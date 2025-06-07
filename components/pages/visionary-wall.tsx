@@ -9,6 +9,9 @@ import { useState } from "react"
 
 export default function VisionaryWall() {
   const [isUnlocked, setIsUnlocked] = useState(false)
+  const [password, setPassword] = useState("")
+  const [passwordError, setPasswordError] = useState("")
+  const [isPasswordAccepted, setIsPasswordAccepted] = useState(false)
   const [captchaAnswer, setCaptchaAnswer] = useState("")
   const [captchaQuestion, setCaptchaQuestion] = useState({ question: "15 + 7", answer: "22" })
   const [activeFilter, setActiveFilter] = useState("all")
@@ -128,6 +131,53 @@ export default function VisionaryWall() {
 
   const filteredIdeas =
     activeFilter === "all" ? startupIdeas : startupIdeas.filter((idea) => idea.category === activeFilter)
+
+  if (!isPasswordAccepted) {
+    return (
+      <div className="min-h-screen pt-20 pb-16 flex items-center justify-center">
+        <div className="max-w-md mx-auto px-4">
+          <Card className="bg-slate-800/70 border-cyan-500/30 backdrop-blur-sm">
+            <CardContent className="p-8 text-center">
+              <div className="w-20 h-20 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Lock className="h-10 w-10 text-white" />
+              </div>
+              <h2 className="text-2xl font-bold text-white mb-4">Visionary Wall Password</h2>
+              <p className="text-gray-300 mb-6">
+                This section is protected. Please enter the password provided by Mohamed Aslam to continue.
+              </p>
+              <Input
+                type="password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                placeholder="Enter password"
+                className="bg-slate-600 border-cyan-500/30 text-white mb-4"
+                onKeyDown={e => { if (e.key === "Enter") {
+                  if (password === "thefutureinnov") {
+                    setIsPasswordAccepted(true); setPasswordError("");
+                  } else {
+                    setPasswordError("Incorrect password. Please try again.");
+                  }
+                }}}
+              />
+              <Button
+                className="w-full bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-600 hover:to-purple-600 mb-2"
+                onClick={() => {
+                  if (password === "thefutureinnov") {
+                    setIsPasswordAccepted(true); setPasswordError("");
+                  } else {
+                    setPasswordError("Incorrect password. Please try again.");
+                  }
+                }}
+              >
+                Unlock
+              </Button>
+              {passwordError && <p className="text-red-400 text-sm mt-2">{passwordError}</p>}
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    )
+  }
 
   if (!isUnlocked) {
     return (
