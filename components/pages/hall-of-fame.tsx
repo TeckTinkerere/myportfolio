@@ -1,0 +1,400 @@
+"use client"
+
+import { Card, CardContent } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Heart, Calendar, Award } from "lucide-react"
+import { useState, useEffect } from "react"
+
+export default function HallOfFame() {
+  const [likedCertificates, setLikedCertificates] = useState<number[]>([])
+  const [modalImage, setModalImage] = useState<string | null>(null)
+  const [modalAlt, setModalAlt] = useState<string>("")
+
+  const topCertificates = [
+    {
+      id: 1,
+      title: "YAC Season 6",
+      issuer: "National Youth Council",
+      date: "2024-05-01",
+      description: "1st Place - Youth Action Challenge Season 6. Recognized for impactful tech-driven solutions for youth and community.",
+      image: "/YACS.png",
+      likes: 60,
+      category: "Entrepreneurship",
+      tags: ["Entrepreneurship", "Leadership", "Participation"],
+    },
+    {
+      id: 2,
+      title: "Batey Hackathon SP-2024",
+      issuer: "Singapore Polytechnic",
+      date: "2024-04-01",
+      description: "2nd Place - SP Batey Hackathon 2024. Awarded for innovative full-stack web development and teamwork.",
+      image: "/Batey.png",
+      likes: 52,
+      category: "Hackathon",
+      tags: ["Software Development", "Participation", "Leadership"],
+    },
+    {
+      id: 3,
+      title: "AI FOR GOOD (YOUTH) STUDENT FACILITATOR",
+      issuer: "AI Singapore",
+      date: "2024-03-01",
+      description: "3rd Place - AI for Good (Youth) Student Facilitator. Recognized for leadership and facilitation in AI-driven social impact projects.",
+      image: "/AITrainer.png",
+      likes: 45,
+      category: "AI & Leadership",
+      tags: ["AI", "Leadership", "Participation"],
+    },
+  ]
+
+  const allCertificates = [
+    ...topCertificates,
+    {
+      id: 4,
+      title: "Rock Your LinkedIn Profile",
+      issuer: "LinkedIn",
+      date: "2019-08-01",
+      description: "Completed LinkedIn's official profile optimization course.",
+      image: "/placeholder-user.jpg",
+      likes: 29,
+      category: "Professional Development",
+      tags: ["LinkedIn", "General"],
+    },
+    {
+      id: 5,
+      title: "Leadership Foundations: Leadership Styles and Models",
+      issuer: "LinkedIn Learning",
+      date: "2023-11-01",
+      description: "Completed training on leadership styles and models.",
+      image: "/placeholder-user.jpg",
+      likes: 33,
+      category: "Leadership",
+      tags: ["Leadership", "LinkedIn", "General"],
+    },
+    {
+      id: 6,
+      title: "Kotlin Essential Training: Object-Oriented and Async Code",
+      issuer: "LinkedIn Learning",
+      date: "2023-10-01",
+      description: "Completed essential training in Kotlin, focusing on OOP and async programming.",
+      image: "/placeholder-user.jpg",
+      likes: 27,
+      category: "Programming",
+      tags: ["Software Development", "General"],
+    },
+  ]
+
+  const toggleLike = (certificateId: number) => {
+    setLikedCertificates((prev) =>
+      prev.includes(certificateId) ? prev.filter((id) => id !== certificateId) : [...prev, certificateId],
+    )
+  }
+
+  useEffect(() => {
+    if (!modalImage) return;
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setModalImage(null);
+    };
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, [modalImage]);
+
+  // Collect all unique tags
+  const allTags = [
+    "All",
+    ...Array.from(
+      new Set(
+        allCertificates.flatMap(cert => cert.tags || ["General"])
+      )
+    ),
+  ]
+
+  const [activeTag, setActiveTag] = useState<string>("All")
+
+  const filteredCertificates =
+    activeTag === "All"
+      ? allCertificates
+      : allCertificates.filter(cert => (cert.tags || ["General"]).includes(activeTag))
+
+  return (
+    <div className="min-h-screen pt-20 pb-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6">
+            Hall of{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">Fame</span>
+          </h1>
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            A collection of certifications and achievements that mark my journey of continuous learning and professional
+            development in technology and leadership.
+          </p>
+        </div>
+
+        {/* Top 3 Certificates - Pedestal Style */}
+        <div className="mb-20">
+          <h2 className="text-3xl font-bold text-white text-center mb-12">🏆 Top Achievements</h2>
+
+          {/* Futuristic Background */}
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-pink-500/10 rounded-3xl blur-3xl" />
+
+            <div className="relative grid grid-cols-1 md:grid-cols-3 gap-8 items-end">
+              {/* Second Place */}
+              <div className="order-1 md:order-1">
+                <Card className="bg-slate-800/70 border-cyan-500/30 backdrop-blur-sm transform hover:scale-105 transition-all duration-300">
+                  <CardContent className="p-6">
+                    <div className="text-center mb-4">
+                      <div className="w-16 h-16 bg-gradient-to-r from-gray-400 to-gray-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <span className="text-white font-bold text-xl">2</span>
+                      </div>
+                      <Badge variant="outline" className="border-gray-500/50 text-gray-400">
+                        Silver
+                      </Badge>
+                    </div>
+                    <img
+                      src={topCertificates[1].image || "/placeholder.svg"}
+                      alt={topCertificates[1].title}
+                      className="w-full max-h-52 object-contain rounded-lg mb-4 cursor-pointer bg-slate-900"
+                      style={{ aspectRatio: '4/3', background: '#0f172a' }}
+                      onClick={() => { setModalImage(topCertificates[1].image); setModalAlt(topCertificates[1].title); }}
+                    />
+                    <h3 className="text-lg font-bold text-white mb-2">{topCertificates[1].title}</h3>
+                    <p className="text-cyan-400 font-semibold mb-2">{topCertificates[1].issuer}</p>
+                    <p className="text-gray-300 text-sm mb-4">{topCertificates[1].description}</p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-gray-400 text-xs flex items-center gap-1">
+                        <Calendar className="h-3 w-3" />
+                        {new Date(topCertificates[1].date).toLocaleDateString()}
+                      </span>
+                      <button
+                        onClick={() => toggleLike(topCertificates[1].id)}
+                        className="flex items-center gap-1 text-pink-400 hover:text-pink-300 transition-colors"
+                      >
+                        <Heart
+                          className={`h-4 w-4 ${likedCertificates.includes(topCertificates[1].id) ? "fill-current" : ""}`}
+                        />
+                        <span className="text-xs">
+                          {topCertificates[1].likes + (likedCertificates.includes(topCertificates[1].id) ? 1 : 0)}
+                        </span>
+                      </button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* First Place */}
+              <div className="order-2 md:order-2 transform md:scale-110">
+                <Card className="bg-slate-800/70 border-yellow-500/50 backdrop-blur-sm transform hover:scale-105 transition-all duration-300">
+                  <CardContent className="p-6">
+                    <div className="text-center mb-4">
+                      <div className="w-20 h-20 bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <Award className="h-8 w-8 text-white" />
+                      </div>
+                      <Badge variant="outline" className="border-yellow-500/50 text-yellow-400">
+                        Gold
+                      </Badge>
+                    </div>
+                    <img
+                      src={topCertificates[0].image || "/placeholder.svg"}
+                      alt={topCertificates[0].title}
+                      className="w-full max-h-52 object-contain rounded-lg mb-4 cursor-pointer bg-slate-900"
+                      style={{ aspectRatio: '4/3', background: '#0f172a' }}
+                      onClick={() => { setModalImage(topCertificates[0].image); setModalAlt(topCertificates[0].title); }}
+                    />
+                    <h3 className="text-xl font-bold text-white mb-2">{topCertificates[0].title}</h3>
+                    <p className="text-cyan-400 font-semibold mb-2">{topCertificates[0].issuer}</p>
+                    <p className="text-gray-300 text-sm mb-4">{topCertificates[0].description}</p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-gray-400 text-xs flex items-center gap-1">
+                        <Calendar className="h-3 w-3" />
+                        {new Date(topCertificates[0].date).toLocaleDateString()}
+                      </span>
+                      <button
+                        onClick={() => toggleLike(topCertificates[0].id)}
+                        className="flex items-center gap-1 text-pink-400 hover:text-pink-300 transition-colors"
+                      >
+                        <Heart
+                          className={`h-4 w-4 ${likedCertificates.includes(topCertificates[0].id) ? "fill-current" : ""}`}
+                        />
+                        <span className="text-xs">
+                          {topCertificates[0].likes + (likedCertificates.includes(topCertificates[0].id) ? 1 : 0)}
+                        </span>
+                      </button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Third Place */}
+              <div className="order-3 md:order-3">
+                <Card className="bg-slate-800/70 border-orange-500/30 backdrop-blur-sm transform hover:scale-105 transition-all duration-300">
+                  <CardContent className="p-6">
+                    <div className="text-center mb-4">
+                      <div className="w-16 h-16 bg-gradient-to-r from-orange-400 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <span className="text-white font-bold text-xl">3</span>
+                      </div>
+                      <Badge variant="outline" className="border-orange-500/50 text-orange-400">
+                        Bronze
+                      </Badge>
+                    </div>
+                    <img
+                      src={topCertificates[2].image || "/placeholder.svg"}
+                      alt={topCertificates[2].title}
+                      className="w-full max-h-52 object-contain rounded-lg mb-4 cursor-pointer bg-slate-900"
+                      style={{ aspectRatio: '4/3', background: '#0f172a' }}
+                      onClick={() => { setModalImage(topCertificates[2].image); setModalAlt(topCertificates[2].title); }}
+                    />
+                    <h3 className="text-lg font-bold text-white mb-2">{topCertificates[2].title}</h3>
+                    <p className="text-cyan-400 font-semibold mb-2">{topCertificates[2].issuer}</p>
+                    <p className="text-gray-300 text-sm mb-4">{topCertificates[2].description}</p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-gray-400 text-xs flex items-center gap-1">
+                        <Calendar className="h-3 w-3" />
+                        {new Date(topCertificates[2].date).toLocaleDateString()}
+                      </span>
+                      <button
+                        onClick={() => toggleLike(topCertificates[2].id)}
+                        className="flex items-center gap-1 text-pink-400 hover:text-pink-300 transition-colors"
+                      >
+                        <Heart
+                          className={`h-4 w-4 ${likedCertificates.includes(topCertificates[2].id) ? "fill-current" : ""}`}
+                        />
+                        <span className="text-xs">
+                          {topCertificates[2].likes + (likedCertificates.includes(topCertificates[2].id) ? 1 : 0)}
+                        </span>
+                      </button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Filter Bar */}
+        <div className="flex flex-wrap justify-center gap-2 mb-8">
+          {allTags.map(tag => (
+            <button
+              key={tag}
+              onClick={() => setActiveTag(tag)}
+              className={`px-4 py-2 rounded-full font-semibold transition-all duration-200 border text-sm
+                ${activeTag === tag ? "bg-gradient-to-r from-cyan-500 to-purple-500 text-white border-cyan-500" : "bg-slate-800/50 text-gray-300 border-cyan-500/20 hover:bg-cyan-500/10"}`}
+            >
+              {tag}
+            </button>
+          ))}
+        </div>
+
+        {/* All Certificates - Instagram Style Grid */}
+        <div>
+          <h2 className="text-3xl font-bold text-white text-center mb-12">All Certifications</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredCertificates.map((certificate) => (
+              <Card
+                key={certificate.id}
+                className="bg-slate-800/50 border-cyan-500/20 backdrop-blur-sm hover:border-cyan-500/40 transition-all duration-300 group overflow-hidden"
+              >
+                <div className="relative">
+                  <img
+                    src={certificate.image || "/placeholder.svg"}
+                    alt={certificate.title}
+                    className="w-full max-h-56 object-contain transition-transform duration-300 group-hover:scale-110 rounded-lg cursor-pointer bg-slate-900"
+                    style={{ aspectRatio: '4/3', background: '#0f172a' }}
+                    onClick={() => { setModalImage(certificate.image); setModalAlt(certificate.title); }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent" />
+                  <div className="absolute top-4 right-4">
+                    <Badge variant="outline" className="border-cyan-500/50 text-cyan-400 text-xs">
+                      {certificate.category}
+                    </Badge>
+                  </div>
+                </div>
+
+                <CardContent className="p-4">
+                  <h3 className="text-lg font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">
+                    {certificate.title}
+                  </h3>
+                  <p className="text-cyan-400 font-semibold text-sm mb-2">{certificate.issuer}</p>
+                  <p className="text-gray-300 text-xs leading-relaxed mb-3">{certificate.description}</p>
+
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-400 text-xs flex items-center gap-1">
+                      <Calendar className="h-3 w-3" />
+                      {new Date(certificate.date).toLocaleDateString()}
+                    </span>
+                    <button
+                      onClick={() => toggleLike(certificate.id)}
+                      className="flex items-center gap-1 text-pink-400 hover:text-pink-300 transition-colors"
+                    >
+                      <Heart
+                        className={`h-4 w-4 ${likedCertificates.includes(certificate.id) ? "fill-current" : ""}`}
+                      />
+                      <span className="text-xs">
+                        {certificate.likes + (likedCertificates.includes(certificate.id) ? 1 : 0)}
+                      </span>
+                    </button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+
+        {/* Statistics */}
+        <div className="mt-16">
+          <Card className="bg-gradient-to-r from-slate-800/50 to-purple-900/50 border-cyan-500/20 backdrop-blur-sm">
+            <CardContent className="p-8">
+              <h2 className="text-2xl font-bold text-white text-center mb-6">Achievement Statistics</h2>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div>
+                  <div className="text-3xl font-bold text-cyan-400 mb-2">{allCertificates.length}</div>
+                  <div className="text-gray-300">Total Certificates</div>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-purple-400 mb-2">6</div>
+                  <div className="text-gray-300">Categories</div>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-green-400 mb-2">2024</div>
+                  <div className="text-gray-300">Most Active Year</div>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-orange-400 mb-2">
+                    {allCertificates.reduce((sum, cert) => sum + cert.likes, 0)}
+                  </div>
+                  <div className="text-gray-300">Total Likes</div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+
+      {modalImage && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
+          onClick={() => setModalImage(null)}
+          tabIndex={-1}
+          aria-modal="true"
+          role="dialog"
+        >
+          <div className="relative max-w-3xl w-full p-4" onClick={e => e.stopPropagation()}>
+            <button
+              className="absolute top-2 right-2 text-white bg-black/60 rounded-full p-2 hover:bg-black/80 z-10"
+              onClick={() => setModalImage(null)}
+              aria-label="Close large certificate view"
+            >
+              ×
+            </button>
+            <img
+              src={modalImage}
+              alt={modalAlt}
+              className="w-full h-auto max-h-[80vh] object-contain rounded-lg shadow-2xl bg-slate-900"
+              style={{ background: '#0f172a' }}
+            />
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
