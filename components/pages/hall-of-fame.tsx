@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Heart, Calendar, Award } from "lucide-react"
 import { useState, useEffect } from "react"
+import { Button } from "@/components/ui/button"
 
 export default function HallOfFame() {
   const [likedCertificates, setLikedCertificates] = useState<number[]>([])
@@ -368,6 +369,16 @@ export default function HallOfFame() {
             </CardContent>
           </Card>
         </div>
+
+        <Button
+          as="a"
+          href="https://github.com/TeckTinkerere/myportfolio"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-gradient-to-r from-cyan-500 to-purple-500 text-white px-4 py-2 rounded"
+        >
+          View Source on GitHub
+        </Button>
       </div>
 
       {modalImage && (
