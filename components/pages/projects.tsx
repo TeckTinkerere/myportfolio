@@ -27,7 +27,7 @@ export default function Projects() {
       id: 2,
       title: "PolyStart Connect (StartupLink)",
       description:
-        "A student-driven platform for verified, closed-network startup collaboration. Founder and lead developer, building ecosystems for young founders to connect and co-create.",
+        "A collaboration hub for polytechnic student founders to discover, verify, and connect with other legit startups. Helps avoid time-wasting or scammy connections.",
       image: "/placeholder-user.jpg",
       tags: ["React.js", "Startup", "Community", "Leadership"],
       category: "startup",
@@ -206,15 +206,17 @@ export default function Projects() {
 
                 {/* Action Buttons */}
                 <div className="flex gap-3">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="flex-1 border-cyan-500/50 text-cyan-400 hover:bg-cyan-500 hover:text-white"
-                    onClick={() => window.open(project.github, "_blank")}
-                  >
-                    <Github className="h-4 w-4 mr-2" />
-                    Code
-                  </Button>
+                  {project.github && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="flex-1 border-cyan-500/50 text-cyan-400 hover:bg-cyan-500 hover:text-white"
+                      onClick={() => window.open(project.github!, "_blank")}
+                    >
+                      <Github className="h-4 w-4 mr-2" />
+                      Code
+                    </Button>
+                  )}
                   {project.demo && (
                     <Button
                       size="sm"

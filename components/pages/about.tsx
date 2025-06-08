@@ -2,7 +2,9 @@
 
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Calendar, MapPin, Users, Award } from "lucide-react"
+import { Calendar as CalendarIcon, MapPin, Users, Award } from "lucide-react"
+import { useState } from "react"
+import { Calendar } from "@/components/ui/calendar"
 
 export default function About() {
   const roles = [
@@ -64,7 +66,7 @@ export default function About() {
             About <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">Me</span>
           </h1>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Co-Founder & CEO of Local Loco | Web & AI Enthusiast | Aspiring Software Dev | IT Student @SP | Founder @ PolyStart Connect
+            Co-Founder & CEO of Local Loco | Web & AI Enthusiast | Aspiring Software Dev | IT Student @SP | Founder @ StartupLink
           </p>
         </div>
 
@@ -76,18 +78,15 @@ export default function About() {
                 <div>
                   <h2 className="text-2xl font-bold text-white mb-4">Summary</h2>
                   <p className="text-gray-300 leading-relaxed mb-4">
-                    As a full-stack developer currently pursuing a Diploma in Information Technology at Singapore Polytechnic and the Co-Founder of LocalLoco, a student-led startup focusing on building digital solutions for SMEs and social enterprises, I am passionate about creating user-centric technology to tackle real-world challenges, particularly in digital inclusion and small business enablement.
+                    I'm a builder at heart—whether it's code, teams, or ideas. My journey started with academic struggles, but I found my spark in technology and entrepreneurship. Now, I co-lead LocalLoco, where I turn real-world problems into digital solutions, and I thrive on learning by doing.
                   </p>
                   <p className="text-gray-300 leading-relaxed mb-4">
-                    My unique blend of technical skills and startup leadership sets me apart. At Local Loco, I oversee MVP development, coordinate agile student teams, and iterate based on user feedback. This hands-on experience has honed my ability to balance innovation with practicality and deliver effective solutions within tight deadlines. My strengths have been further refined through participation in national competitions like the Youth Action Challenge Season 6, NUS GURU AI competition, and as a finalist in the SP Batey Hackathon 2024.
+                    My edge? I blend hands-on web development (React, Node.js), rapid prototyping, and a knack for rallying people around a vision. I love experimenting, failing fast, and iterating—whether it's for a hackathon, a startup, or a community project.
                   </p>
                   <p className="text-gray-300 leading-relaxed mb-4">
-                    On the technical front, I excel in frontend development (HTML, CSS, JavaScript, React), backend (Node.js, Express, basic Python), and relational databases (SQL). I have experience with RESTful APIs, AI prototyping (Hugging Face API on Google Cloud), and tools like Git, Figma, CapCut, and Canva. My soft skills include effective communication, user-centered design thinking, adaptability, and teamwork, cultivated through project work and active engagement in CCAs such as Freelance Academy, SPCyclists, and SP Deejays.
+                    Beyond code, I'm passionate about storytelling through video, and I believe the best teams are built on trust, curiosity, and a shared sense of purpose. I'm happiest when I'm building something that matters—with people who care.
                   </p>
-                  <p className="text-gray-300 leading-relaxed mb-4">
-                    Currently seeking a software engineering internship to deepen my backend development expertise, engage with real systems, and contribute to impactful projects. Outside of software development, I take on freelance projects in web and video editing, blending creativity and technology to deliver impactful results.
-                  </p>
-                  <p className="text-cyan-400 italic">“The best way to predict the future is to invent it.” – Alan Kay</p>
+                  <p className="text-cyan-400 italic">I don't just want to predict the future—I want to help invent it, one project at a time.</p>
                 </div>
                 <div className="relative">
                   <img
@@ -116,7 +115,7 @@ export default function About() {
             </Card>
             <Card className="bg-slate-800/50 border-cyan-500/20 backdrop-blur-sm">
               <CardContent className="p-6">
-                <h3 className="text-xl font-bold text-white mb-2">PolyStart Connect</h3>
+                <h3 className="text-xl font-bold text-white mb-2">PolyStart Connect (StartupLink)</h3>
                 <p className="text-cyan-400 font-semibold mb-2">Founder</p>
                 <Badge variant="outline" className="border-purple-500/50 text-purple-400 mb-3">Apr 2025 - Present</Badge>
                 <p className="text-gray-300 text-sm leading-relaxed">Founder of PolyStart Connect – a student-driven side project exploring how verified, closed-network startup collaboration can empower young founders to connect, co-create, and grow.</p>
@@ -199,6 +198,64 @@ export default function About() {
             </div>
           </div>
         </div>
+
+        {/* Activity Calendar */}
+        <div className="mt-20">
+          <h2 className="text-3xl font-bold text-white text-center mb-12">Activity Calendar</h2>
+          <ActivityCalendar />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ActivityCalendar component
+function ActivityCalendar() {
+  // Example activity data
+  const activities = [
+    { date: new Date(2024, 5, 10), title: "LocalLoco Sprint Planning", description: "Led a sprint planning session for the LocalLoco MVP." },
+    { date: new Date(2024, 5, 12), title: "StartupLink Demo", description: "Presented StartupLink to potential collaborators." },
+    { date: new Date(2024, 5, 15), title: "Hackathon", description: "Participated in NUS GURU AI Hackathon." },
+    { date: new Date(2024, 5, 18), title: "Video Project", description: "Completed a freelance video montage for a class event." },
+    { date: new Date(2024, 5, 22), title: "SPCyclists Event", description: "Coordinated logistics for a cycling event." },
+    { date: new Date(2024, 5, 25), title: "Freelance Academy Meetup", description: "Organized a networking session for Freelance Academy." },
+  ]
+
+  const [selected, setSelected] = useState<Date | undefined>(undefined)
+
+  // Find activities for the selected date
+  const selectedActivities = selected
+    ? activities.filter(a => a.date.toDateString() === selected.toDateString())
+    : []
+
+  return (
+    <div className="flex flex-col lg:flex-row gap-8 items-start justify-center">
+      <div className="bg-slate-800/50 border-cyan-500/20 rounded-lg p-6 shadow-lg">
+        <Calendar
+          mode="single"
+          selected={selected}
+          onSelect={date => setSelected(date)}
+          className="rounded-lg"
+        />
+      </div>
+      <div className="flex-1 min-w-[250px]">
+        <Card className="bg-slate-800/50 border-cyan-500/20 backdrop-blur-sm">
+          <CardContent className="p-6">
+            <h3 className="text-xl font-bold text-white mb-4">{selected ? selected.toLocaleDateString() : "Select a date"}</h3>
+            {selectedActivities.length > 0 ? (
+              <ul className="space-y-4">
+                {selectedActivities.map((activity, idx) => (
+                  <li key={idx}>
+                    <p className="text-cyan-400 font-semibold">{activity.title}</p>
+                    <p className="text-gray-300 text-sm">{activity.description}</p>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-gray-400">{selected ? "No activities for this day." : "Pick a date to see activities."}</p>
+            )}
+          </CardContent>
+        </Card>
       </div>
     </div>
   )

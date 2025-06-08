@@ -93,12 +93,19 @@ export default function Contact() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact Form */}
-          <div>
+          <div className="relative">
             <Card className="bg-slate-800/50 border-cyan-500/20 backdrop-blur-sm">
               <CardContent className="p-8">
                 <h2 className="text-2xl font-bold text-white mb-6">Send Me a Message</h2>
-
-                <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Maintenance Overlay */}
+                <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-slate-900/80 backdrop-blur-sm rounded-lg">
+                  <div className="text-center">
+                    <h3 className="text-2xl font-bold text-cyan-400 mb-2">Contact Form in Maintenance</h3>
+                    <p className="text-gray-200 mb-4">This form is temporarily unavailable.<br />Please email me directly at <a href="mailto:aslam040607@gmail.com" className="underline text-cyan-300">aslam040607@gmail.com</a> or connect via <a href="https://www.linkedin.com/in/mohamed-aslam-abdul" target="_blank" rel="noopener noreferrer" className="underline text-cyan-300">LinkedIn</a>.</p>
+                  </div>
+                </div>
+                {/* Disabled Form (visually present but not usable) */}
+                <form className="space-y-6 pointer-events-none opacity-50 select-none">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
                       Full Name *
@@ -107,15 +114,11 @@ export default function Contact() {
                       id="name"
                       type="text"
                       value={formData.name}
-                      onChange={(e) => handleInputChange("name", e.target.value)}
-                      className={`bg-slate-700/50 border-cyan-500/30 text-white placeholder-gray-400 ${
-                        errors.name ? "border-red-500" : ""
-                      }`}
+                      disabled
+                      className="bg-slate-700/50 border-cyan-500/30 text-white placeholder-gray-400"
                       placeholder="Enter your full name"
                     />
-                    {errors.name && <p className="text-red-400 text-sm mt-1">{errors.name}</p>}
                   </div>
-
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
                       Email Address *
@@ -124,15 +127,11 @@ export default function Contact() {
                       id="email"
                       type="email"
                       value={formData.email}
-                      onChange={(e) => handleInputChange("email", e.target.value)}
-                      className={`bg-slate-700/50 border-cyan-500/30 text-white placeholder-gray-400 ${
-                        errors.email ? "border-red-500" : ""
-                      }`}
+                      disabled
+                      className="bg-slate-700/50 border-cyan-500/30 text-white placeholder-gray-400"
                       placeholder="Enter your email address"
                     />
-                    {errors.email && <p className="text-red-400 text-sm mt-1">{errors.email}</p>}
                   </div>
-
                   <div>
                     <label htmlFor="subject" className="block text-sm font-medium text-gray-300 mb-2">
                       Subject *
@@ -141,15 +140,11 @@ export default function Contact() {
                       id="subject"
                       type="text"
                       value={formData.subject}
-                      onChange={(e) => handleInputChange("subject", e.target.value)}
-                      className={`bg-slate-700/50 border-cyan-500/30 text-white placeholder-gray-400 ${
-                        errors.subject ? "border-red-500" : ""
-                      }`}
+                      disabled
+                      className="bg-slate-700/50 border-cyan-500/30 text-white placeholder-gray-400"
                       placeholder="What's this about?"
                     />
-                    {errors.subject && <p className="text-red-400 text-sm mt-1">{errors.subject}</p>}
                   </div>
-
                   <div>
                     <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
                       Message *
@@ -157,31 +152,17 @@ export default function Contact() {
                     <Textarea
                       id="message"
                       value={formData.message}
-                      onChange={(e) => handleInputChange("message", e.target.value)}
-                      className={`bg-slate-700/50 border-cyan-500/30 text-white placeholder-gray-400 min-h-32 ${
-                        errors.message ? "border-red-500" : ""
-                      }`}
+                      disabled
+                      className="bg-slate-700/50 border-cyan-500/30 text-white placeholder-gray-400 min-h-32"
                       placeholder="Tell me about your project or question..."
                     />
-                    {errors.message && <p className="text-red-400 text-sm mt-1">{errors.message}</p>}
                   </div>
-
                   <Button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-600 hover:to-purple-600 text-white py-3 text-lg font-semibold rounded-lg transition-all duration-300 disabled:opacity-50"
+                    type="button"
+                    disabled
+                    className="w-full bg-gradient-to-r from-cyan-500 to-purple-500 text-white py-3 text-lg font-semibold rounded-lg opacity-60"
                   >
-                    {isSubmitting ? (
-                      <>
-                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2" />
-                        Sending...
-                      </>
-                    ) : (
-                      <>
-                        <Send className="h-5 w-5 mr-2" />
-                        Send Message
-                      </>
-                    )}
+                    Send Message
                   </Button>
                 </form>
               </CardContent>
@@ -202,7 +183,7 @@ export default function Contact() {
                     </div>
                     <div>
                       <h3 className="text-white font-semibold">Email</h3>
-                      <p className="text-gray-300">contact@mohamedaslam.dev</p>
+                      <p className="text-gray-300">aslam040607@gmail.com</p>
                     </div>
                   </div>
 
@@ -212,7 +193,7 @@ export default function Contact() {
                     </div>
                     <div>
                       <h3 className="text-white font-semibold">Phone</h3>
-                      <p className="text-gray-300">+65 XXXX XXXX</p>
+                      <p className="text-gray-300">+65 9343 0467</p>
                     </div>
                   </div>
 

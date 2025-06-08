@@ -96,6 +96,91 @@ export default function VisionaryWall() {
       businessModel: "B2B SaaS with impact measurement tools",
       techStack: ["React.js", "Node.js", "Google Maps API", "Twilio"],
     },
+    // --- Brain History Ideas ---
+    {
+      id: 1001,
+      title: "Local Loco – Real-Time Deals from Local Shops",
+      miniPitch: "A hyperlocal promotion platform that boosts visibility for small businesses using real-time, social-media-style deal posts.",
+      stage: "seed",
+      tags: ["SMEs", "QR redemption", "community commerce", "neighborhood shops", "app-based promotions"],
+      category: "startup",
+      detailedDescription: "A hyperlocal promotion platform that boosts visibility for small businesses using real-time, social-media-style deal posts. Consumers benefit from discovering nearby discounts while supporting local merchants.",
+      targetMarket: "Small businesses, local merchants, deal-seeking consumers",
+      businessModel: "Commission on redemptions, premium merchant features",
+      techStack: ["React Native", "Node.js", "Firebase"],
+    },
+    {
+      id: 1002,
+      title: "StartupLink – Verified Student Startup Platform",
+      miniPitch: "A collaboration hub for polytechnic student founders to discover, verify, and connect with other legit startups.",
+      stage: "concept",
+      tags: ["Polytechnic founders", "startup verification", "MVP showcase", "team forming"],
+      category: "startup",
+      detailedDescription: "A collaboration hub where polytechnic student founders can discover, verify, and connect with other legit startups. Helps avoid time-wasting or scammy connections.",
+      targetMarket: "Polytechnic student founders, early-stage startups",
+      businessModel: "Freemium, verification fees, sponsorships",
+      techStack: ["Next.js", "PostgreSQL", "Vercel"],
+    },
+    {
+      id: 1003,
+      title: "SubGuard – Smart Mobile Subscription Manager",
+      miniPitch: "A privacy-first mobile app to detect, manage, and cancel hidden subscriptions.",
+      stage: "paused",
+      tags: ["Subscription tracker", "financial health", "cancellation assistant", "data privacy"],
+      category: "productivity",
+      detailedDescription: "A privacy-first mobile app to detect, manage, and cancel hidden subscriptions. Targets subscription fatigue and dark UX traps.",
+      targetMarket: "Mobile users, subscription-heavy consumers",
+      businessModel: "Subscription, premium features",
+      techStack: ["React Native", "Expo", "Stripe"],
+    },
+    {
+      id: 1004,
+      title: "GURU AI – AI-Powered Scriptwriter & Video Generator",
+      miniPitch: "A tool designed to turn written prompts into ready-to-publish video content.",
+      stage: "paused",
+      tags: ["Video automation", "AI scriptwriting", "CapCut integration", "content speed"],
+      category: "ai",
+      detailedDescription: "A tool designed to turn written prompts into ready-to-publish video content. Targets content creators, marketers, and students with fast, AI-driven production.",
+      targetMarket: "Content creators, marketers, students",
+      businessModel: "SaaS, pay-per-video, integrations",
+      techStack: ["Python", "Hugging Face", "CapCut API"],
+    },
+    {
+      id: 1005,
+      title: "SilverConnect – A Senior-Friendly Digital Companion",
+      miniPitch: "A senior-friendly digital assistant platform for essential services, digital skills, and safe communication.",
+      stage: "paused",
+      tags: ["Senior-friendly technology", "digital literacy", "online safety", "scam alerts", "telehealth", "online banking", "communication tools", "guided tutorials"],
+      category: "health",
+      detailedDescription: "A senior-friendly digital assistant platform that helps elderly users access essential services like banking and telehealth, improve digital skills with guided tutorials, stay safe online with scam alerts and simple security, and stay connected with family through built-in communication tools.",
+      targetMarket: "Elderly users, caregivers, families",
+      businessModel: "Subscription, partnerships with service providers",
+      techStack: ["React Native", "Twilio", "Node.js"],
+    },
+    {
+      id: 1006,
+      title: "StepFresh – Refresh Your Step, Sustainably",
+      miniPitch: "A modular footwear system for easy sole replacement and sustainable urban living.",
+      stage: "paused",
+      tags: ["Modular footwear", "sole replacement", "sustainable design", "urban mobility", "eco-conscious lifestyle", "user-friendly system", "reusable soles", "minimal waste"],
+      category: "productivity",
+      detailedDescription: "A modular footwear system that empowers users to extend the life of their shoes by easily swapping worn-out soles at home or in shared spaces. Designed for eco-conscious urban professionals, StepFresh combines sleek design, sustainable materials, and a smart attachment system for ultimate convenience. Whether you're switching from your office commute to the gym or just refreshing worn treads, StepFresh keeps your shoes—and your values—aligned.",
+      targetMarket: "Urban professionals, eco-conscious consumers",
+      businessModel: "Product sales, replacement parts, subscription for upgrades",
+      techStack: ["Product design", "E-commerce", "Sustainable materials"],
+    },
+    {
+      id: 1007,
+      title: "SnapSweep – Declutter Photos by Face Detection",
+      miniPitch: "A lightweight mobile utility to clean up faceless, random, or low-value images using on-device AI.",
+      stage: "paused",
+      tags: ["Face detection", "photo cleaner", "privacy-first", "gallery declutter", "mobile utility"],
+      category: "ai",
+      detailedDescription: "A lightweight mobile utility that helps users clean up faceless, random, or low-value images from their photo gallery using on-device AI. With SnapSweep, you reclaim space, keep only what matters, and enjoy an organized camera roll — all without giving up privacy.",
+      targetMarket: "Mobile users, privacy-conscious consumers",
+      businessModel: "Freemium, in-app purchases",
+      techStack: ["React Native", "TensorFlow Lite", "Mobile AI"],
+    },
   ]
 
   const filters = [
@@ -241,6 +326,8 @@ export default function VisionaryWall() {
             building. Each idea represents a potential solution to real-world problems.
           </p>
         </div>
+
+      
 
         {/* Filter Buttons */}
         <div className="flex flex-wrap justify-center gap-4 mb-12">

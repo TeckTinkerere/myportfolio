@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { ArrowDown, Github, Linkedin, Mail } from "lucide-react"
 import { useEffect, useState } from "react"
+import Link from "next/link"
 
 export default function Home() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
@@ -14,10 +15,6 @@ export default function Home() {
     window.addEventListener("mousemove", handleMouseMove)
     return () => window.removeEventListener("mousemove", handleMouseMove)
   }, [])
-
-  const scrollToAbout = () => {
-    window.scrollTo({ top: window.innerHeight, behavior: "smooth" })
-  }
 
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -69,7 +66,7 @@ export default function Home() {
           </div>
 
           {/* Right Side - Hero Content */}
-          <div className="order-1 lg:order-2 text-center lg:text-left">
+          <div className="order-1 lg:order-2 text-center lg:text-left pt-16 sm:pt-20">
             <div className="space-y-6">
               <div className="space-y-2">
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight">
@@ -88,19 +85,28 @@ export default function Home() {
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <Button
-                  onClick={scrollToAbout}
-                  className="bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-600 hover:to-purple-600 text-white px-8 py-3 text-lg font-semibold rounded-full transition-all duration-300 transform hover:scale-105"
-                >
-                  Explore My Journey
-                  <ArrowDown className="ml-2 h-5 w-5" />
-                </Button>
-                <Button
-                  variant="outline"
-                  className="border-cyan-500 text-cyan-400 hover:bg-cyan-500 hover:text-white px-8 py-3 text-lg font-semibold rounded-full transition-all duration-300"
-                >
-                  View Projects
-                </Button>
+                <Link href="/about" passHref legacyBehavior>
+                  <Button
+                    asChild
+                    className="bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-600 hover:to-purple-600 text-white px-8 py-3 text-lg font-semibold rounded-full transition-all duration-300 transform hover:scale-105"
+                  >
+                    <a>
+                      Explore My Journey
+                      <ArrowDown className="ml-2 h-5 w-5" />
+                    </a>
+                  </Button>
+                </Link>
+                <Link href="/projects" passHref legacyBehavior>
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="border-cyan-500 text-cyan-400 hover:bg-cyan-500 hover:text-white px-8 py-3 text-lg font-semibold rounded-full transition-all duration-300"
+                  >
+                    <a>
+                      View Projects
+                    </a>
+                  </Button>
+                </Link>
               </div>
 
               <div className="flex gap-6 justify-center lg:justify-start pt-4">
@@ -113,7 +119,7 @@ export default function Home() {
                   <Linkedin className="h-6 w-6" />
                 </a>
                 <a
-                  href="https://github.com"
+                  href="https://github.com/TeckTinkerere"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-400 hover:text-cyan-400 transition-colors duration-300"
@@ -121,7 +127,7 @@ export default function Home() {
                   <Github className="h-6 w-6" />
                 </a>
                 <a
-                  href="mailto:contact@mohamedaslam.dev"
+                  href="mailto:aslam040607@gmail.com"
                   className="text-gray-400 hover:text-cyan-400 transition-colors duration-300"
                 >
                   <Mail className="h-6 w-6" />

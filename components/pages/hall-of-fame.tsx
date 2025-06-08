@@ -16,29 +16,29 @@ export default function HallOfFame() {
       id: 1,
       title: "YAC Season 6",
       issuer: "National Youth Council",
-      date: "2024-05-01",
+      date: "2024-03-15",
       description: "1st Place - Youth Action Challenge Season 6. Recognized for impactful tech-driven solutions for youth and community.",
       image: "/YACS.png",
       likes: 60,
       category: "Entrepreneurship",
-      tags: ["Entrepreneurship", "Leadership", "Participation"],
+      tags: ["Entrepreneurship", "Leadership", "Participation", "Startup", "Business"],
     },
     {
       id: 2,
       title: "Batey Hackathon SP-2024",
       issuer: "Singapore Polytechnic",
-      date: "2024-04-01",
+      date: "2024-09-10",
       description: "2nd Place - SP Batey Hackathon 2024. Awarded for innovative full-stack web development and teamwork.",
       image: "/Batey.png",
       likes: 52,
       category: "Hackathon",
-      tags: ["Software Development", "Participation", "Leadership"],
+      tags: ["Software Development", "Participation", "Leadership", "Startup", "Entrepreneurship"],
     },
     {
       id: 3,
       title: "AI FOR GOOD (YOUTH) STUDENT FACILITATOR",
       issuer: "AI Singapore",
-      date: "2024-03-01",
+      date: "2025-4-15",
       description: "3rd Place - AI for Good (Youth) Student Facilitator. Recognized for leadership and facilitation in AI-driven social impact projects.",
       image: "/AITrainer.png",
       likes: 45,
@@ -53,9 +53,9 @@ export default function HallOfFame() {
       id: 4,
       title: "Rock Your LinkedIn Profile",
       issuer: "LinkedIn",
-      date: "2019-08-01",
+      date: "2025-05-01",
       description: "Completed LinkedIn's official profile optimization course.",
-      image: "/placeholder-user.jpg",
+      image: "/rockurprofile.png",
       likes: 29,
       category: "Professional Development",
       tags: ["LinkedIn", "General"],
@@ -64,9 +64,9 @@ export default function HallOfFame() {
       id: 5,
       title: "Leadership Foundations: Leadership Styles and Models",
       issuer: "LinkedIn Learning",
-      date: "2023-11-01",
+      date: "2025-05-01",
       description: "Completed training on leadership styles and models.",
-      image: "/placeholder-user.jpg",
+      image: "/leadership1.png",
       likes: 33,
       category: "Leadership",
       tags: ["Leadership", "LinkedIn", "General"],
@@ -75,12 +75,45 @@ export default function HallOfFame() {
       id: 6,
       title: "Kotlin Essential Training: Object-Oriented and Async Code",
       issuer: "LinkedIn Learning",
-      date: "2023-10-01",
-      description: "Completed essential training in Kotlin, focusing on OOP and async programming.",
-      image: "/placeholder-user.jpg",
-      likes: 27,
+      date: "2025-05-15",
+      description: "Essential training in Kotlin, focusing on object-oriented and asynchronous programming.",
+      image: "/kotlinessential.png",
+      likes: 0,
       category: "Programming",
       tags: ["Software Development", "General"],
+    },
+    {
+      id: 7,
+      title: "AI FOR GOOD (YOUTH) TRAIN-THE-TRAINER PROGRAMME",
+      issuer: "AI Singapore",
+      date: "2025-4-15",
+      description: "Completed the AI for Good (Youth) Train-the-Trainer Programme, focusing on AI education and facilitation for youth.",
+      image: "/AIBootcamp.png",
+      likes: 0,
+      category: "Programming",
+      tags: ["Software Development", "General", "AI", "Participation"],
+    },
+    {
+      id: 8,
+      title: "Developing Credibility as a Leader",
+      issuer: "LinkedIn Learning",
+      date: "2023-10-01",
+      description: "Completed the course on developing credibility as a leader. Helped me imrpove my leadership skills and understand some previously obsure reasons.",
+      image: "/developleader.png",
+      likes: 0,
+      category: "Leadership",
+      tags: ["LinkedIn", "General", "Leadership"],
+    },
+    {
+      id: 9,
+      title: "How Leaders Can Motivate Others by Creating Meaning",
+      issuer: "LinkedIn Learning",
+      date: "2023-10-01",
+      description: "Learned how to motivate others as a Leader, ensuring the team quality is consistent mentally and in  their work.",
+      image: "/motivateothers.png",
+      likes: 0,
+      category: "Leadership",
+      tags: ["LinkedIn", "General", "Leadership"],
     },
   ]
 
@@ -370,14 +403,14 @@ export default function HallOfFame() {
           </Card>
         </div>
 
-        <Button
-          as="a"
-          href="https://github.com/TeckTinkerere/myportfolio"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="bg-gradient-to-r from-cyan-500 to-purple-500 text-white px-4 py-2 rounded"
-        >
-          View Source on GitHub
+        <Button asChild className="bg-gradient-to-r from-cyan-500 to-purple-500 text-white px-4 py-2 rounded">
+          <a
+            href="https://github.com/TeckTinkerere/myportfolio"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View Source on GitHub
+          </a>
         </Button>
       </div>
 
