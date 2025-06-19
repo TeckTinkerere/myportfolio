@@ -2,12 +2,11 @@
 
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Heart, Calendar, Award } from "lucide-react"
+import { Calendar, Award } from "lucide-react"
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 
 export default function HallOfFame() {
-  const [likedCertificates, setLikedCertificates] = useState<number[]>([])
   const [modalImage, setModalImage] = useState<string | null>(null)
   const [modalAlt, setModalAlt] = useState<string>("")
 
@@ -16,7 +15,7 @@ export default function HallOfFame() {
       id: 1,
       title: "YAC Season 6",
       issuer: "National Youth Council",
-      date: "2024-03-15",
+      date: "2025-03-15",
       description: "1st Place - Youth Action Challenge Season 6. Recognized for impactful tech-driven solutions for youth and community.",
       image: "/YACS.png",
       likes: 60,
@@ -64,7 +63,7 @@ export default function HallOfFame() {
       id: 5,
       title: "Leadership Foundations: Leadership Styles and Models",
       issuer: "LinkedIn Learning",
-      date: "2025-05-01",
+      date: "2025-05-03",
       description: "Completed training on leadership styles and models.",
       image: "/leadership1.png",
       likes: 33,
@@ -86,7 +85,7 @@ export default function HallOfFame() {
       id: 7,
       title: "AI FOR GOOD (YOUTH) TRAIN-THE-TRAINER PROGRAMME",
       issuer: "AI Singapore",
-      date: "2025-4-15",
+      date: "2025-4-18",
       description: "Completed the AI for Good (Youth) Train-the-Trainer Programme, focusing on AI education and facilitation for youth.",
       image: "/AIBootcamp.png",
       likes: 0,
@@ -97,7 +96,7 @@ export default function HallOfFame() {
       id: 8,
       title: "Developing Credibility as a Leader",
       issuer: "LinkedIn Learning",
-      date: "2023-10-01",
+      date: "2025-06-01",
       description: "Completed the course on developing credibility as a leader. Helped me imrpove my leadership skills and understand some previously obsure reasons.",
       image: "/developleader.png",
       likes: 0,
@@ -108,7 +107,7 @@ export default function HallOfFame() {
       id: 9,
       title: "How Leaders Can Motivate Others by Creating Meaning",
       issuer: "LinkedIn Learning",
-      date: "2023-10-01",
+      date: "2025-05-26",
       description: "Learned how to motivate others as a Leader, ensuring the team quality is consistent mentally and in  their work.",
       image: "/motivateothers.png",
       likes: 0,
@@ -116,12 +115,6 @@ export default function HallOfFame() {
       tags: ["LinkedIn", "General", "Leadership"],
     },
   ]
-
-  const toggleLike = (certificateId: number) => {
-    setLikedCertificates((prev) =>
-      prev.includes(certificateId) ? prev.filter((id) => id !== certificateId) : [...prev, certificateId],
-    )
-  }
 
   useEffect(() => {
     if (!modalImage) return;
@@ -150,7 +143,7 @@ export default function HallOfFame() {
       : allCertificates.filter(cert => (cert.tags || ["General"]).includes(activeTag))
 
   return (
-    <div className="min-h-screen pt-20 pb-16">
+    <div className="min-h-screen pt-16 pb-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">
@@ -188,7 +181,7 @@ export default function HallOfFame() {
                     <img
                       src={topCertificates[1].image || "/placeholder.svg"}
                       alt={topCertificates[1].title}
-                      className="w-full max-h-52 object-contain rounded-lg mb-4 cursor-pointer bg-slate-900"
+                      className="w-full max-h-52 object-contain rounded-lg mb-4 cursor-pointer bg-slate-900 transition-transform duration-300 hover:scale-105"
                       style={{ aspectRatio: '4/3', background: '#0f172a' }}
                       onClick={() => { setModalImage(topCertificates[1].image); setModalAlt(topCertificates[1].title); }}
                     />
@@ -200,17 +193,6 @@ export default function HallOfFame() {
                         <Calendar className="h-3 w-3" />
                         {new Date(topCertificates[1].date).toLocaleDateString()}
                       </span>
-                      <button
-                        onClick={() => toggleLike(topCertificates[1].id)}
-                        className="flex items-center gap-1 text-pink-400 hover:text-pink-300 transition-colors"
-                      >
-                        <Heart
-                          className={`h-4 w-4 ${likedCertificates.includes(topCertificates[1].id) ? "fill-current" : ""}`}
-                        />
-                        <span className="text-xs">
-                          {topCertificates[1].likes + (likedCertificates.includes(topCertificates[1].id) ? 1 : 0)}
-                        </span>
-                      </button>
                     </div>
                   </CardContent>
                 </Card>
@@ -231,7 +213,7 @@ export default function HallOfFame() {
                     <img
                       src={topCertificates[0].image || "/placeholder.svg"}
                       alt={topCertificates[0].title}
-                      className="w-full max-h-52 object-contain rounded-lg mb-4 cursor-pointer bg-slate-900"
+                      className="w-full max-h-52 object-contain rounded-lg mb-4 cursor-pointer bg-slate-900 transition-transform duration-300 hover:scale-105"
                       style={{ aspectRatio: '4/3', background: '#0f172a' }}
                       onClick={() => { setModalImage(topCertificates[0].image); setModalAlt(topCertificates[0].title); }}
                     />
@@ -243,17 +225,6 @@ export default function HallOfFame() {
                         <Calendar className="h-3 w-3" />
                         {new Date(topCertificates[0].date).toLocaleDateString()}
                       </span>
-                      <button
-                        onClick={() => toggleLike(topCertificates[0].id)}
-                        className="flex items-center gap-1 text-pink-400 hover:text-pink-300 transition-colors"
-                      >
-                        <Heart
-                          className={`h-4 w-4 ${likedCertificates.includes(topCertificates[0].id) ? "fill-current" : ""}`}
-                        />
-                        <span className="text-xs">
-                          {topCertificates[0].likes + (likedCertificates.includes(topCertificates[0].id) ? 1 : 0)}
-                        </span>
-                      </button>
                     </div>
                   </CardContent>
                 </Card>
@@ -274,7 +245,7 @@ export default function HallOfFame() {
                     <img
                       src={topCertificates[2].image || "/placeholder.svg"}
                       alt={topCertificates[2].title}
-                      className="w-full max-h-52 object-contain rounded-lg mb-4 cursor-pointer bg-slate-900"
+                      className="w-full max-h-52 object-contain rounded-lg mb-4 cursor-pointer bg-slate-900 transition-transform duration-300 hover:scale-105"
                       style={{ aspectRatio: '4/3', background: '#0f172a' }}
                       onClick={() => { setModalImage(topCertificates[2].image); setModalAlt(topCertificates[2].title); }}
                     />
@@ -286,17 +257,6 @@ export default function HallOfFame() {
                         <Calendar className="h-3 w-3" />
                         {new Date(topCertificates[2].date).toLocaleDateString()}
                       </span>
-                      <button
-                        onClick={() => toggleLike(topCertificates[2].id)}
-                        className="flex items-center gap-1 text-pink-400 hover:text-pink-300 transition-colors"
-                      >
-                        <Heart
-                          className={`h-4 w-4 ${likedCertificates.includes(topCertificates[2].id) ? "fill-current" : ""}`}
-                        />
-                        <span className="text-xs">
-                          {topCertificates[2].likes + (likedCertificates.includes(topCertificates[2].id) ? 1 : 0)}
-                        </span>
-                      </button>
                     </div>
                   </CardContent>
                 </Card>
@@ -336,7 +296,6 @@ export default function HallOfFame() {
                     style={{ aspectRatio: '4/3', background: '#0f172a' }}
                     onClick={() => { setModalImage(certificate.image); setModalAlt(certificate.title); }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent" />
                   <div className="absolute top-4 right-4">
                     <Badge variant="outline" className="border-cyan-500/50 text-cyan-400 text-xs">
                       {certificate.category}
@@ -356,17 +315,6 @@ export default function HallOfFame() {
                       <Calendar className="h-3 w-3" />
                       {new Date(certificate.date).toLocaleDateString()}
                     </span>
-                    <button
-                      onClick={() => toggleLike(certificate.id)}
-                      className="flex items-center gap-1 text-pink-400 hover:text-pink-300 transition-colors"
-                    >
-                      <Heart
-                        className={`h-4 w-4 ${likedCertificates.includes(certificate.id) ? "fill-current" : ""}`}
-                      />
-                      <span className="text-xs">
-                        {certificate.likes + (likedCertificates.includes(certificate.id) ? 1 : 0)}
-                      </span>
-                    </button>
                   </div>
                 </CardContent>
               </Card>
@@ -375,28 +323,22 @@ export default function HallOfFame() {
         </div>
 
         {/* Statistics */}
-        <div className="mt-16">
-          <Card className="bg-gradient-to-r from-slate-800/50 to-purple-900/50 border-cyan-500/20 backdrop-blur-sm">
+        <div className="mt-16 flex justify-center">
+          <Card className="bg-gradient-to-r from-slate-800/50 to-purple-900/50 border-cyan-500/20 backdrop-blur-sm max-w-3xl w-full">
             <CardContent className="p-8">
               <h2 className="text-2xl font-bold text-white text-center mb-6">Achievement Statistics</h2>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                 <div>
                   <div className="text-3xl font-bold text-cyan-400 mb-2">{allCertificates.length}</div>
                   <div className="text-gray-300">Total Certificates</div>
                 </div>
                 <div>
-                  <div className="text-3xl font-bold text-purple-400 mb-2">6</div>
+                  <div className="text-3xl font-bold text-purple-400 mb-2">7</div>
                   <div className="text-gray-300">Categories</div>
                 </div>
                 <div>
-                  <div className="text-3xl font-bold text-green-400 mb-2">2024</div>
+                  <div className="text-3xl font-bold text-green-400 mb-2">2025</div>
                   <div className="text-gray-300">Most Active Year</div>
-                </div>
-                <div>
-                  <div className="text-3xl font-bold text-orange-400 mb-2">
-                    {allCertificates.reduce((sum, cert) => sum + cert.likes, 0)}
-                  </div>
-                  <div className="text-gray-300">Total Likes</div>
                 </div>
               </div>
             </CardContent>
@@ -416,24 +358,24 @@ export default function HallOfFame() {
 
       {modalImage && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4"
           onClick={() => setModalImage(null)}
           tabIndex={-1}
           aria-modal="true"
           role="dialog"
         >
-          <div className="relative max-w-3xl w-full p-4" onClick={e => e.stopPropagation()}>
+          <div className="relative max-w-5xl w-full" onClick={e => e.stopPropagation()}>
             <button
-              className="absolute top-2 right-2 text-white bg-black/60 rounded-full p-2 hover:bg-black/80 z-10"
+              className="absolute -top-10 right-0 text-white hover:text-cyan-400 text-2xl transition-colors"
               onClick={() => setModalImage(null)}
               aria-label="Close large certificate view"
             >
-              ×
+              ✕
             </button>
             <img
               src={modalImage}
               alt={modalAlt}
-              className="w-full h-auto max-h-[80vh] object-contain rounded-lg shadow-2xl bg-slate-900"
+              className="w-full h-auto max-h-[85vh] object-contain rounded-lg bg-slate-900/80"
               style={{ background: '#0f172a' }}
             />
           </div>

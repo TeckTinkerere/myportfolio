@@ -27,7 +27,7 @@ export default function Navbar({ onNewsletterClick }: NavbarProps) {
 
   const navItems = [
     { name: "Home", path: "/" },
-    { name: "About Me", path: "/about" },
+    // { name: "About Me", path: "/about" },
     { name: "Skills", path: "/skills" },
     { name: "Projects", path: "/projects" },
     { name: "Hall of Fame", path: "/hall-of-fame" },
@@ -54,18 +54,18 @@ export default function Navbar({ onNewsletterClick }: NavbarProps) {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-8 ml-auto">
             {navItems.map((item) => (
               <Link
                 key={item.name}
                 href={item.path}
-                className={`relative px-3 py-2 text-sm font-medium transition-colors duration-200 ${
+                className={`relative px-4 py-2 text-base font-medium transition-colors duration-200 ${
                   pathname === item.path ? "text-cyan-400" : "text-gray-300 hover:text-cyan-400"
                 }`}
               >
                 {item.name}
                 {pathname === item.path && (
-                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-cyan-400 to-purple-500 rounded-full" />
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-400 to-purple-500 rounded-full" />
                 )}
               </Link>
             ))}
@@ -93,24 +93,24 @@ export default function Navbar({ onNewsletterClick }: NavbarProps) {
             {/* Mobile Menu Button */}
             <Button
               variant="ghost"
-              size="sm"
-              className="md:hidden text-cyan-400 hover:text-cyan-300"
+              size="icon"
+              className="md:hidden text-cyan-400 hover:text-cyan-300 hover:bg-cyan-400/10 w-12 h-12 p-2"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
-              {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              {isMobileMenuOpen ? <X className="h-7 w-7" /> : <Menu className="h-7 w-7" />}
             </Button>
           </div>
         </div>
 
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
-          <div className="md:hidden bg-slate-900/95 dark:bg-slate-950/95 backdrop-blur-md border-t border-cyan-500/20">
-            <div className="px-2 pt-2 pb-3 space-y-1">
+          <div className="md:hidden fixed inset-x-0 top-16 bg-slate-900/95 dark:bg-slate-950/95 backdrop-blur-md border-t border-cyan-500/20">
+            <div className="px-4 py-2 max-h-[calc(100vh-4rem)] overflow-y-auto">
               {navItems.map((item) => (
                 <Link
                   key={item.name}
                   href={item.path}
-                  className={`block px-3 py-2 text-base font-medium transition-colors duration-200 ${
+                  className={`block px-4 py-3 text-base font-medium transition-colors duration-200 rounded-lg ${
                     pathname === item.path
                       ? "text-cyan-400 bg-cyan-400/10"
                       : "text-gray-300 hover:text-cyan-400 hover:bg-cyan-400/5"
@@ -126,7 +126,7 @@ export default function Navbar({ onNewsletterClick }: NavbarProps) {
                   onNewsletterClick()
                   setIsMobileMenuOpen(false)
                 }}
-                className="w-full justify-start text-cyan-400 hover:text-cyan-300 hover:bg-cyan-400/10"
+                className="w-full justify-start px-4 py-3 mt-2 text-base font-medium text-cyan-400 hover:text-cyan-300 hover:bg-cyan-400/10 rounded-lg"
               >
                 Newsletter
               </Button>
