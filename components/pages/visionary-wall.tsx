@@ -13,7 +13,23 @@ export default function VisionaryWall() {
   const [passwordError, setPasswordError] = useState("")
   const [isPasswordAccepted, setIsPasswordAccepted] = useState(false)
   const [captchaAnswer, setCaptchaAnswer] = useState("")
-  const [captchaQuestion, setCaptchaQuestion] = useState({ question: "15 + 7", answer: "22" })
+  // Math-only captcha questions for variety
+  const captchaQuestions = [
+    { question: "15 + 7", answer: "22" },
+    { question: "9 - 3", answer: "6" },
+    { question: "5 x 3", answer: "15" },
+    { question: "12 + 8", answer: "20" },
+    { question: "18 - 4", answer: "14" },
+    { question: "7 + 6", answer: "13" },
+    { question: "18 + 7", answer: "25" },
+    { question: "3 x 7", answer: "21" },
+    { question: "14 - 9", answer: "5" },
+    { question: "8 + 11", answer: "19" },
+  ];
+  // Pick a random question on mount or as needed
+  const [captchaQuestion, setCaptchaQuestion] = useState(
+    captchaQuestions[Math.floor(Math.random() * captchaQuestions.length)]
+  );
   const [activeFilter, setActiveFilter] = useState("all")
   const [showDetails, setShowDetails] = useState<number[]>([])
 
@@ -48,7 +64,7 @@ export default function VisionaryWall() {
       id: 3,
       title: "LocalCraft",
       miniPitch: "Marketplace for local artisans and handmade products",
-      stage: "seed",
+      stage: "Ideation",
       tags: ["E-commerce", "Local Business", "Artisans"],
       category: "marketplace",
       detailedDescription:
@@ -61,7 +77,7 @@ export default function VisionaryWall() {
       id: 4,
       title: "MindfulAI",
       miniPitch: "AI-powered mental health companion for personalized wellness",
-      stage: "paused",
+      stage: "ideation",
       tags: ["AI", "Mental Health", "Wellness"],
       category: "health",
       detailedDescription:
@@ -87,7 +103,7 @@ export default function VisionaryWall() {
       id: 6,
       title: "FoodRescue",
       miniPitch: "Connecting restaurants with food banks to reduce waste",
-      stage: "success",
+      stage: "ideation",
       tags: ["Social Impact", "Food Waste", "Logistics"],
       category: "social",
       detailedDescription:
@@ -113,7 +129,7 @@ export default function VisionaryWall() {
       id: 1002,
       title: "StartupLink – Verified Student Startup Platform",
       miniPitch: "A collaboration hub for polytechnic student founders to discover, verify, and connect with other legit startups.",
-      stage: "concept",
+      stage: "seed",
       tags: ["Polytechnic founders", "startup verification", "MVP showcase", "team forming"],
       category: "startup",
       detailedDescription: "A collaboration hub where polytechnic student founders can discover, verify, and connect with other legit startups. Helps avoid time-wasting or scammy connections.",
@@ -125,7 +141,7 @@ export default function VisionaryWall() {
       id: 1003,
       title: "SubGuard – Smart Mobile Subscription Manager",
       miniPitch: "A privacy-first mobile app to detect, manage, and cancel hidden subscriptions.",
-      stage: "paused",
+      stage: "ideation",
       tags: ["Subscription tracker", "financial health", "cancellation assistant", "data privacy"],
       category: "productivity",
       detailedDescription: "A privacy-first mobile app to detect, manage, and cancel hidden subscriptions. Targets subscription fatigue and dark UX traps.",
@@ -137,7 +153,7 @@ export default function VisionaryWall() {
       id: 1004,
       title: "GURU AI – AI-Powered Scriptwriter & Video Generator",
       miniPitch: "A tool designed to turn written prompts into ready-to-publish video content.",
-      stage: "paused",
+      stage: "success",
       tags: ["Video automation", "AI scriptwriting", "CapCut integration", "content speed"],
       category: "ai",
       detailedDescription: "A tool designed to turn written prompts into ready-to-publish video content. Targets content creators, marketers, and students with fast, AI-driven production.",
@@ -149,7 +165,7 @@ export default function VisionaryWall() {
       id: 1005,
       title: "SilverConnect – A Senior-Friendly Digital Companion",
       miniPitch: "A senior-friendly digital assistant platform for essential services, digital skills, and safe communication.",
-      stage: "paused",
+      stage: "ideation",
       tags: ["Senior-friendly technology", "digital literacy", "online safety", "scam alerts", "telehealth", "online banking", "communication tools", "guided tutorials"],
       category: "health",
       detailedDescription: "A senior-friendly digital assistant platform that helps elderly users access essential services like banking and telehealth, improve digital skills with guided tutorials, stay safe online with scam alerts and simple security, and stay connected with family through built-in communication tools.",
@@ -161,7 +177,7 @@ export default function VisionaryWall() {
       id: 1006,
       title: "StepFresh – Refresh Your Step, Sustainably",
       miniPitch: "A modular footwear system for easy sole replacement and sustainable urban living.",
-      stage: "paused",
+      stage: "ideation",
       tags: ["Modular footwear", "sole replacement", "sustainable design", "urban mobility", "eco-conscious lifestyle", "user-friendly system", "reusable soles", "minimal waste"],
       category: "productivity",
       detailedDescription: "A modular footwear system that empowers users to extend the life of their shoes by easily swapping worn-out soles at home or in shared spaces. Designed for eco-conscious urban professionals, StepFresh combines sleek design, sustainable materials, and a smart attachment system for ultimate convenience. Whether you're switching from your office commute to the gym or just refreshing worn treads, StepFresh keeps your shoes—and your values—aligned.",
@@ -173,13 +189,25 @@ export default function VisionaryWall() {
       id: 1007,
       title: "SnapSweep – Declutter Photos by Face Detection",
       miniPitch: "A lightweight mobile utility to clean up faceless, random, or low-value images using on-device AI.",
-      stage: "paused",
+      stage: "ideation",
       tags: ["Face detection", "photo cleaner", "privacy-first", "gallery declutter", "mobile utility"],
       category: "ai",
       detailedDescription: "A lightweight mobile utility that helps users clean up faceless, random, or low-value images from their photo gallery using on-device AI. With SnapSweep, you reclaim space, keep only what matters, and enjoy an organized camera roll — all without giving up privacy.",
       targetMarket: "Mobile users, privacy-conscious consumers",
       businessModel: "Freemium, in-app purchases",
       techStack: ["React Native", "TensorFlow Lite", "Mobile AI"],
+    },
+    {
+      id: 1008,
+      title: "ArtistryHub – Collaborative Platform for Artists",
+      miniPitch: "A platform for artists to collaborate on digital and physical projects, share resources, and build creative teams.",
+      stage: "ideation",
+      tags: ["Art", "Collaboration", "Creatives", "Projects", "Community"],
+      category: "marketplace",
+      detailedDescription: "ArtistryHub connects artists from various disciplines, enabling them to find collaborators, manage joint projects, and showcase their work. Features include project boards, resource sharing, and a portfolio gallery for both digital and physical art.",
+      targetMarket: "Artists, designers, creative teams, art students.",
+      businessModel: "Freemium, commission on project listings, premium collaboration tools.",
+      techStack: ["React", "Node.js", "MongoDB", "Cloud Storage"],
     },
   ]
 
@@ -228,7 +256,7 @@ export default function VisionaryWall() {
               </div>
               <h2 className="text-2xl font-bold text-white mb-4">Visionary Wall Password</h2>
               <p className="text-gray-300 mb-6">
-                This section is protected. Please enter the password provided by Mohamed Aslam to continue.
+                This section is protected due to the presence of innovative startup ideas. Please enter the password provided by Mohamed Aslam to continue.
               </p>
               <Input
                 type="password"
@@ -275,8 +303,7 @@ export default function VisionaryWall() {
               </div>
               <h2 className="text-2xl font-bold text-white mb-4">Visionary Wall Access</h2>
               <p className="text-gray-300 mb-6">
-                This section contains my innovative startup ideas and concepts. Please solve the captcha to unlock
-                access and prevent AI intrusion.
+               Please solve the captcha to unlock access and prevent AI intrusion.
               </p>
 
               <div className="bg-slate-700/50 rounded-lg p-4 mb-6">
@@ -323,7 +350,8 @@ export default function VisionaryWall() {
           </div>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
             Welcome to my innovation laboratory! Here you'll find startup ideas and concepts that I'm passionate about
-            building. Each idea represents a potential solution to real-world problems.
+            building or just fixing a problem I encounter in my daily life. Each idea represents a potential solution 
+            to real-world problems.
           </p>
         </div>
 
@@ -432,7 +460,7 @@ export default function VisionaryWall() {
                         <p className="text-gray-300 text-xs">{idea.businessModel}</p>
                       </div>
                       <div>
-                        <h4 className="text-sm font-semibold text-cyan-400 mb-1">Tech Stack:</h4>
+                        <h4 className="text-sm font-semibold text-cyan-400 mb-1">Just the Recommended Tech Stack:</h4>
                         <div className="flex flex-wrap gap-1">
                           {idea.techStack.map((tech, index) => (
                             <Badge key={index} variant="outline" className="border-green-500/50 text-green-400 text-xs">
@@ -486,6 +514,22 @@ export default function VisionaryWall() {
                   <div className="text-gray-300">Paused</div>
                 </div>
               </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Stage Descriptions */}
+        <div className="max-w-3xl mx-auto mt-8">
+          <Card className="bg-slate-800/70 border-cyan-500/20">
+            <CardContent className="p-6">
+              <h3 className="text-lg font-semibold text-cyan-400 mb-4 text-center">What do the stages mean?</h3>
+              <ul className="text-gray-300 text-sm space-y-2">
+                <li><span className="font-bold text-blue-400">Ideation:</span> Early idea stage, not yet started or just brainstorming.</li>
+                <li><span className="font-bold text-purple-400">Concept:</span> Actively working on the idea, researching, or prototyping.</li>
+                <li><span className="font-bold text-yellow-400">Seed:</span> MVP or initial version built, some real-world validation or traction.</li>
+                <li><span className="font-bold text-green-400">Success:</span> Completed, launched, or achieved significant milestones.</li>
+                <li><span className="font-bold text-gray-400">Paused:</span> Temporarily on hold, not actively working on it.</li>
+              </ul>
             </CardContent>
           </Card>
         </div>
