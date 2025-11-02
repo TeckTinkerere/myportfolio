@@ -3,9 +3,8 @@ import './globals.css'
 import { ThemeProvider } from "@/components/theme-provider"
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
-  generator: 'v0.dev',
+  title: 'Mohamed Aslam - Portfolio',
+  description: 'The portfolio website of Mohamed Aslam, a passionate full-stack developer and tech enthusiast.',
 }
 
 export default function RootLayout({
@@ -14,8 +13,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body>
+    <html lang="en" suppressHydrationWarning>
+      <body suppressHydrationWarning>
         <ThemeProvider defaultTheme="dark" storageKey="portfolio-theme">
           {children}
         </ThemeProvider>

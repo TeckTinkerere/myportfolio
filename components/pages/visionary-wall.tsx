@@ -35,85 +35,6 @@ export default function VisionaryWall() {
 
   const startupIdeas = [
     {
-      id: 1,
-      title: "EcoTrack",
-      miniPitch: "AI-powered carbon footprint tracking for individuals and businesses",
-      stage: "ideation",
-      tags: ["AI", "Sustainability", "Mobile App"],
-      category: "environmental",
-      detailedDescription:
-        "A comprehensive platform that uses AI to track and analyze carbon footprints, providing personalized recommendations for reducing environmental impact. Features include real-time tracking, gamification, and corporate sustainability reporting.",
-      targetMarket: "Environmentally conscious consumers and businesses",
-      businessModel: "Freemium with premium analytics and corporate plans",
-      techStack: ["React Native", "TensorFlow", "Node.js", "MongoDB"],
-    },
-    {
-      id: 2,
-      title: "SkillBridge",
-      miniPitch: "Connecting students with industry mentors for real-world skill development",
-      stage: "concept",
-      tags: ["Education", "Networking", "Career Development"],
-      category: "education",
-      detailedDescription:
-        "A platform that bridges the gap between academic learning and industry requirements by connecting students with experienced professionals for mentorship, project collaboration, and skill development.",
-      targetMarket: "University students and recent graduates",
-      businessModel: "Subscription-based with commission on successful placements",
-      techStack: ["Next.js", "PostgreSQL", "WebRTC", "Stripe"],
-    },
-    {
-      id: 3,
-      title: "LocalCraft",
-      miniPitch: "Marketplace for local artisans and handmade products",
-      stage: "Ideation",
-      tags: ["E-commerce", "Local Business", "Artisans"],
-      category: "marketplace",
-      detailedDescription:
-        "An e-commerce platform specifically designed for local artisans to showcase and sell their handmade products, with features for custom orders, local delivery, and community building.",
-      targetMarket: "Local artisans and craft enthusiasts",
-      businessModel: "Commission-based with premium seller tools",
-      techStack: ["React.js", "Stripe", "Firebase", "Google Maps API"],
-    },
-    {
-      id: 4,
-      title: "MindfulAI",
-      miniPitch: "AI-powered mental health companion for personalized wellness",
-      stage: "ideation",
-      tags: ["AI", "Mental Health", "Wellness"],
-      category: "health",
-      detailedDescription:
-        "An AI companion that provides personalized mental health support through mood tracking, meditation guidance, and crisis intervention. Includes integration with healthcare providers.",
-      targetMarket: "Individuals seeking mental health support",
-      businessModel: "Subscription with healthcare partnerships",
-      techStack: ["Python", "TensorFlow", "React Native", "HIPAA-compliant infrastructure"],
-    },
-    {
-      id: 5,
-      title: "CodeCollab",
-      miniPitch: "Real-time collaborative coding platform for remote teams",
-      stage: "ideation",
-      tags: ["Developer Tools", "Collaboration", "Remote Work"],
-      category: "productivity",
-      detailedDescription:
-        "A comprehensive platform for remote development teams featuring real-time code collaboration, integrated video calls, project management, and code review tools.",
-      targetMarket: "Remote development teams and coding bootcamps",
-      businessModel: "Tiered subscription based on team size",
-      techStack: ["WebRTC", "Socket.io", "Monaco Editor", "Docker"],
-    },
-    {
-      id: 6,
-      title: "FoodRescue",
-      miniPitch: "Connecting restaurants with food banks to reduce waste",
-      stage: "ideation",
-      tags: ["Social Impact", "Food Waste", "Logistics"],
-      category: "social",
-      detailedDescription:
-        "A logistics platform that efficiently connects restaurants and grocery stores with food banks and charities to redistribute surplus food, reducing waste and fighting hunger.",
-      targetMarket: "Restaurants, grocery stores, and food banks",
-      businessModel: "B2B SaaS with impact measurement tools",
-      techStack: ["React.js", "Node.js", "Google Maps API", "Twilio"],
-    },
-    // --- Brain History Ideas ---
-    {
       id: 1001,
       title: "Local Loco – Real-Time Deals from Local Shops",
       miniPitch: "A hyperlocal promotion platform that boosts visibility for small businesses using real-time, social-media-style deal posts.",
@@ -141,7 +62,7 @@ export default function VisionaryWall() {
       id: 1003,
       title: "SubGuard – Smart Mobile Subscription Manager",
       miniPitch: "A privacy-first mobile app to detect, manage, and cancel hidden subscriptions.",
-      stage: "ideation",
+      stage: "paused",
       tags: ["Subscription tracker", "financial health", "cancellation assistant", "data privacy"],
       category: "productivity",
       detailedDescription: "A privacy-first mobile app to detect, manage, and cancel hidden subscriptions. Targets subscription fatigue and dark UX traps.",
@@ -153,7 +74,7 @@ export default function VisionaryWall() {
       id: 1004,
       title: "GURU AI – AI-Powered Scriptwriter & Video Generator",
       miniPitch: "A tool designed to turn written prompts into ready-to-publish video content.",
-      stage: "success",
+      stage: "paused",
       tags: ["Video automation", "AI scriptwriting", "CapCut integration", "content speed"],
       category: "ai",
       detailedDescription: "A tool designed to turn written prompts into ready-to-publish video content. Targets content creators, marketers, and students with fast, AI-driven production.",
@@ -165,7 +86,7 @@ export default function VisionaryWall() {
       id: 1005,
       title: "SilverConnect – A Senior-Friendly Digital Companion",
       miniPitch: "A senior-friendly digital assistant platform for essential services, digital skills, and safe communication.",
-      stage: "ideation",
+      stage: "paused",
       tags: ["Senior-friendly technology", "digital literacy", "online safety", "scam alerts", "telehealth", "online banking", "communication tools", "guided tutorials"],
       category: "health",
       detailedDescription: "A senior-friendly digital assistant platform that helps elderly users access essential services like banking and telehealth, improve digital skills with guided tutorials, stay safe online with scam alerts and simple security, and stay connected with family through built-in communication tools.",
@@ -177,7 +98,7 @@ export default function VisionaryWall() {
       id: 1006,
       title: "StepFresh – Refresh Your Step, Sustainably",
       miniPitch: "A modular footwear system for easy sole replacement and sustainable urban living.",
-      stage: "ideation",
+      stage: "paused",
       tags: ["Modular footwear", "sole replacement", "sustainable design", "urban mobility", "eco-conscious lifestyle", "user-friendly system", "reusable soles", "minimal waste"],
       category: "productivity",
       detailedDescription: "A modular footwear system that empowers users to extend the life of their shoes by easily swapping worn-out soles at home or in shared spaces. Designed for eco-conscious urban professionals, StepFresh combines sleek design, sustainable materials, and a smart attachment system for ultimate convenience. Whether you're switching from your office commute to the gym or just refreshing worn treads, StepFresh keeps your shoes—and your values—aligned.",
@@ -189,7 +110,7 @@ export default function VisionaryWall() {
       id: 1007,
       title: "SnapSweep – Declutter Photos by Face Detection",
       miniPitch: "A lightweight mobile utility to clean up faceless, random, or low-value images using on-device AI.",
-      stage: "ideation",
+      stage: "paused",
       tags: ["Face detection", "photo cleaner", "privacy-first", "gallery declutter", "mobile utility"],
       category: "ai",
       detailedDescription: "A lightweight mobile utility that helps users clean up faceless, random, or low-value images from their photo gallery using on-device AI. With SnapSweep, you reclaim space, keep only what matters, and enjoy an organized camera roll — all without giving up privacy.",
@@ -199,26 +120,77 @@ export default function VisionaryWall() {
     },
     {
       id: 1008,
-      title: "ArtistryHub – Collaborative Platform for Artists",
-      miniPitch: "A platform for artists to collaborate on digital and physical projects, share resources, and build creative teams.",
-      stage: "ideation",
-      tags: ["Art", "Collaboration", "Creatives", "Projects", "Community"],
-      category: "marketplace",
-      detailedDescription: "ArtistryHub connects artists from various disciplines, enabling them to find collaborators, manage joint projects, and showcase their work. Features include project boards, resource sharing, and a portfolio gallery for both digital and physical art.",
-      targetMarket: "Artists, designers, creative teams, art students.",
-      businessModel: "Freemium, commission on project listings, premium collaboration tools.",
-      techStack: ["React", "Node.js", "MongoDB", "Cloud Storage"],
+      title: "HabitLoop – Social Habit Challenges with Creator Communities",
+      miniPitch: "A community-first habit tracker that lets users join 30-day challenges led by creators, coaches, and micro-influencers.",
+      stage: "paused",
+      tags: ["habit tracker", "challenge app", "creator-led", "accountability", "social wellness", "minimal UX"],
+      category: "social",
+      detailedDescription: "A community-first habit tracker that lets users join 30-day challenges led by creators, coaches, and micro-influencers. HabitLoop transforms individual habit-building into a social, gamified experience — helping users stay consistent, accountable, and motivated by participating in creator-hosted micro-challenges. All without fluff, ads, or corporate wellness jargon.",
+      targetMarket: "Users of habit-tracking apps, followers of creators/coaches",
+      businessModel: "Freemium, creator partnerships, in-app purchases for challenges",
+      techStack: ["React Native", "Firebase", "Stripe"],
+    },
+    {
+      id: 1009,
+      title: "DevOmegle – Random Developer Pairing Platform",
+      miniPitch: "A real-time chat and collaboration platform that instantly pairs developers worldwide for code reviews, pair programming, and spontaneous idea-sharing.",
+      stage: "paused",
+      tags: ["developer chat", "pair programming", "random match", "coding collaboration", "real-time mentoring", "lightweight UX"],
+      category: "productivity",
+      detailedDescription: "A real-time chat and collaboration platform that instantly pairs developers worldwide for code reviews, pair programming, and spontaneous idea-sharing. DevOmegle turns serendipitous encounters into productive sessions by matching developers with shared skills or interests. With lightweight profiles, syntax-highlighted chat, and optional live code sharing, it enables fast, meaningful connections — no scheduling, no networking fluff, just instant developer-to-developer collaboration.",
+      targetMarket: "Developers, coders, tech enthusiasts",
+      businessModel: "Freemium, premium features for teams, sponsored pairings",
+      techStack: ["WebRTC", "Socket.io", "Next.js", "Firebase"],
+    },
+    {
+      id: 1010,
+      title: "Ascendants – A Roblox Xianxia MMORPG with Cultivation & Sect Politics",
+      miniPitch: "A Xianxia-inspired MMORPG on Roblox where players pursue immortality through cultivation, rebirth, and sect hierarchies.",
+      stage: "paused",
+      tags: ["Roblox MMO", "cultivation RPG", "Xianxia-inspired", "sect politics", "rebirth system", "talent RNG", "community-driven"],
+      category: "gaming",
+      detailedDescription: "Ascendants is a Xianxia-inspired MMORPG built on Roblox where players pursue immortality through cultivation, rebirth, and sect hierarchies. With randomized talents, spiritual roots, and profession-based progression, each journey is unique. Players rise through realms, shape their sect’s destiny, and engage in arena duels or profession competitions that balance grind, strategy, and social drama. Dynamic sect politics, RNG-driven destinies, and rebirth loops create a living world where every choice — and every failure — matters.",
+      targetMarket: "Roblox players, MMORPG fans, Xianxia enthusiasts",
+      businessModel: "In-game purchases, cosmetics, premium features",
+      techStack: ["Roblox Studio", "Luau", "Firebase for external data"],
+    },
+    {
+      id: 1011,
+      title: "BeachSafe – Smart, Safety-First Beach Tracker System",
+      miniPitch: "A comprehensive safety ecosystem for public and private beaches that monitors swimmers in real time.",
+      stage: "paused",
+      tags: ["Beach safety", "wearable tracker", "heartbeat sensor", "geolocation", "lifeguard alert", "automated sanitization", "event scalability", "drowning prevention", "sustainable operations", "public beach monitoring"],
+      category: "health",
+      detailedDescription: "BeachSafe is a comprehensive safety ecosystem for public and private beaches that monitors swimmers in real time. Using wearable tracker bands equipped with geolocation, heartbeat sensors, motion detection, and water immersion sensors, BeachSafe provides immediate alerts to parents, guardians, or lifeguards. The system integrates automated sanitization pods, emergency e-bike response units, and event-scale scalability to ensure safety for children and vulnerable swimmers without relying on parental fees. Designed for continuous operation, public trust, and government oversight, BeachSafe is a practical and proactive approach to drowning prevention.",
+      targetMarket: "Beach operators, local governments, parents, event organizers",
+      businessModel: "B2B SaaS, government contracts, event-based pricing",
+      techStack: ["IoT", "React", "Node.js", "GPS", "LoRaWAN"],
+    },
+    {
+      id: 1012,
+      title: "ConnectSphere – Smart Event Networking & Media Collaboration Platform",
+      miniPitch: "A full-stack, production-grade event networking platform designed to make connecting at events effortless.",
+      stage: "seed",
+      tags: ["event networking", "LinkedIn login", "QR onboarding", "AI matchmaking", "real-time chat", "photo collaboration", "Media Hub", "event analytics", "Supabase", "Next.js", "professional community", "sponsor branding", "post-event insights", "attendee engagement", "event management software"],
+      category: "startup",
+      detailedDescription: "ConnectSphere is a full-stack, production-grade event networking platform designed to make connecting at events effortless. With a 30-second onboarding flow powered by LinkedIn login and dynamic QR codes, attendees can instantly join event chats, view profiles, and form meaningful professional connections. For organisers, ConnectSphere offers intuitive event creation, real-time engagement tracking, and AI-driven attendee matchmaking. The platform’s premium Media Hub lets participants and official photographers upload and share event photos live, with organiser controls for moderation, branding, and post-event highlight generation. ConnectSphere balances professional utility with user delight — blending LinkedIn’s credibility with the energy of a live event community. It’s designed for organisers seeking smarter engagement, attendees looking for authentic networking, and brands wanting measurable visibility.",
+      targetMarket: "Event organizers, attendees, brands, photographers",
+      businessModel: "SaaS, per-event pricing, premium features",
+      techStack: ["Next.js", "Supabase", "Tailwind CSS", "Vercel"],
     },
   ]
 
   const filters = [
     { key: "all", label: "All Ideas" },
+    { key: "startup", label: "Startup" },
     { key: "environmental", label: "Environmental" },
     { key: "education", label: "Education" },
     { key: "marketplace", label: "Marketplace" },
     { key: "health", label: "Health" },
     { key: "productivity", label: "Productivity" },
     { key: "social", label: "Social Impact" },
+    { key: "ai", label: "AI" },
+    { key: "gaming", label: "Gaming" },
   ]
 
   const stageColors = {
@@ -349,9 +321,7 @@ export default function VisionaryWall() {
             </h1>
           </div>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Welcome to my innovation laboratory! Here you'll find startup ideas and concepts that I'm passionate about
-            building or just fixing a problem I encounter in my daily life. Each idea represents a potential solution 
-            to real-world problems.
+            🧠 The Brain History - An archive of startup ideas, explorations, and conceptual designs — even the ones that never got built.
           </p>
         </div>
 

@@ -2,9 +2,7 @@
 
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Calendar as CalendarIcon, MapPin, Users, Award } from "lucide-react"
-import { useState } from "react"
-import { Calendar } from "@/components/ui/calendar"
+import { MapPin, Users, Award } from "lucide-react"
 
 export default function About() {
   const roles = [
@@ -199,63 +197,6 @@ export default function About() {
           </div>
         </div>
 
-        {/* Activity Calendar */}
-        <div className="mt-20">
-          <h2 className="text-3xl font-bold text-white text-center mb-12">Activity Calendar</h2>
-          <ActivityCalendar />
-        </div>
-      </div>
-    </div>
-  )
-}
-
-// ActivityCalendar component
-function ActivityCalendar() {
-  // Example activity data
-  const activities = [
-    { date: new Date(2024, 5, 10), title: "LocalLoco Sprint Planning", description: "Led a sprint planning session for the LocalLoco MVP." },
-    { date: new Date(2024, 5, 12), title: "StartupLink Demo", description: "Presented StartupLink to potential collaborators." },
-    { date: new Date(2024, 5, 15), title: "Hackathon", description: "Participated in NUS GURU AI Hackathon." },
-    { date: new Date(2024, 5, 18), title: "Video Project", description: "Completed a freelance video montage for a class event." },
-    { date: new Date(2024, 5, 22), title: "SPCyclists Event", description: "Coordinated logistics for a cycling event." },
-    { date: new Date(2024, 5, 25), title: "Freelance Academy Meetup", description: "Organized a networking session for Freelance Academy." },
-  ]
-
-  const [selected, setSelected] = useState<Date | undefined>(undefined)
-
-  // Find activities for the selected date
-  const selectedActivities = selected
-    ? activities.filter(a => a.date.toDateString() === selected.toDateString())
-    : []
-
-  return (
-    <div className="flex flex-col lg:flex-row gap-8 items-start justify-center">
-      <div className="bg-slate-800/50 border-cyan-500/20 rounded-lg p-6 shadow-lg">
-        <Calendar
-          mode="single"
-          selected={selected}
-          onSelect={date => setSelected(date)}
-          className="rounded-lg"
-        />
-      </div>
-      <div className="flex-1 min-w-[250px]">
-        <Card className="bg-slate-800/50 border-cyan-500/20 backdrop-blur-sm">
-          <CardContent className="p-6">
-            <h3 className="text-xl font-bold text-white mb-4">{selected ? selected.toLocaleDateString() : "Select a date"}</h3>
-            {selectedActivities.length > 0 ? (
-              <ul className="space-y-4">
-                {selectedActivities.map((activity, idx) => (
-                  <li key={idx}>
-                    <p className="text-cyan-400 font-semibold">{activity.title}</p>
-                    <p className="text-gray-300 text-sm">{activity.description}</p>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="text-gray-400">{selected ? "No activities for this day." : "Pick a date to see activities."}</p>
-            )}
-          </CardContent>
-        </Card>
       </div>
     </div>
   )
