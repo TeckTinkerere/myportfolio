@@ -321,7 +321,7 @@ export default function Projects() {
               </p>
               <Button
                 className="bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-600 hover:to-purple-600 text-white px-8 py-3 text-lg font-semibold rounded-full"
-                onClick={() => window.open("https://github.com/mohamedaslam", "_blank")}
+                onClick={() => window.open("https://github.com/TeckTinkerere", "_blank")}
               >
                 <Github className="h-5 w-5 mr-2" />
                 View GitHub Profile
