@@ -27,11 +27,11 @@ export default function Navbar({ onNewsletterClick }: NavbarProps) {
 
   const navItems = [
     { name: "Home", path: "/" },
-    // { name: "About Me", path: "/about" },
     { name: "Skills", path: "/skills" },
-    { name: "Projects", path: "/projects" },
-    { name: "Hall of Fame", path: "/hall-of-fame" },
-    { name: "Visionary Wall", path: "/visionary-wall" },
+    { name: "Featured Projects", path: "/projects" },
+    { name: "All Projects", path: "/all-projects" },
+    { name: "Certifications", path: "/hall-of-fame" },
+    { name: "Testimonials", path: "/visionary-wall" },
     { name: "Contact", path: "/contact" },
   ]
 

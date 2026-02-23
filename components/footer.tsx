@@ -59,8 +59,7 @@ export default function Footer({ onNewsletterClick }: FooterProps) {
               <span className="text-white font-semibold text-xl">Mohamed Aslam</span>
             </div>
             <p className="text-gray-300 text-sm leading-relaxed">
-              Full-Stack Developer & Visionary Leader passionate about creating innovative solutions and leading teams
-              towards technological excellence.
+              Full-Stack Developer with experience building web systems using modern JavaScript frameworks and cloud-backed architectures. Focus on component-driven development and production deployment.
             </p>
             <div className="flex space-x-4">
               {socialLinks.map((link) => (
