@@ -31,7 +31,7 @@ export default function Navbar({ onNewsletterClick }: NavbarProps) {
     { name: "Featured Projects", path: "/projects" },
     { name: "All Projects", path: "/all-projects" },
     { name: "Certifications", path: "/hall-of-fame" },
-    { name: "Testimonials", path: "/visionary-wall" },
+    /* { name: "Testimonials", path: "/visionary-wall" }, */
     { name: "Contact", path: "/contact" },
   ]
 
