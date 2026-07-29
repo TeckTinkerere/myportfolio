@@ -136,6 +136,43 @@ Motion is one orchestrated hero sequence plus once-only scroll reveals, and
 everything is gated behind `prefers-reduced-motion: no-preference` so a
 reduced-motion visitor gets the finished composition, not a degraded one.
 
+### Brand assets
+
+Every icon and logo is generated from one master by a single script:
+
+```bash
+node scripts/build-brand-assets.mjs
+```
+
+| Output | Size | Used by |
+| --- | --- | --- |
+| `app/icon.png` | 128 | Favicon (Next's icon convention) |
+| `app/apple-icon.png` | 180 | iOS home screen |
+| `public/images/brand/logo.png` | 512 | Header, footer, social card |
+| `public/images/brand/logo-email.png` | 128 | Transactional email |
+
+The master lives at `assets/brand/logo-master.png` — **outside `public/`**, so
+the 4.5 MB original is never deployed or served.
+
+Two things the script handles that matter:
+
+- It crops to the bounding box of *opaque* pixels rather than trimming on
+  colour, which removes the generator watermark and the soft drop shadow
+  (both low-alpha, both outside the mark) and centres the mark optically at
+  every size.
+- It quantises the palette. The mark is a photographic brushed-metal render,
+  so a full-colour PNG of it is large; this takes the favicon from 113 kB to
+  9.7 kB with no visible loss at the sizes actually rendered.
+
+The master **must have a real alpha channel**. The mark sits on both the
+near-black and the warm cream theme, so anything with a background baked in
+is unusable as site chrome — it reads as a white sticker on the dark theme.
+
+One theme correction is applied in CSS, not in the asset. On dark the mark
+measures ~6.2:1 and needs nothing; on cream its champagne highlights measure
+~1.05:1 and wash out, dragging the whole mark to ~2.9:1. The `.brand-mark`
+class applies a mild darkening in light theme only, lifting it to ~3.9:1.
+
 ### The hero field
 
 The signature element is a 3D node field where **every node is one published
