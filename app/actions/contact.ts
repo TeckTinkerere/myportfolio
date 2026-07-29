@@ -32,11 +32,30 @@ const ECHOED_FIELDS = [
   'roleRequired',
 ] as const
 
+/**
+ * Read only the fields we know about.
+ *
+ * Not Object.fromEntries(formData): React injects its own hidden inputs
+ * ($ACTION_REF, $ACTION_KEY and friends) into a Server Action form, and the
+ * schema is strict, so those would fail validation on every submission. An
+ * explicit allowlist also means no caller can smuggle in an extra key.
+ */
+function readFields(formData: FormData) {
+  const out: Record<string, string> = {}
+  for (const field of ECHOED_FIELDS) {
+    const value = formData.get(field)
+    if (typeof value === 'string') out[field] = value
+  }
+  const honeypot = formData.get('website')
+  out.website = typeof honeypot === 'string' ? honeypot : ''
+  return out
+}
+
 export async function submitContactForm(
   _prev: ContactFormState,
   formData: FormData,
 ): Promise<ContactFormState> {
-  const raw = Object.fromEntries(formData.entries()) as Record<string, string>
+  const raw = readFields(formData)
   const values = Object.fromEntries(
     ECHOED_FIELDS.map((field) => [field, raw[field] ?? '']),
   ) as ContactFormState['values']

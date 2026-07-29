@@ -12,7 +12,8 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "validate:content": "jest --testPathPatterns=content",
-    "verify": "npm run typecheck && npm run lint && npm test && npm run build"
+    "check:leaks": "node scripts/check-leaks.mjs",
+    "verify": "npm run typecheck && npm run lint && npm test && npm run build && npm run check:leaks"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "1.1.4",

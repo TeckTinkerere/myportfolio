@@ -1,5 +1,6 @@
 import Link from 'next/link'
 
+import { EventCard } from '@/components/events/event-card'
 import { CtaLink } from '@/components/layout/cta-link'
 import { Section, SectionHeader } from '@/components/layout/section'
 import { ProjectCard } from '@/components/projects/project-card'
@@ -7,17 +8,21 @@ import { PersonSchema } from '@/components/seo/person-schema'
 import { principles } from '@/content/profile'
 import { placements } from '@/content/recognition'
 import { capabilityRoutes, siteConfig } from '@/content/site-config'
-import { getFeaturedProjects } from '@/lib/content/queries'
+import { getFeaturedProjects, getPublicEvents } from '@/lib/content/queries'
 
 export default function HomePage() {
-  const featured = getFeaturedProjects('general', 4)
+  // Three projects plus the strongest event record, so the four featured
+  // slots span a product, a platform, a community initiative and
+  // facilitation (PRD s8.5) rather than four of the same thing.
+  const featured = getFeaturedProjects('general', 3)
+  const featuredEvent = getPublicEvents()[0]
 
   return (
     <>
       <PersonSchema />
       <Hero />
       <Capabilities />
-      <SelectedWork projects={featured} />
+      <SelectedWork projects={featured} event={featuredEvent} />
       <Recognition />
       <WorkingStyle />
       <FinalCta />
@@ -84,8 +89,10 @@ function Capabilities() {
 
 function SelectedWork({
   projects,
+  event,
 }: {
   projects: ReturnType<typeof getFeaturedProjects>
+  event?: ReturnType<typeof getPublicEvents>[number]
 }) {
   return (
     <Section aria-labelledby="work-heading">
@@ -106,6 +113,7 @@ function SelectedWork({
         {projects.map((project) => (
           <ProjectCard key={project.slug} project={project} />
         ))}
+        {event ? <EventCard event={event} /> : null}
       </div>
     </Section>
   )

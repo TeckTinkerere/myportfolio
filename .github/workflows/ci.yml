@@ -34,3 +34,8 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      # Confirms no unpublished item, unverified metric or secret reached a
+      # client bundle or a prerendered page.
+      - name: Content safety gate
+        run: npm run check:leaks
