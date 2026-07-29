@@ -1,3 +1,6 @@
+import { readFile } from 'node:fs/promises'
+import { join } from 'node:path'
+
 import { ImageResponse } from 'next/og'
 
 import { siteConfig } from '@/content/site-config'
@@ -7,10 +10,14 @@ export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
 /**
- * Default social card. Typography only — there is no approved brand
- * photograph cleared for social distribution.
+ * Social card. The mark is inlined as a data URI because Satori resolves
+ * <img> at render time and cannot reach a relative path — and an absolute
+ * URL would fail while the deployment that serves it is still building.
  */
-export default function OpengraphImage() {
+export default async function OpengraphImage() {
+  const logo = await readFile(join(process.cwd(), 'public/images/brand/logo.png'))
+  const logoSrc = `data:image/png;base64,${logo.toString('base64')}`
+
   return new ImageResponse(
     (
       <div
@@ -20,29 +27,15 @@ export default function OpengraphImage() {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          background: '#0b0d0f',
+          background: '#06070a',
           padding: 72,
           fontFamily: 'sans-serif',
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: 48,
-              height: 48,
-              borderRadius: 10,
-              border: '1px solid #2b3239',
-              color: '#f4b942',
-              fontSize: 20,
-              fontWeight: 600,
-            }}
-          >
-            {siteConfig.monogram}
-          </div>
-          <div style={{ color: '#a5adb5', fontSize: 22, letterSpacing: '0.16em' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={logoSrc} width={64} height={64} alt="" />
+          <div style={{ color: '#a5adb5', fontSize: 21, letterSpacing: '0.18em' }}>
             SINGAPORE · TECHNOLOGY · PRODUCTS · EVENTS
           </div>
         </div>
@@ -52,9 +45,9 @@ export default function OpengraphImage() {
             display: 'flex',
             color: '#f3f0e8',
             fontSize: 68,
-            lineHeight: 1.1,
-            letterSpacing: '-0.03em',
-            maxWidth: 940,
+            lineHeight: 1.08,
+            letterSpacing: '-0.035em',
+            maxWidth: 960,
           }}
         >
           {siteConfig.headline}

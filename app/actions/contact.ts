@@ -7,6 +7,7 @@ import {
   isEmailConfigured,
   sendTransactionalEmail,
 } from '@/lib/email/brevo'
+import { renderEnquiryEmail } from '@/lib/email/templates'
 import { checkRateLimit } from '@/lib/security/rate-limit'
 import {
   ENQUIRY_TYPES,
@@ -114,7 +115,10 @@ export async function submitContactForm(
     await sendTransactionalEmail({
       subject: `[${ENQUIRY_TYPES[data.enquiryType]}] ${data.name}`,
       replyTo: { email: data.email, name: data.name },
+      // Both are sent. Clients that block remote images, or prefer plain
+      // text, still get the whole enquiry.
       textContent: formatEnquiry(data),
+      htmlContent: renderEnquiryEmail(data),
     })
   } catch (error) {
     // Log the failure class only. The message body is never logged (PRD s21.2).

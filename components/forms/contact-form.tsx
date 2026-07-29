@@ -5,6 +5,7 @@ import { useFormStatus } from 'react-dom'
 import { useState } from 'react'
 
 import { submitContactForm } from '@/app/actions/contact'
+import { BrandMark } from '@/components/brand/wordmark'
 import {
   ENQUIRY_TYPES,
   type ContactFormState,
@@ -25,9 +26,12 @@ export function ContactForm({ defaultType }: { defaultType: EnquiryType }) {
     return (
       <div
         role="status"
-        className="rounded-sm border border-success/40 bg-surface p-8 text-center"
+        className="panel rounded-sm border-success/40 p-8 text-center"
       >
-        <h2 className="text-title font-semibold text-ink">Message sent</h2>
+        <BrandMark size={44} className="mx-auto" />
+        <h2 className="mt-5 font-display text-title font-semibold text-ink">
+          Message sent
+        </h2>
         <p className="mt-3 text-sm leading-relaxed text-ink-muted">{state.message}</p>
       </div>
     )

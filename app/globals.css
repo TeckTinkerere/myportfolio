@@ -176,6 +176,24 @@
     background-color: hsl(var(--surface-raised));
   }
 
+  /*
+    The brand mark is one asset used on both themes, which is only possible
+    because its PNG is genuinely transparent.
+
+    On the near-black theme it sits at ~6.2:1 and needs nothing. On the warm
+    cream theme its champagne highlights measure ~1.05:1 and disappear, so
+    the whole mark reads at ~2.9:1 and looks patchy. A mild darkening lifts
+    it to ~3.9:1 without touching the metal's character. Measured, not
+    guessed — see the contrast notes at the top of this file.
+  */
+  .brand-mark {
+    filter: brightness(0.86) contrast(1.08);
+  }
+
+  .dark .brand-mark {
+    filter: none;
+  }
+
   /* Telemetry label: mono, uppercase, wide-tracked. Metadata only. */
   .label-mono {
     @apply font-mono text-[0.6875rem] uppercase tracking-[0.16em];

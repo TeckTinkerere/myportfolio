@@ -30,10 +30,13 @@ export function isEmailConfigured(): boolean {
 export async function sendTransactionalEmail({
   subject,
   textContent,
+  htmlContent,
   replyTo,
 }: {
   subject: string
+  /** Always sent. Many clients block remote images, so this is the fallback. */
   textContent: string
+  htmlContent?: string
   replyTo?: { email: string; name?: string }
 }): Promise<void> {
   const apiKey = process.env.BREVO_API_KEY
@@ -58,6 +61,7 @@ export async function sendTransactionalEmail({
       ...(replyTo ? { replyTo } : {}),
       subject,
       textContent,
+      ...(htmlContent ? { htmlContent } : {}),
     }),
     // Never let a hanging provider hold a request open indefinitely.
     signal: AbortSignal.timeout(10_000),
