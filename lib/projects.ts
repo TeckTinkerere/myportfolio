@@ -81,7 +81,7 @@ export const projects: Project[] = [
     image: "/projects/locallocomvp.png",
     status: "active",
     priority: 1,
-    systemOverview: "LocalLoco is a hyperlocal web application designed to strengthen local business ecosystems by connecting residents with real-time neighborhood deals. The system implements a community-driven approach where volunteers submit and moderate business promotions, creating a sustainable model for local commerce discovery.",
+    systemOverview: "LocalLoco implements a three-tier architecture for hyperlocal business discovery, utilizing Next.js for server-side rendering and FastAPI for RESTful backend services. The system architecture separates concerns between content submission, moderation workflows, and real-time data synchronization through Supabase, enabling horizontal scaling and independent service deployment.",
     responsibilities: [
       "Architected full-stack web application using Next.js and FastAPI",
       "Implemented real-time deal aggregation system with PostgreSQL database",
@@ -163,7 +163,7 @@ export const projects: Project[] = [
     image: "/projects/startuplinkmvp.png",
     status: "active",
     priority: 2,
-    systemOverview: "StartupLink is a secure collaboration platform designed to connect polytechnic students with verified student-led startups. The system implements email domain verification for founder authentication and provides role-based access to prevent fraudulent connections in the student startup ecosystem.",
+    systemOverview: "StartupLink implements Firebase Authentication with custom email domain verification logic through Cloud Functions, enforcing role-based access control at the Firestore security rules level. The architecture leverages Firebase's real-time database capabilities for instant message delivery while maintaining strict data isolation between user roles through declarative security policies.",
     responsibilities: [
       "Developed secure authentication system with Firebase and email verification",
       "Implemented multi-step user onboarding with form validation and progress tracking",

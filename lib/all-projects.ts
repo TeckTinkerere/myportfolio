@@ -233,16 +233,27 @@ export const allProjects: BrainProject[] = [
   // MVP / Previous Work
   {
     id: 24,
+    name: "Portfolio V2",
+    status: "Active",
+    category: "Web App",
+    keyTech: "Next.js 14, Tailwind CSS, TypeScript, shadcn/ui",
+    description: "Modern portfolio website with dark theme, responsive design, and comprehensive project showcase",
+    demoUrl: "https://mohamedaslam.vercel.app/",
+    githubUrl: "https://github.com/mohamedaslam/portfolio-v2",
+    notes: "Current production portfolio"
+  },
+  {
+    id: 25,
     name: "Portfolio V1",
-    status: "MVP",
+    status: "Completed",
     category: "Web App",
     keyTech: "React, Vercel",
     description: "Initial portfolio website iteration deployed on Vercel platform"
   },
   {
-    id: 25,
+    id: 28,
     name: "Blog Contribution",
-    status: "MVP",
+    status: "Completed",
     category: "Web App",
     keyTech: "React, HTML, CSS",
     description: "Frontend development contribution to collaborative blog project"

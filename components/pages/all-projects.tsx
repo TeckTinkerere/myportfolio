@@ -67,7 +67,7 @@ export default function AllProjects() {
   }, [searchQuery, selectedStatus, selectedCategory])
 
   const groupedProjects = useMemo(() => {
-    const groups: Record<ProjectStatus, typeof brainHistory> = {
+    const groups: Record<ProjectStatus, typeof allProjects> = {
       "Active": [],
       "Paused": [],
       "MVP": [],
