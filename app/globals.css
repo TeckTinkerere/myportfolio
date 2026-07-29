@@ -2,85 +2,73 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
-}
+/*
+  Brand tokens. Values come from the PRD's warm palette, converted to HSL
+  triplets so Tailwind's hsl(var(--x)) mapping keeps working.
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-}
+  Every foreground/background pair below was checked against WCAG 2.2 AA:
+    dark  text-primary    on background  ~17.0:1
+    dark  text-secondary  on background   ~8.6:1
+    light text-primary    on background  ~16.4:1
+    light text-secondary  on background   ~5.0:1
+    light accent          on background   ~4.9:1  (AA normal text, just over 4.5)
+    light accent-contrast on accent       ~5.5:1
+  Accessibility overrides the suggested hexes (PRD s15.3). If a value is
+  retuned, re-check its pair before committing.
+*/
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-    --radius: 0.5rem;
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Light theme */
+    --background: 43 36% 94%;
+    --surface: 0 0% 100%;
+    --surface-raised: 43 23% 91%;
+    --text-primary: 210 9% 9%;
+    --text-secondary: 210 7% 41%;
+    --border-token: 43 12% 83%;
+    --accent: 35 100% 30%;
+    --accent-soft: 40 89% 61%;
+    --accent-contrast: 0 0% 100%;
+    --success: 145 55% 28%;
+    --danger: 0 65% 38%;
+
+    /* shadcn compatibility layer — the retained primitives read these names.
+       Aliases, not a second palette. */
+    --foreground: var(--text-primary);
+    --card: var(--surface);
+    --card-foreground: var(--text-primary);
+    --popover: var(--surface);
+    --popover-foreground: var(--text-primary);
+    --primary: var(--accent);
+    --primary-foreground: var(--accent-contrast);
+    --secondary: var(--surface-raised);
+    --secondary-foreground: var(--text-primary);
+    --muted: var(--surface-raised);
+    --muted-foreground: var(--text-secondary);
+    --accent-foreground: var(--accent-contrast);
+    --destructive: var(--danger);
+    --destructive-foreground: 0 0% 100%;
+    --border: var(--border-token);
+    --input: var(--border-token);
+    --ring: var(--accent);
+
+    --radius: 0.625rem;
   }
+
   .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --background: 210 15% 5%;
+    --surface: 210 18% 9%;
+    --surface-raised: 210 17% 11%;
+    --text-primary: 44 31% 93%;
+    --text-secondary: 210 10% 68%;
+    --border-token: 210 14% 20%;
+    --accent: 40 89% 61%;
+    --accent-soft: 40 89% 61%;
+    --accent-contrast: 37 40% 6%;
+    --success: 145 43% 58%;
+    --danger: 0 65% 67%;
+
+    --destructive-foreground: 37 40% 6%;
   }
 }
 
@@ -88,26 +76,94 @@ body {
   * {
     @apply border-border;
   }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased;
+    font-synthesis-weight: none;
+  }
+
+  /* Focus must stay visible and must never sit under the sticky header. */
+  :focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+
+  [id] {
+    scroll-margin-top: 6rem;
+  }
+
+  ::selection {
+    background-color: hsl(var(--accent) / 0.25);
   }
 }
 
-/* Custom scrollbar styles */
-.custom-scrollbar::-webkit-scrollbar {
-  width: 8px;
+@layer components {
+  /* Reading measure for long-form case-study prose (PRD s15.5: 680-760px). */
+  .prose-measure {
+    max-width: 46rem;
+  }
+
+  .prose-measure p {
+    @apply text-base leading-relaxed;
+    color: hsl(var(--text-secondary));
+  }
+
+  .prose-measure p + p {
+    @apply mt-4;
+  }
 }
 
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(51, 65, 85, 0.3);
-  border-radius: 4px;
+@layer utilities {
+  .text-secondary-token {
+    color: hsl(var(--text-secondary));
+  }
+
+  .bg-surface {
+    background-color: hsl(var(--surface));
+  }
+
+  .bg-surface-raised {
+    background-color: hsl(var(--surface-raised));
+  }
+
+  /* Small uppercase proof verb / metadata label (PRD s3.8). */
+  .label-mono {
+    @apply font-mono text-[0.6875rem] uppercase tracking-[0.14em];
+  }
 }
 
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(6, 182, 212, 0.5);
-  border-radius: 4px;
+/*
+  Motion is decorative, so it is opt-in by preference rather than opt-out.
+  A reduced-motion user gets the finished state directly, not a degraded
+  one (PRD s15.8).
+*/
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes rise-in {
+    from {
+      opacity: 0;
+      transform: translateY(0.5rem);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .animate-rise-in {
+    animation: rise-in 220ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
 }
 
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(6, 182, 212, 0.7);
+@media print {
+  .print-hidden {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+  }
 }
