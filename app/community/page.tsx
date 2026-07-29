@@ -21,12 +21,12 @@ export default function CommunityPage() {
       ctaHref="/contact?type=community"
     >
       <Section aria-labelledby="leadership-heading" className="pb-0">
-        <h2 id="leadership-heading" className="text-title font-semibold text-ink">
+        <h2 id="leadership-heading" className="font-display text-title font-semibold text-ink">
           Current commitments
         </h2>
         <ul className="mt-6 grid gap-4 sm:grid-cols-3">
           {leadership.map((role) => (
-            <li key={role.organisation} className="rounded-lg border border-border p-5">
+            <li key={role.organisation} className="rounded-sm border border-border p-5">
               <p className="text-sm font-semibold text-ink">{role.role}</p>
               <p className="mt-1.5 text-sm text-ink-muted">{role.organisation}</p>
               <p className="label-mono mt-3 text-ink-muted">{role.timeframe}</p>

@@ -89,20 +89,20 @@ export default async function CaseStudyPage({
             <StatusBadge status={project.status} />
           </div>
 
-          <h1 className="mt-4 text-headline font-semibold text-ink">{project.title}</h1>
+          <h1 className="mt-4 font-display text-headline font-semibold text-ink">{project.title}</h1>
           <p className="prose-measure mt-4 text-lg leading-relaxed text-ink-muted">
             {project.oneLiner}
           </p>
         </header>
 
         {project.confidentialityNote ? (
-          <p className="prose-measure mt-8 rounded-lg border border-accent/40 bg-surface-raised p-4 text-sm leading-relaxed text-ink-muted">
+          <p className="prose-measure mt-8 rounded-sm border border-accent/40 bg-surface-raised p-4 text-sm leading-relaxed text-ink-muted">
             {project.confidentialityNote}
           </p>
         ) : null}
 
         {project.coverImage ? (
-          <div className="relative mt-10 aspect-[16/9] overflow-hidden rounded-lg border border-border bg-surface-raised">
+          <div className="relative mt-10 aspect-[16/9] overflow-hidden rounded-sm border border-border bg-surface-raised">
             <Image
               src={project.coverImage.src}
               alt={project.coverImage.alt}
@@ -120,7 +120,7 @@ export default async function CaseStudyPage({
         <h2 id="snapshot-heading" className="sr-only">
           Snapshot
         </h2>
-        <dl className="grid gap-x-8 gap-y-6 rounded-lg border border-border bg-surface p-6 sm:grid-cols-2 lg:grid-cols-4">
+        <dl className="grid gap-x-8 gap-y-6 rounded-sm border border-border bg-surface p-6 sm:grid-cols-2 lg:grid-cols-4">
           <Fact label="My role" value={project.role} />
           <Fact label="Timeframe" value={project.timeframeLabel} />
           <Fact label="Status" value={STATUS_LABELS[project.status]} />
@@ -136,7 +136,7 @@ export default async function CaseStudyPage({
 
       {project.longSummary ? (
         <Section aria-labelledby="challenge-heading">
-          <h2 id="challenge-heading" className="text-title font-semibold text-ink">
+          <h2 id="challenge-heading" className="font-display text-title font-semibold text-ink">
             The problem
           </h2>
           <div className="prose-measure mt-4">
@@ -180,7 +180,7 @@ export default async function CaseStudyPage({
           </h2>
           <dl className="grid gap-5 sm:grid-cols-3">
             {metrics.map((metric) => (
-              <div key={metric.label} className="rounded-lg border border-border p-5">
+              <div key={metric.label} className="rounded-sm border border-border p-5">
                 <dt className="text-sm text-ink-muted">{metric.label}</dt>
                 <dd className="mt-1 text-2xl font-semibold text-ink">{metric.value}</dd>
                 {metric.publicSourceUrl ? (
@@ -229,7 +229,7 @@ export default async function CaseStudyPage({
 
       {evidence.length > 0 ? (
         <Section aria-labelledby="evidence-heading" className="pt-0">
-          <h2 id="evidence-heading" className="text-title font-semibold text-ink">
+          <h2 id="evidence-heading" className="font-display text-title font-semibold text-ink">
             Evidence
           </h2>
           <ul className="mt-4 flex flex-col gap-3">
@@ -256,7 +256,7 @@ export default async function CaseStudyPage({
 
       {related.length > 0 ? (
         <Section aria-labelledby="related-heading" className="pt-0">
-          <h2 id="related-heading" className="text-title font-semibold text-ink">
+          <h2 id="related-heading" className="font-display text-title font-semibold text-ink">
             Related work
           </h2>
           <div className="mt-6 grid gap-5 sm:grid-cols-2">
@@ -292,7 +292,7 @@ function ListSection({
 }) {
   return (
     <Section aria-labelledby={`${id}-heading`} className="pt-0">
-      <h2 id={`${id}-heading`} className="text-title font-semibold text-ink">
+      <h2 id={`${id}-heading`} className="font-display text-title font-semibold text-ink">
         {heading}
       </h2>
       {intro ? <p className="prose-measure mt-3 text-sm text-ink-muted">{intro}</p> : null}

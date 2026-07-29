@@ -28,7 +28,7 @@ export default async function ContactPage({
     <Section>
       <div className="grid gap-12 lg:grid-cols-[1.5fr_1fr] lg:gap-16">
         <div>
-          <h1 className="text-headline font-semibold text-ink">Get in touch</h1>
+          <h1 className="font-display text-headline font-semibold text-ink">Get in touch</h1>
           <p className="prose-measure mt-4 text-base leading-relaxed text-ink-muted">
             Tell me what you are trying to do. The more concrete you can be, the more
             useful my reply will be.
@@ -40,7 +40,7 @@ export default async function ContactPage({
         </div>
 
         <aside className="flex flex-col gap-6 lg:pt-20">
-          <div className="rounded-lg border border-border bg-surface p-6">
+          <div className="rounded-sm border border-border bg-surface p-6">
             <h2 className="text-sm font-semibold text-ink">Prefer email?</h2>
             <p className="mt-2 text-sm leading-relaxed text-ink-muted">
               The form is a convenience, not a requirement.
@@ -54,7 +54,7 @@ export default async function ContactPage({
             </a>
           </div>
 
-          <div className="rounded-lg border border-border p-6">
+          <div className="rounded-sm border border-border p-6">
             <h2 className="text-sm font-semibold text-ink">What happens next</h2>
             <p className="mt-2 text-sm leading-relaxed text-ink-muted">
               I read everything and usually reply within a day or two. If it is a website
@@ -62,7 +62,7 @@ export default async function ContactPage({
             </p>
           </div>
 
-          <div className="rounded-lg border border-border p-6">
+          <div className="rounded-sm border border-border p-6">
             <h2 className="text-sm font-semibold text-ink">Your information</h2>
             <p className="mt-2 text-sm leading-relaxed text-ink-muted">
               What you send is used only so I can reply. No mailing list, no sharing, and

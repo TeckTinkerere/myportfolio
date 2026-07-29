@@ -56,7 +56,7 @@ export default function WebsitesPage() {
       <Section className="pb-0">
         <div className="grid gap-10 lg:grid-cols-2">
           <div>
-            <h2 className="text-title font-semibold text-ink">What I can help with</h2>
+            <h2 className="font-display text-title font-semibold text-ink">What I can help with</h2>
             <ul className="mt-5 flex flex-col gap-2.5">
               {SERVICES.map((service) => (
                 <li key={service} className="flex gap-3 text-sm text-ink-muted">
@@ -71,7 +71,7 @@ export default function WebsitesPage() {
           </div>
 
           <div>
-            <h2 className="text-title font-semibold text-ink">
+            <h2 className="font-display text-title font-semibold text-ink">
               What I would need from you
             </h2>
             <ul className="mt-5 flex flex-col gap-2.5">
@@ -102,12 +102,12 @@ export default function WebsitesPage() {
       </Section>
 
       <Section aria-labelledby="process-heading" className="pb-0">
-        <h2 id="process-heading" className="text-title font-semibold text-ink">
+        <h2 id="process-heading" className="font-display text-title font-semibold text-ink">
           How a project runs
         </h2>
         <ol className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
           {PROCESS.map((phase, index) => (
-            <li key={phase.step} className="rounded-lg border border-border p-4">
+            <li key={phase.step} className="rounded-sm border border-border p-4">
               <span className="label-mono text-accent">
                 {String(index + 1).padStart(2, '0')}
               </span>

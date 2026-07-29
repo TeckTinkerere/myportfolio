@@ -21,7 +21,7 @@ export default function SoftwarePage() {
       ctaHref="/contact?type=technical"
     >
       <Section aria-labelledby="capability-heading" className="pb-0">
-        <h2 id="capability-heading" className="text-title font-semibold text-ink">
+        <h2 id="capability-heading" className="font-display text-title font-semibold text-ink">
           What I can work on
         </h2>
         {/* Technologies are listed with the work that used them rather than as
@@ -30,7 +30,7 @@ export default function SoftwarePage() {
           {capabilities
             .filter((group) => group.group !== 'Operating and communicating')
             .map((group) => (
-              <div key={group.group} className="rounded-lg border border-border p-5">
+              <div key={group.group} className="rounded-sm border border-border p-5">
                 <dt className="label-mono text-accent">{group.group}</dt>
                 <dd className="mt-3 text-sm leading-relaxed text-ink-muted">
                   {group.items.join(' · ')}

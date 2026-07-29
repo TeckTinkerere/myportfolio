@@ -75,7 +75,7 @@ export default async function WorkPage({
           ))}
         </div>
       ) : (
-        <p className="mt-6 rounded-lg border border-border bg-surface p-6 text-sm text-ink-muted">
+        <p className="mt-6 rounded-sm border border-border bg-surface p-6 text-sm text-ink-muted">
           Nothing published under this filter yet.
         </p>
       )}

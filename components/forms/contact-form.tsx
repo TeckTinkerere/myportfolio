@@ -25,7 +25,7 @@ export function ContactForm({ defaultType }: { defaultType: EnquiryType }) {
     return (
       <div
         role="status"
-        className="rounded-lg border border-success/40 bg-surface p-8 text-center"
+        className="rounded-sm border border-success/40 bg-surface p-8 text-center"
       >
         <h2 className="text-title font-semibold text-ink">Message sent</h2>
         <p className="mt-3 text-sm leading-relaxed text-ink-muted">{state.message}</p>
@@ -38,7 +38,7 @@ export function ContactForm({ defaultType }: { defaultType: EnquiryType }) {
       {/* Failures are announced, not just coloured. */}
       <div aria-live="polite">
         {state.status === 'error' && state.message ? (
-          <p className="rounded-md border border-danger/40 bg-surface p-4 text-sm text-ink">
+          <p className="rounded-sm border border-danger/40 bg-surface p-4 text-sm text-ink">
             {state.message}
           </p>
         ) : null}
@@ -88,7 +88,7 @@ export function ContactForm({ defaultType }: { defaultType: EnquiryType }) {
           onChange={(event) => setEnquiryType(event.target.value as EnquiryType)}
           aria-invalid={state.errors?.enquiryType ? true : undefined}
           aria-describedby={state.errors?.enquiryType ? 'enquiryType-error' : undefined}
-          className="rounded-md border border-border bg-surface px-3 py-2.5 text-sm text-ink"
+          className="rounded-sm border border-border-strong bg-surface px-3 py-2.5 text-sm text-ink"
         >
           {Object.entries(ENQUIRY_TYPES).map(([value, label]) => (
             <option key={value} value={value}>
@@ -106,7 +106,7 @@ export function ContactForm({ defaultType }: { defaultType: EnquiryType }) {
       {/* Conditional fields (PRD FR-06). Unrendered fields simply are not
           submitted, and the schema treats them as optional. */}
       {enquiryType === 'website' ? (
-        <fieldset className="grid gap-6 rounded-lg border border-border p-5 sm:grid-cols-2">
+        <fieldset className="grid gap-6 rounded-sm border border-border p-5 sm:grid-cols-2">
           <legend className="label-mono px-2 text-ink-muted">Project details</legend>
           <Field
             name="targetDate"
@@ -132,7 +132,7 @@ export function ContactForm({ defaultType }: { defaultType: EnquiryType }) {
       ) : null}
 
       {enquiryType === 'event' ? (
-        <fieldset className="grid gap-6 rounded-lg border border-border p-5 sm:grid-cols-2">
+        <fieldset className="grid gap-6 rounded-sm border border-border p-5 sm:grid-cols-2">
           <legend className="label-mono px-2 text-ink-muted">Event details</legend>
           <Field
             name="eventDate"
@@ -184,7 +184,7 @@ export function ContactForm({ defaultType }: { defaultType: EnquiryType }) {
           defaultValue={state.values?.message}
           aria-invalid={state.errors?.message ? true : undefined}
           aria-describedby={state.errors?.message ? 'message-error' : undefined}
-          className="rounded-md border border-border bg-surface px-3 py-2.5 text-sm text-ink placeholder:text-ink-muted"
+          className="rounded-sm border border-border-strong bg-surface px-3 py-2.5 text-sm text-ink placeholder:text-ink-muted"
           placeholder="What are you trying to do, and where are you stuck?"
         />
         {state.errors?.message ? (
@@ -214,7 +214,7 @@ function SubmitButton() {
     <button
       type="submit"
       disabled={pending}
-      className="inline-flex w-fit items-center gap-2 rounded-md bg-accent px-5 py-2.5 text-sm font-medium text-accent-contrast transition-opacity disabled:opacity-60"
+      className="inline-flex w-fit items-center gap-2 rounded-sm bg-accent px-5 py-2.5 text-sm font-medium text-accent-contrast transition-opacity disabled:opacity-60"
     >
       {pending ? 'Sending…' : 'Send message'}
     </button>
@@ -267,7 +267,7 @@ function Field({
         autoComplete={autoComplete}
         aria-invalid={error ? true : undefined}
         aria-describedby={cn(hintId, errorId) || undefined}
-        className="rounded-md border border-border bg-surface px-3 py-2.5 text-sm text-ink"
+        className="rounded-sm border border-border-strong bg-surface px-3 py-2.5 text-sm text-ink"
       />
       {error ? (
         <p id={errorId} className="text-sm text-danger">

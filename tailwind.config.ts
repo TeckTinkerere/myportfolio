@@ -61,20 +61,25 @@ const config: Config = {
           DEFAULT: 'hsl(var(--destructive))',
           foreground: 'hsl(var(--destructive-foreground))',
         },
-        border: 'hsl(var(--border))',
+        border: {
+          DEFAULT: 'hsl(var(--border))',
+          // Interactive boundaries need 3:1; the hairline is decorative only.
+          strong: 'hsl(var(--border-strong))',
+        },
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
       },
       fontFamily: {
         sans: ['var(--font-sans)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        serif: ['var(--font-serif)', 'ui-serif', 'Georgia', 'serif'],
+        display: ['var(--font-display)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         mono: ['var(--font-mono)', 'ui-monospace', 'SFMono-Regular', 'monospace'],
       },
       fontSize: {
-        // Editorial display sizes, fluid so headlines never overflow at 360px.
-        display: ['clamp(2.25rem, 1.35rem + 4vw, 4.5rem)', { lineHeight: '1.04', letterSpacing: '-0.025em' }],
-        headline: ['clamp(1.75rem, 1.2rem + 2.4vw, 3rem)', { lineHeight: '1.1', letterSpacing: '-0.02em' }],
-        title: ['clamp(1.375rem, 1.1rem + 1.2vw, 1.875rem)', { lineHeight: '1.2', letterSpacing: '-0.015em' }],
+        // Fluid, so headlines never overflow at 360px. Tighter tracking than
+        // the editorial direction — display type here is equipment labelling.
+        display: ['clamp(2.25rem, 1.3rem + 4.2vw, 4.75rem)', { lineHeight: '1.02', letterSpacing: '-0.035em' }],
+        headline: ['clamp(1.75rem, 1.2rem + 2.4vw, 3rem)', { lineHeight: '1.08', letterSpacing: '-0.03em' }],
+        title: ['clamp(1.25rem, 1.05rem + 1vw, 1.75rem)', { lineHeight: '1.15', letterSpacing: '-0.02em' }],
       },
       borderRadius: {
         lg: 'var(--radius)',

@@ -28,7 +28,7 @@ export default function AboutPage() {
       <Section className="pb-0">
         <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr] lg:items-start">
           <div>
-            <h1 className="text-headline font-semibold text-ink">
+            <h1 className="font-display text-headline font-semibold text-ink">
               {siteConfig.descriptor}
             </h1>
             <div className="prose-measure mt-6">
@@ -38,7 +38,7 @@ export default function AboutPage() {
             </div>
           </div>
 
-          <div className="relative aspect-[4/5] overflow-hidden rounded-lg border border-border bg-surface-raised lg:sticky lg:top-24">
+          <div className="relative aspect-[4/5] overflow-hidden rounded-sm border border-border bg-surface-raised lg:sticky lg:top-24">
             <Image
               src="/images/profile/portrait.jpg"
               alt={`${siteConfig.name}`}
@@ -55,7 +55,7 @@ export default function AboutPage() {
         <SectionHeader eyebrow="How I work" title="Three things I hold to" />
         <ol className="grid gap-5 sm:grid-cols-3">
           {principles.map((principle, index) => (
-            <li key={principle.title} className="rounded-lg border border-border p-5">
+            <li key={principle.title} className="rounded-sm border border-border p-5">
               <span className="label-mono text-accent">
                 {String(index + 1).padStart(2, '0')}
               </span>
@@ -93,7 +93,7 @@ export default function AboutPage() {
 
       <Section aria-labelledby="education-heading" className="pt-0">
         <SectionHeader eyebrow="Education" title={education.qualification} />
-        <div className="rounded-lg border border-border p-6">
+        <div className="rounded-sm border border-border p-6">
           <p className="text-sm font-medium text-ink">{education.institution}</p>
           <p className="label-mono mt-1 text-ink-muted">{education.timeframe}</p>
           <h3 className="label-mono mt-6 text-ink-muted">Relevant coursework</h3>
@@ -114,7 +114,7 @@ export default function AboutPage() {
         <SectionHeader eyebrow="Also" title="Committees and community roles" />
         <ul className="grid gap-4 sm:grid-cols-3">
           {leadership.map((role) => (
-            <li key={role.organisation} className="rounded-lg border border-border p-5">
+            <li key={role.organisation} className="rounded-sm border border-border p-5">
               <p className="text-sm font-semibold text-ink">{role.role}</p>
               <p className="mt-1.5 text-sm text-ink-muted">{role.organisation}</p>
               <p className="label-mono mt-3 text-ink-muted">{role.timeframe}</p>
@@ -131,7 +131,7 @@ export default function AboutPage() {
         />
         <dl className="grid gap-6 sm:grid-cols-2">
           {capabilities.map((group) => (
-            <div key={group.group} className="rounded-lg border border-border p-5">
+            <div key={group.group} className="rounded-sm border border-border p-5">
               <dt className="label-mono text-accent">{group.group}</dt>
               <dd className="mt-3 text-sm leading-relaxed text-ink-muted">
                 {group.items.join(' · ')}
@@ -155,7 +155,7 @@ export default function AboutPage() {
         />
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {recognition.map((item) => (
-            <li key={item.slug} className="rounded-lg border border-border bg-surface p-5">
+            <li key={item.slug} className="rounded-sm border border-border bg-surface p-5">
               {item.placement ? (
                 <p className="label-mono text-accent">{item.placement}</p>
               ) : (
@@ -178,8 +178,8 @@ export default function AboutPage() {
       </Section>
 
       <Section className="pt-0">
-        <div className="rounded-lg border border-border bg-surface p-8">
-          <h2 className="text-title font-semibold text-ink">
+        <div className="rounded-sm border border-border bg-surface p-8">
+          <h2 className="font-display text-title font-semibold text-ink">
             Want to talk about something specific?
           </h2>
           <div className="mt-6 flex flex-wrap gap-3">

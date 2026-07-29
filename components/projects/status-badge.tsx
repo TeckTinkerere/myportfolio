@@ -3,9 +3,9 @@ import type { ProjectStatus } from '@/lib/content/schema'
 import { cn } from '@/lib/utils'
 
 /**
- * Status must stay distinguishable without colour (PRD s10.2, s18), so each
- * state carries a shape marker as well as a tint. A concept must never be
- * mistakable for something that is live.
+ * Status readout. The distinction between concept, prototype and live is the
+ * most load-bearing information on the site, so it is carried three ways:
+ * a glyph, a tint, and the written label. Never colour alone.
  */
 const MARKERS: Record<ProjectStatus, string> = {
   live: '●',

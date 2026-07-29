@@ -61,8 +61,8 @@ export function LensPage({
       )}
 
       <Section className="pt-0">
-        <div className="rounded-lg border border-border bg-surface p-8">
-          <h2 className="max-w-xl text-title font-semibold text-ink">{ctaLabel}</h2>
+        <div className="rounded-sm border border-border bg-surface p-8">
+          <h2 className="max-w-xl font-display text-title font-semibold text-ink">{ctaLabel}</h2>
           <div className="mt-6">
             <CtaLink href={ctaHref}>Start a conversation</CtaLink>
           </div>

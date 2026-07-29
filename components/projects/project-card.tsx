@@ -6,8 +6,9 @@ import type { PortfolioProject } from '@/lib/content/schema'
 import { cn } from '@/lib/utils'
 
 /**
- * Everything essential is visible without hovering (PRD s15.6): proof verb,
- * title, one-line result, role and status. Hover only lifts the border.
+ * Everything essential is visible without hovering: proof verb, title,
+ * one-line result, role and status. Hover only lifts the frame and reveals
+ * the affordance — it never carries information that exists nowhere else.
  */
 export function ProjectCard({
   project,
@@ -19,7 +20,7 @@ export function ProjectCard({
   return (
     <article
       className={cn(
-        'group relative flex flex-col overflow-hidden rounded-lg border border-border bg-surface transition-colors hover:border-accent/60',
+        'panel group relative flex h-full flex-col rounded-sm transition-colors hover:border-border-strong',
         featured && 'sm:flex-row',
       )}
     >
@@ -35,7 +36,7 @@ export function ProjectCard({
             alt={project.coverImage.alt}
             fill
             sizes={featured ? '(max-width: 640px) 100vw, 40vw' : '(max-width: 768px) 100vw, 33vw'}
-            className="object-cover"
+            className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
           />
         </div>
       ) : null}
@@ -46,9 +47,9 @@ export function ProjectCard({
           <StatusBadge status={project.status} />
         </div>
 
-        <h3 className="mt-3 text-lg font-semibold tracking-tight text-ink">
+        <h3 className="mt-3 font-display text-lg font-semibold text-ink">
           {/* Stretched link keeps the whole card clickable without nesting
-              interactive elements. */}
+              interactive elements inside one another. */}
           <Link href={`/work/${project.slug}`} className="after:absolute after:inset-0">
             {project.title}
           </Link>
@@ -56,14 +57,14 @@ export function ProjectCard({
 
         <p className="mt-2 text-sm leading-relaxed text-ink-muted">{project.oneLiner}</p>
 
-        <dl className="mt-4 flex flex-wrap gap-x-5 gap-y-1 border-t border-border pt-3 text-xs text-ink-muted">
+        <dl className="mt-auto flex flex-wrap gap-x-5 gap-y-1 border-t border-border pt-3 text-xs text-ink-muted">
           <div className="flex gap-1.5">
             <dt className="sr-only">Role</dt>
             <dd>{project.role}</dd>
           </div>
           <div className="flex gap-1.5">
             <dt className="sr-only">Timeframe</dt>
-            <dd>{project.timeframeLabel}</dd>
+            <dd className="tnum">{project.timeframeLabel}</dd>
           </div>
         </dl>
       </div>

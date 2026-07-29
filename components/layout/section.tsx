@@ -33,8 +33,16 @@ export function SectionHeader({
   return (
     <div className="mb-8 flex flex-col gap-4 sm:mb-10 sm:flex-row sm:items-end sm:justify-between">
       <div className="max-w-2xl">
-        {eyebrow ? <p className="label-mono mb-3 text-accent">{eyebrow}</p> : null}
-        <Heading className="text-title font-semibold text-ink">{title}</Heading>
+        {eyebrow ? (
+          <p className="label-mono mb-3 flex items-center gap-2.5 text-accent">
+            {/* Short rule ties the eyebrow into the console grid. */}
+            <span aria-hidden className="h-px w-6 bg-accent/60" />
+            {eyebrow}
+          </p>
+        ) : null}
+        <Heading className="font-display text-title font-semibold text-ink">
+          {title}
+        </Heading>
         {description ? (
           <p className="mt-3 text-base leading-relaxed text-ink-muted">{description}</p>
         ) : null}

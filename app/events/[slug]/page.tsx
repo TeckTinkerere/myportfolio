@@ -71,7 +71,7 @@ export default async function EventPage({
         <p className="label-mono text-accent">
           {EVENT_ROLE_LABELS[event.role as EventRole]}
         </p>
-        <h1 className="mt-4 text-headline font-semibold text-ink">{event.name}</h1>
+        <h1 className="mt-4 font-display text-headline font-semibold text-ink">{event.name}</h1>
         <p className="mt-3 text-sm text-ink-muted">
           {event.organiser} · {event.date}
         </p>
@@ -93,8 +93,8 @@ export default async function EventPage({
         </ul>
 
         {event.testimonial ? (
-          <figure className="prose-measure mt-12 rounded-lg border border-border bg-surface p-6">
-            <blockquote className="font-serif text-xl leading-relaxed text-ink">
+          <figure className="prose-measure mt-12 rounded-sm border border-border bg-surface p-6">
+            <blockquote className="text-xl leading-relaxed text-ink">
               “{event.testimonial.quote}”
             </blockquote>
             <figcaption className="mt-4 text-sm text-ink-muted">
@@ -107,7 +107,7 @@ export default async function EventPage({
           <div className="mt-12 grid gap-4 sm:grid-cols-2">
             {event.images.map((image) => (
               <figure key={image.src}>
-                <div className="relative aspect-[4/3] overflow-hidden rounded-lg border border-border">
+                <div className="relative aspect-[4/3] overflow-hidden rounded-sm border border-border">
                   <Image
                     src={image.src}
                     alt={image.alt}

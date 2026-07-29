@@ -5,10 +5,10 @@ import { cn } from '@/lib/utils'
 /**
  * Filters are links, not buttons with client state.
  *
- * The server does the filtering from searchParams, which means: real
- * shareable URLs, full keyboard support for free, and it still works with
- * JavaScript disabled. Next's soft navigation means no full reload, so
- * FR-03 is satisfied without shipping any filter JS at all.
+ * The server filters from searchParams, which gives real shareable URLs,
+ * keyboard support for free, and correct behaviour with JavaScript disabled.
+ * Next's soft navigation still avoids a full reload, so nothing is lost by
+ * shipping no filter JavaScript at all.
  */
 export type FilterOption = { value: string; label: string }
 
@@ -27,26 +27,26 @@ export function WorkFilters({
 }) {
   return (
     <nav aria-label={label}>
-      <ul className="flex flex-wrap gap-2">
+      <ul className="flex flex-wrap gap-px overflow-hidden rounded-sm border border-border bg-border">
         {options.map((option) => {
           const isActive = option.value === active
           const href =
             option.value === 'all' ? basePath : `${basePath}?${paramName}=${option.value}`
 
           return (
-            <li key={option.value}>
+            <li key={option.value} className="flex-1">
               <Link
                 href={href}
                 aria-current={isActive ? 'page' : undefined}
                 scroll={false}
                 className={cn(
-                  'inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-sm transition-colors',
+                  'label-mono flex h-full items-center justify-center gap-2 whitespace-nowrap px-3.5 py-2.5 text-center transition-colors',
                   isActive
-                    ? 'border-accent bg-accent text-accent-contrast'
-                    : 'border-border text-ink-muted hover:border-accent/50 hover:text-ink',
+                    ? 'bg-accent text-accent-contrast'
+                    : 'bg-surface text-ink-muted hover:bg-surface-raised hover:text-ink',
                 )}
               >
-                {/* Active state is not carried by colour alone (PRD s10.1). */}
+                {/* The active state is never carried by colour alone. */}
                 {isActive ? (
                   <span aria-hidden className="text-[0.7em] leading-none">
                     ●

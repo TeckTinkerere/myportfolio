@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Geist, Geist_Mono, Instrument_Serif } from 'next/font/google'
+import { Archivo, Geist, IBM_Plex_Mono } from 'next/font/google'
 
 import { SiteFooter } from '@/components/navigation/site-footer'
 import { SiteHeader } from '@/components/navigation/site-header'
@@ -15,18 +15,28 @@ const sans = Geist({
   display: 'swap',
 })
 
-const mono = Geist_Mono({
+/**
+ * Display face. Archivo's width axis lets headlines sit slightly expanded,
+ * which reads as equipment labelling rather than editorial. Deliberately not
+ * Geist for display — that is the default reach in a Next.js project, and
+ * the display face is where the page's personality has to live.
+ */
+const display = Archivo({
   subsets: ['latin'],
-  variable: '--font-mono',
+  axes: ['wdth'],
+  variable: '--font-display',
   display: 'swap',
 })
 
-// Editorial accent only — reserved for display headlines and pull statements,
-// never body copy (PRD s15.4). Instrument Serif ships a single weight.
-const serif = Instrument_Serif({
+/**
+ * Telemetry face, used heavily: every status, date, count and label. IBM
+ * Plex Mono has real machine heritage and more character than a neutral
+ * mono, which is what carries the instrument feel.
+ */
+const mono = IBM_Plex_Mono({
   subsets: ['latin'],
-  weight: '400',
-  variable: '--font-serif',
+  weight: ['400', '500'],
+  variable: '--font-mono',
   display: 'swap',
 })
 
@@ -63,7 +73,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: '#f6f3ec' },
-    { media: '(prefers-color-scheme: dark)', color: '#0b0d0f' },
+    { media: '(prefers-color-scheme: dark)', color: '#06070a' },
   ],
 }
 
@@ -74,7 +84,7 @@ export default function RootLayout({
     <html
       lang="en-SG"
       suppressHydrationWarning
-      className={cn(sans.variable, mono.variable, serif.variable)}
+      className={cn(sans.variable, mono.variable, display.variable)}
     >
       <body className="min-h-dvh">
         <ThemeProvider>

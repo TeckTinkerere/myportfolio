@@ -48,7 +48,10 @@ Run `npm run dev` and check:
 - [ ] Tablet and 1366px
 - [ ] Light theme and dark theme, and the toggle in both directions with no flash
 - [ ] Keyboard only: skip link is the first tab stop; every control is reachable; focus is always visible and never hidden under the sticky header
-- [ ] `prefers-reduced-motion: reduce` — content is complete, not degraded
+- [ ] `prefers-reduced-motion: reduce` — content is complete, not degraded, and the hero field holds a single static frame
+- [ ] Hero field: nodes visible and drifting; colours match the status legend in the panel beneath it
+- [ ] Hero field with JavaScript disabled — the SVG projection still renders the same nodes
+- [ ] Hero field on a mid-range phone — no dropped frames while scrolling past it
 - [ ] `/work` filters change the URL and still work with JavaScript disabled
 - [ ] `/contact` shows the right conditional fields per enquiry type, and `?type=event` preselects
 - [ ] Submit an invalid form: errors are announced and typed data is preserved

@@ -23,7 +23,7 @@ export default function Error({
     <div className="container py-20">
       <div className="max-w-2xl">
         <p className="label-mono text-accent">Error</p>
-        <h1 className="mt-4 text-headline font-semibold text-ink">
+        <h1 className="mt-4 font-display text-headline font-semibold text-ink">
           Something went wrong on this page.
         </h1>
         <p className="mt-4 text-base leading-relaxed text-ink-muted">

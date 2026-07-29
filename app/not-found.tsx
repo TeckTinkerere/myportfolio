@@ -13,7 +13,7 @@ export default function NotFound() {
   return (
     <Section className="max-w-2xl">
       <p className="label-mono text-accent">404</p>
-      <h1 className="mt-4 text-headline font-semibold text-ink">
+      <h1 className="mt-4 font-display text-headline font-semibold text-ink">
         That page isn’t here.
       </h1>
       <p className="mt-4 text-base leading-relaxed text-ink-muted">

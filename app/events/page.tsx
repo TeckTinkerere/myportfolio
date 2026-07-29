@@ -35,7 +35,7 @@ export default async function EventsPage({
     <>
       <Section className="pb-0">
         <div className="max-w-3xl">
-          <h1 className="text-headline font-semibold text-ink">
+          <h1 className="font-display text-headline font-semibold text-ink">
             Technology events that stay clear, energetic, and human.
           </h1>
           <p className="prose-measure mt-5 text-lg leading-relaxed text-ink-muted">
@@ -70,7 +70,7 @@ export default async function EventsPage({
             {visible.map((event) => (
               <li
                 key={event.slug}
-                className="rounded-lg border border-border bg-surface p-6"
+                className="rounded-sm border border-border bg-surface p-6"
               >
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
                   <span className="label-mono text-accent">
@@ -107,7 +107,7 @@ export default async function EventsPage({
             ))}
           </ul>
         ) : (
-          <p className="mt-6 rounded-lg border border-border bg-surface p-6 text-sm text-ink-muted">
+          <p className="mt-6 rounded-sm border border-border bg-surface p-6 text-sm text-ink-muted">
             No events published under this role yet.
           </p>
         )}
@@ -116,7 +116,7 @@ export default async function EventsPage({
           An honest statement of incompleteness rather than padding the page.
           PRD s27.6: a missing fact never becomes invented copy.
         */}
-        <div className="mt-8 rounded-lg border border-dashed border-border p-6">
+        <div className="mt-8 rounded-sm border border-dashed border-border p-6">
           <h3 className="text-sm font-semibold text-ink">
             More event work is being verified
           </h3>
@@ -140,7 +140,7 @@ export default async function EventsPage({
       </Section>
 
       <Section className="pt-0">
-        <div className="rounded-lg border border-border bg-surface p-8">
+        <div className="rounded-sm border border-border bg-surface p-8">
           <h2 className="max-w-xl text-title font-semibold text-ink">
             Need a host, facilitator, workshop instructor or hackathon support?
           </h2>

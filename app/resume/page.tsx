@@ -28,7 +28,7 @@ export default function ResumePage() {
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
             {/* The one place the full legal name is appropriate (PRD FR-08). */}
-            <h1 className="text-headline font-semibold text-ink">
+            <h1 className="font-display text-headline font-semibold text-ink">
               {siteConfig.legalName}
             </h1>
             <p className="mt-2 text-base text-ink-muted">{siteConfig.descriptor}</p>
@@ -44,7 +44,7 @@ export default function ResumePage() {
             {resumePdf ? (
               <a
                 href={resumePdf.href}
-                className="inline-flex items-center gap-2 rounded-md bg-accent px-4 py-2 text-sm font-medium text-accent-contrast"
+                className="inline-flex items-center gap-2 rounded-sm bg-accent px-4 py-2 text-sm font-medium text-accent-contrast"
               >
                 Download PDF
               </a>
