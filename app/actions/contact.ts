@@ -4,7 +4,8 @@ import { headers } from 'next/headers'
 
 import {
   EmailNotConfiguredError,
-  isEmailConfigured,
+  EmailSendError,
+  missingEmailConfig,
   sendTransactionalEmail,
 } from '@/lib/email/brevo'
 import { renderEnquiryEmail } from '@/lib/email/templates'
@@ -98,9 +99,11 @@ export async function submitContactForm(
     }
   }
 
-  if (!isEmailConfigured()) {
-    // Honest unavailable state rather than a fake success. The form is fully
-    // testable now and goes live the moment the Brevo keys are set.
+  const missing = missingEmailConfig()
+  if (missing.length > 0) {
+    // Names only, never values — safe to log, and this is the one line that
+    // makes a production misconfiguration diagnosable from Vercel logs.
+    console.error(`Contact form: Brevo not configured. Missing: ${missing.join(', ')}`)
     return {
       status: 'error',
       message:
@@ -121,11 +124,22 @@ export async function submitContactForm(
       htmlContent: renderEnquiryEmail(data),
     })
   } catch (error) {
-    // Log the failure class only. The message body is never logged (PRD s21.2).
-    console.error(
-      'Contact form delivery failed:',
-      error instanceof EmailNotConfiguredError ? 'not configured' : 'send error',
-    )
+    /**
+     * The reason is logged, the submitted content never is. Brevo's own
+     * error code is included because the two common production failures —
+     * a bad API key (401 unauthorized) and an unverified sender address
+     * (400 invalid_parameter) — are indistinguishable without it.
+     */
+    if (error instanceof EmailNotConfiguredError) {
+      console.error(`Contact form: missing config — ${error.missing.join(', ')}`)
+    } else if (error instanceof EmailSendError) {
+      console.error(`Contact form: ${error.message}`)
+    } else if (error instanceof Error && error.name === 'TimeoutError') {
+      console.error('Contact form: Brevo request timed out after 10s')
+    } else {
+      console.error('Contact form: unexpected delivery failure')
+    }
+
     return {
       status: 'error',
       message:

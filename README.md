@@ -200,9 +200,29 @@ To retune it, edit the config file. To remove it entirely, drop
 
 ## Deployment
 
-Deploys on Vercel from `main`. Set `BREVO_API_KEY`, `BREVO_SENDER_EMAIL` and
-`CONTACT_RECIPIENT_EMAIL` in the project's environment variables; the sender
-address must be verified in Brevo.
+Deploys on Vercel from `main`.
+
+### Contact form environment
+
+**All three are required.** With any of them missing the form renders and
+validates normally but reports itself unavailable, and logs exactly which
+variable is absent — check the Vercel runtime logs.
+
+| Variable | Notes |
+| --- | --- |
+| `BREVO_API_KEY` | Brevo → SMTP & API → API Keys. Nothing sends without it. |
+| `BREVO_SENDER_EMAIL` | Must be a **verified** sender in Brevo, or Brevo rejects with `400 invalid_parameter`. |
+| `CONTACT_RECIPIENT_EMAIL` | Destination. `SUPPORT_EMAIL` is accepted as an alias. |
+
+`BREVO_SENDER_NAME` is optional and falls back to `APP_NAME`, then
+`"Portfolio"`.
+
+Delivery failures log Brevo's own error code, because the two common
+production faults look identical otherwise: a bad key returns `401
+unauthorized`, an unverified sender returns `400 invalid_parameter`.
+
+Also make sure `NEXT_PUBLIC_SITE_URL` matches the host Vercel actually
+serves — see the note in `content/site-config.ts`.
 
 Run through [`docs/release-checklist.md`](./docs/release-checklist.md) before
 promoting to production — in particular the content-safety grep, which
