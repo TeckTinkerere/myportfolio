@@ -12,7 +12,7 @@ import { SystemFieldStatic } from '@/components/three/system-field-static'
 import { principles } from '@/content/profile'
 import { placements } from '@/content/recognition'
 import { capabilityRoutes, siteConfig } from '@/content/site-config'
-import { getFeaturedProjects, getPublicEvents, getPublicProjects } from '@/lib/content/queries'
+import { getFeaturedEvent, getFeaturedProjects, getPublicProjects } from '@/lib/content/queries'
 import { buildSystemField } from '@/lib/content/system-field'
 import { STATUS_LABELS } from '@/lib/content/public-view'
 
@@ -21,7 +21,7 @@ export default function HomePage() {
   // slots span a product, a platform, a community initiative and
   // facilitation rather than four of the same thing.
   const featured = getFeaturedProjects('general', 3)
-  const featuredEvent = getPublicEvents()[0]
+  const featuredEvent = getFeaturedEvent()
   const field = buildSystemField()
 
   return (
@@ -152,7 +152,7 @@ function SelectedWork({
   event,
 }: {
   projects: ReturnType<typeof getFeaturedProjects>
-  event?: ReturnType<typeof getPublicEvents>[number]
+  event?: ReturnType<typeof getFeaturedEvent>
 }) {
   return (
     <Section aria-labelledby="work-heading">

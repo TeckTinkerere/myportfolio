@@ -30,7 +30,15 @@ export default async function EventsPage({
   const role = ROLE_FILTERS.some((f) => f.value === rawRole) ? rawRole! : 'all'
 
   const all = getPublicEvents()
-  const visible = role === 'all' ? all : all.filter((event) => event.role === role)
+  // Matches primary or secondary role, consistent with the ladder count below
+  // and with getEventsByRole() — a multi-hat event should surface under
+  // every role it filters by, not just the one chosen as primary.
+  const visible =
+    role === 'all'
+      ? all
+      : all.filter(
+          (event) => event.role === role || event.secondaryRoles?.includes(role as EventRole),
+        )
 
   return (
     <>
@@ -54,15 +62,18 @@ export default async function EventsPage({
         />
 
         {/*
-          The ladder is deliberately honest: it shows all five role types and
-          marks how many published records evidence each. Four are empty, and
-          saying so is better than implying a fuller record than exists.
+          The ladder counts a role wherever it appears, primary or secondary
+          — matching the filter logic below — so a multi-hat event credits
+          every role it genuinely evidences.
         */}
         <RoleLadder
-          caption="Roles I can currently evidence. Empty rows are real experience awaiting date and organiser confirmation."
+          caption="Roles evidenced across the published record, counted from both primary and secondary roles."
           rungs={Object.entries(EVENT_ROLE_LABELS).map(([value, label]) => ({
             label,
-            count: all.filter((event) => event.role === value).length,
+            count: all.filter(
+              (event) =>
+                event.role === value || event.secondaryRoles?.includes(value as EventRole),
+            ).length,
           }))}
         />
 
@@ -86,9 +97,9 @@ export default async function EventsPage({
                 className="rounded-sm border border-border bg-surface p-6"
               >
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                  <span className="label-mono text-accent">
-                    {EVENT_ROLE_LABELS[event.role as EventRole]}
-                  </span>
+                  {/* The exact, full role description — never just the
+                      primary role a multi-hat event was filed under. */}
+                  <span className="label-mono text-accent">{event.roleLabel}</span>
                   <span className="text-xs text-ink-muted">{event.date}</span>
                 </div>
 

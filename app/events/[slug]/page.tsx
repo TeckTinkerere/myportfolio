@@ -5,9 +5,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
 import { Section } from '@/components/layout/section'
-import { EVENT_ROLE_LABELS } from '@/content/events'
 import { getEventBySlug, getEventsWithDetailPages } from '@/lib/content/queries'
-import type { EventRole } from '@/lib/content/schema'
 
 /**
  * Only events with enough verified material get their own page (PRD s7.1).
@@ -68,9 +66,7 @@ export default async function EventPage({
           </ol>
         </nav>
 
-        <p className="label-mono text-accent">
-          {EVENT_ROLE_LABELS[event.role as EventRole]}
-        </p>
+        <p className="label-mono text-accent">{event.roleLabel}</p>
         <h1 className="mt-4 font-display text-headline font-semibold text-ink">{event.name}</h1>
         <p className="mt-3 text-sm text-ink-muted">
           {event.organiser} · {event.date}

@@ -11,32 +11,6 @@ agree · `[ASSET]` a file is missing · `[TESTIMONIAL]` needs written consent ·
 
 ## Blocking — these hold back a whole section
 
-### Events
-
-`/events` currently publishes **one** record: the AI Singapore *AI for Good
-(Youth) Student Facilitator* programme. That is the only event anywhere in the
-old codebase with third-party documentation.
-
-The PRD lists a candidate inventory that has **no supporting material** in this
-repository — no dates, no organiser names beyond the event title, no role
-confirmation, no links, no photographs:
-
-- `[VERIFY]` AI Hackathon SG — exact role (main emcee and co-host?), date, organiser, audience size
-- `[VERIFY]` Nosana Challenge — workshop instructor? date, organiser
-- `[VERIFY]` Deep Research Agent workshop — assistant or facilitator? date, organiser
-- `[VERIFY]` AFSG Hackathon — teaching assistant, date, organiser
-- `[VERIFY]` SG Vibe Coding Hackathon — host support, date, organiser
-- `[VERIFY]` AI Builders — your actual relationship to the organisation. The
-  PRD is explicit that it must not read as your own company.
-- `[PERMISSION]` OCBC Kids@Work co-emcee — needs employer approval before it
-  can be named at all
-- `[ASSET]` Event photographs. There is exactly one usable image
-  (`public/images/events/event-01.jpg`) and it is not currently published.
-- `[TESTIMONIAL]` An organiser quote, with written permission to publish.
-
-**To add an event:** append an entry to `content/events/index.ts`. State the
-exact role — the schema will not let participation be filed as hosting.
-
 ### Enterprise automation case study
 
 `content/projects/enterprise-automation.ts` exists as a scaffold with
@@ -74,6 +48,48 @@ sentence of source material, so the rest is not written.
 ---
 
 ## Non-blocking
+
+### Events
+
+`/events` now publishes **13** records (added 2026-07-30 from Mohamed's own
+event log) spanning all five roles: host/emcee, co-host/organiser, workshop
+instructor, facilitator/TA, and event operations support. Multi-role events
+(e.g. Agent Forge: Build OpenClaw AI Assistant, Daytona HackSprint Singapore)
+use `secondaryRoles` so every role genuinely performed is credited in the
+ladder and filters, not just the primary one.
+
+- `[VERIFY]` **Organiser names.** The source data gave event names, dates,
+  roles and detailed responsibilities, but organiser was inferred from the
+  event title/description rather than stated as its own field. Most are
+  confident (e.g. "MeDo Singapore Vibe Coding Hackathon" → MeDo Singapore;
+  Nosana Builders Challenge → Nosana). Worth a second look:
+  `agentfield-day-autonomous-backend-hackathon` (organiser guessed as AI
+  Builders), the three `singapore-ai-founders-vip-dinner*` /
+  `ai-founders-vip-dinner-google-singapore` entries (guessed as "Singapore AI
+  Founders"), and `ai-for-everyday-work` (guessed as AI Builders, least
+  confident of the twelve).
+- `[VERIFY]` Whether `medo-singapore-vibe-coding-hackathon` is the same event
+  the PRD candidate list called "SG Vibe Coding Hackathon" — treated as the
+  same event here.
+- `[VERIFY]` Still unconfirmed and not published: **AI Hackathon SG** (main
+  emcee and co-host?), **AFSG Hackathon** (teaching assistant?) — no dates or
+  organiser details exist for either yet.
+- `[PERMISSION]` **OCBC Kids@Work co-emcee** — needs employer approval before
+  it can be named at all.
+- `[ASSET]` Event photographs. There is exactly one usable image
+  (`public/images/events/event-01.jpg`) and it is not currently published on
+  any event. None of the 13 published events has a cleared photo.
+- `[TESTIMONIAL]` No organiser quote has permission to publish yet.
+- No event has `hasDetailPage: true` — `/events/[slug]` still generates
+  nothing. The inline responsibility list on `/events` covers what a detail
+  page would add; revisit once photos or a testimonial are cleared.
+
+**To add or correct an event:** edit `content/events/index.ts`. `role` is
+the primary role (drives the card's proof verb and the URL filter);
+`secondaryRoles` credits any other roles genuinely performed at the same
+event; `roleLabel` should state all of them in full, matching the wording in
+`EVENT_ROLE_LABELS`. The schema will not let participation be filed as
+hosting.
 
 ### Metrics currently withheld
 

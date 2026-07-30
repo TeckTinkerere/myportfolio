@@ -88,13 +88,29 @@ export function getEventBySlug(slug: string): PortfolioEvent | undefined {
   return getPublicEvents().find((event) => event.slug === slug)
 }
 
+/** Matches the primary role or any secondary role — see PortfolioEvent.secondaryRoles. */
 export function getEventsByRole(role: EventRole): PortfolioEvent[] {
-  return getPublicEvents().filter((event) => event.role === role)
+  return getPublicEvents().filter(
+    (event) => event.role === role || event.secondaryRoles?.includes(role),
+  )
 }
 
 /** Only events with enough verified material get a dedicated page. */
 export function getEventsWithDetailPages(): PortfolioEvent[] {
   return getPublicEvents().filter((event) => event.hasDetailPage)
+}
+
+/**
+ * The single event shown on the homepage. Prefers an explicit featuredRank,
+ * the same convention getFeaturedProjects() uses, so the strongest record —
+ * not just the most recent — gets the one slot. Falls back to the most
+ * recent published event if nothing is ranked.
+ */
+export function getFeaturedEvent(): PortfolioEvent | undefined {
+  const ranked = getPublicEvents()
+    .filter((event) => event.featuredRank !== undefined)
+    .sort((a, b) => a.featuredRank! - b.featuredRank!)
+  return ranked[0] ?? getPublicEvents()[0]
 }
 
 export function getRecognition(): Recognition[] {

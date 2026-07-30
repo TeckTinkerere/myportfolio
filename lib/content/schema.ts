@@ -231,6 +231,13 @@ export const portfolioEventSchema = z
     organiser: z.string().min(1),
     date: isoDate,
     role: eventRoleSchema,
+    /**
+     * Some events genuinely involve more than one distinct role in the same
+     * sitting — emceeing and also handling ops, say. `role` drives filtering,
+     * the ladder count and the card's proof verb; `secondaryRoles` credits
+     * the rest without inflating any single label into the others.
+     */
+    secondaryRoles: z.array(eventRoleSchema).optional(),
     roleLabel: z.string().min(1),
     summary: z.string().min(1),
     responsibilities: z.array(z.string().min(1)).min(1),
@@ -273,6 +280,10 @@ export const portfolioEventSchema = z
       path: ['testimonial'],
     },
   )
+  .refine((e) => !e.secondaryRoles?.includes(e.role), {
+    message: 'secondaryRoles must not repeat the primary role',
+    path: ['secondaryRoles'],
+  })
 
 export const recognitionSchema = z.object({
   slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
