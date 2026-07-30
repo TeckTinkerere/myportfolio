@@ -18,9 +18,18 @@ yarn-error.log*
 
 # env files
 .env*
+!.env.example
 
 # vercel
 .vercel
+
+# Private content: unpublished verification notes, permission records and any
+# item whose visibility is not public. Never committed, never imported by app
+# code, never present in a build. See PRD s13.1.
+/content/private/
+
+# test output
+/coverage/
 
 # typescript
 *.tsbuildinfo

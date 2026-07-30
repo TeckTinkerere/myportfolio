@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main, rebrand]
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      # Content-schema rules (PRD s14.2) run here. A public item with a pending
+      # permission, a missing alt text, or a duplicate slug fails the build.
+      - name: Test
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      # Confirms no unpublished item, unverified metric or secret reached a
+      # client bundle or a prerendered page.
+      - name: Content safety gate
+        run: npm run check:leaks

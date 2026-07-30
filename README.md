@@ -1,424 +1,209 @@
-<div align="center">
+# mohdaslam.dev
 
-# 🚀 Mohamed Aslam's Portfolio
+Personal site for Mohamed Aslam — technology builder and community operator,
+Singapore.
 
-### Professional Full-Stack Developer Portfolio
+Built as a proof-of-work platform rather than a decorative portfolio: one
+typed content source feeds five audience lenses, and the build refuses to
+publish anything whose facts or permissions have not been settled.
 
-[![Next.js](https://img.shields.io/badge/Next.js-15.2-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38bdf8?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
-[![React](https://img.shields.io/badge/React-19.1-61dafb?style=for-the-badge&logo=react)](https://reactjs.org/)
-
-[View Live Demo](https://your-portfolio-url.vercel.app) • [Report Bug](https://github.com/TeckTinkerere/myportfolio/issues) • [Request Feature](https://github.com/TeckTinkerere/myportfolio/issues)
-
-</div>
-
----
-
-## 📋 Table of Contents
-
-- [About](#-about)
-- [Features](#-features)
-- [Tech Stack](#-tech-stack)
-- [Project Structure](#-project-structure)
-- [Getting Started](#-getting-started)
-- [Available Scripts](#-available-scripts)
-- [Portfolio Sections](#-portfolio-sections)
-- [Deployment](#-deployment)
-- [Performance](#-performance)
-- [Contributing](#-contributing)
-- [License](#-license)
-- [Contact](#-contact)
-
----
-
-## 🎯 About
-
-A modern, professional portfolio website showcasing full-stack development expertise, technical projects, certifications, and professional achievements. Built with Next.js 15, TypeScript, and Tailwind CSS, featuring a sleek dark theme with gradient accents and smooth animations.
-
-### ✨ Highlights
-
-- 🎨 **Modern Design**: Gradient-based dark theme with cyan and purple accents
-- 📱 **Fully Responsive**: Mobile-first design that works on all devices
-- ⚡ **Performance Optimized**: Fast loading times with Next.js SSR and SSG
-- 🔍 **SEO Ready**: Optimized for search engines with proper meta tags
-- ♿ **Accessible**: WCAG compliant with keyboard navigation support
-- 🎭 **Interactive**: Smooth animations and transitions throughout
-
----
-
-## 🌟 Features
-
-### Core Features
-
-- **Dynamic Project Showcase**: 27+ projects organized by status and category
-- **Advanced Filtering**: Real-time search and filter by status, category, and technology
-- **Responsive Navigation**: Mobile-optimized menu with smooth transitions
-- **Dark/Light Theme**: Theme toggle with system preference detection
-- **Newsletter Integration**: Email subscription modal for updates
-- **Contact Form**: Professional contact form with validation
-
-### Technical Features
-
-- **Server-Side Rendering**: Fast initial page loads with Next.js SSR
-- **Static Site Generation**: Pre-rendered pages for optimal performance
-- **Type Safety**: Full TypeScript implementation for reliability
-- **Component Library**: Reusable UI components with Shadcn/ui
-- **Form Validation**: React Hook Form with Zod schema validation
-- **Testing Suite**: Jest and React Testing Library integration
-
----
-
-## 🛠️ Tech Stack
-
-### Frontend
-
-| Technology | Purpose |
-|------------|---------|
-| **Next.js 15** | React framework with SSR/SSG |
-| **React 19** | UI component library |
-| **TypeScript** | Type-safe JavaScript |
-| **Tailwind CSS** | Utility-first CSS framework |
-| **Shadcn/ui** | Accessible component library |
-| **Lucide React** | Modern icon library |
-
-### Development Tools
-
-| Tool | Purpose |
-|------|---------|
-| **Jest** | Unit testing framework |
-| **React Testing Library** | Component testing |
-| **ESLint** | Code linting |
-| **Prettier** | Code formatting |
-
-### UI Components
-
-- **Radix UI**: Accessible component primitives
-- **Recharts**: Data visualization
-- **React Hook Form**: Form management
-- **Zod**: Schema validation
-- **Sonner**: Toast notifications
-
----
-
-## 📁 Project Structure
-
-```
-portfolio/
-├── app/                          # Next.js app directory
-│   ├── page.tsx                  # Home page
-│   ├── layout.tsx                # Root layout
-│   ├── globals.css               # Global styles
-│   ├── skills/                   # Skills page
-│   ├── projects/                 # Featured projects page
-│   ├── all-projects/             # Complete portfolio page
-│   ├── hall-of-fame/             # Certifications page
-│   ├── visionary-wall/           # Testimonials page
-│   └── contact/                  # Contact page
-│
-├── components/                   # React components
-│   ├── navbar.tsx                # Navigation bar
-│   ├── footer.tsx                # Site footer
-│   ├── newsletter-modal.tsx      # Newsletter subscription
-│   ├── project-card.tsx          # Project display card
-│   ├── theme-provider.tsx        # Theme context
-│   ├── pages/                    # Page-specific components
-│   │   ├── home.tsx
-│   │   ├── projects.tsx
-│   │   ├── all-projects.tsx
-│   │   ├── skills.tsx
-│   │   ├── hall-of-fame.tsx
-│   │   ├── visionary-wall.tsx
-│   │   └── contact.tsx
-│   └── ui/                       # Reusable UI components
-│       ├── button.tsx
-│       ├── card.tsx
-│       ├── input.tsx
-│       ├── badge.tsx
-│       └── ... (50+ components)
-│
-├── lib/                          # Utility functions and data
-│   ├── projects.ts               # Featured projects data
-│   ├── all-projects.ts           # Complete project portfolio
-│   ├── professional-profile.ts   # Profile information
-│   ├── content-validation.ts     # Content validation
-│   └── utils.ts                  # Helper functions
-│
-├── public/                       # Static assets
-│   ├── certificates/             # Certification images
-│   ├── projects/                 # Project screenshots
-│   └── ...                       # Other images
-│
-├── hooks/                        # Custom React hooks
-│   ├── use-mobile.tsx            # Mobile detection
-│   └── use-toast.ts              # Toast notifications
-│
-├── styles/                       # Additional styles
-│   └── globals.css
-│
-├── .kiro/                        # Project specifications
-│   └── specs/
-│       └── portfolio-refactor/
-│
-├── jest.config.js                # Jest configuration
-├── jest.setup.js                 # Jest setup
-├── tailwind.config.ts            # Tailwind configuration
-├── tsconfig.json                 # TypeScript configuration
-├── next.config.mjs               # Next.js configuration
-└── package.json                  # Dependencies
-```
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- **Node.js**: 18.x or higher
-- **npm** or **pnpm**: Latest version
-
-### Installation
-
-1. **Clone the repository**
+## Quick start
 
 ```bash
-git clone https://github.com/TeckTinkerere/myportfolio.git
-cd myportfolio
-```
-
-2. **Install dependencies**
-
-```bash
-npm install
-# or
-pnpm install
-```
-
-3. **Run the development server**
-
-```bash
+npm ci
+cp .env.example .env.local   # optional — the site runs without it
 npm run dev
-# or
-pnpm dev
 ```
 
-4. **Open your browser**
+Nothing in `.env.local` is required to run the site. Without the Brevo keys
+the contact form still renders and validates; it just reports that delivery
+is not connected yet rather than pretending to send.
 
-Navigate to [http://localhost:3000](http://localhost:3000)
+## Scripts
 
----
+| Command | What it does |
+| --- | --- |
+| `npm run dev` | Development server |
+| `npm run build` | Production build (runs `typecheck` first via `prebuild`) |
+| `npm run typecheck` | `tsc --noEmit` |
+| `npm run lint` | ESLint via `next lint` |
+| `npm test` | Jest — content rules, contact validation, link integrity |
+| `npm run verify` | typecheck → lint → test → build |
 
-## 📜 Available Scripts
+## Stack
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server on port 3000 |
-| `npm run build` | Build production-ready application |
-| `npm run start` | Start production server |
-| `npm run lint` | Run ESLint for code quality |
-| `npm run test` | Run Jest test suite |
-| `npm run test:watch` | Run tests in watch mode |
-| `npm run test:content-validation` | Run content validation tests |
+Next.js 15 (App Router) · React 19 · TypeScript strict · Tailwind CSS 3 · Zod ·
+next-themes · a handful of Radix primitives · Jest.
 
----
+Server components by default. Only three things ship client JavaScript: the
+mobile navigation drawer, the theme toggle, and the contact form.
 
-## 📱 Portfolio Sections
+## How content works
 
-### 1. Home (`/`)
-- Professional introduction
-- Technical summary with key metrics
-- Skills snapshot
-- Call-to-action buttons
-- Social media links
+All content lives in `content/` as typed TypeScript. There is no CMS.
 
-### 2. Skills (`/skills`)
-- Technical competencies organized by category
-- Frontend, Backend, Database, Cloud & DevOps
-- Proficiency levels
-- Technology icons and descriptions
+```
+content/
+  site-config.ts       identity, nav, contact — the single source of truth
+  profile.ts           bio, principles, timeline, education, résumé data
+  projects/            one file per case study, plus archive.ts for compact entries
+  events/index.ts      event records
+  recognition.ts       third-party awards and certifications
+lib/content/
+  schema.ts            Zod schemas + inferred types
+  queries.ts           server-only: the publication boundary
+  public-view.ts       narrows a project before it crosses into a client component
+```
 
-### 3. Featured Projects (`/projects`)
-- Highlighted production applications
-- Detailed project cards with:
-  - Project name and description
-  - Technology stack
-  - Live demo and GitHub links
-  - Technical highlights
-- Organized by Personal and Academic projects
+### The build fails on bad content
 
-### 4. All Projects (`/all-projects`)
-- Complete portfolio of 27 projects
-- Advanced search and filter functionality
-- Organized by status:
-  - **Active & In Production** (8 projects)
-  - **On Hold** (13 projects)
-  - **MVPs** (2 projects)
-  - **Conceptual** (2 projects)
-  - **Completed** (3 projects)
-- Category icons and status badges
-- Statistics dashboard
+`content/projects/index.ts` calls `parseProjects()` at module scope. Because
+the route pages import it, a schema violation throws during static generation
+and fails `next build`, naming the slug and the field. Unlike a type error,
+this cannot be silenced by a config flag.
 
-### 5. Certifications (`/hall-of-fame`)
-- Professional certifications
-- Achievement badges
-- Certification images
-- Issuing organizations
+The build refuses to publish when:
 
-### 6. Testimonials (`/visionary-wall`)
-- Professional recommendations
-- Client feedback
-- Peer testimonials
+- an item claims `visibility: 'public'` while its permission is `pending` or `prohibited`
+- a published image has no alt text
+- a published Tier 1 case study has no outcome or no long summary
+- a metric is marked `verified` without a `publicSourceUrl`
+- a sanitised item has no confidentiality note
+- two items share a slug
+- a testimonial has not been permission-cleared
 
-### 7. Contact (`/contact`)
-- Contact form with validation
-- Email and social media links
-- Professional inquiry handling
+### The publication boundary
 
----
+`lib/content/queries.ts` imports `server-only`, so a client component that
+reaches for the content set fails the build instead of quietly bundling it.
+Everything public flows through `getPublicProjects()` / `getPublicEvents()`,
+which filter on visibility *and* permission in one place.
 
-## 🌐 Deployment
+Consequences worth knowing:
 
-### Deploy to Vercel (Recommended)
+- An item with a pending permission is authored in the repo but appears on no
+  page, in no sitemap, and in no `generateStaticParams` output.
+- Unverified metrics are stored but can never render — `getDisplayableMetrics()`
+  is the only way a component can read them.
+- Anything genuinely private is simply not in the repository. A `noindex` tag
+  or a hidden URL is not access control.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/TeckTinkerere/myportfolio)
+### Adding or changing content
 
-1. Push your code to GitHub
-2. Import your repository to Vercel
-3. Vercel will automatically detect Next.js and configure build settings
-4. Deploy!
+Edit the relevant file in `content/`. A project is authored once; its status,
+role and summary update everywhere it appears — homepage, `/work`, and each
+capability route it is tagged for. To publish the enterprise automation case
+study, fill in its fields and change `permissionStatus` to `approved`; no code
+change is needed.
 
-### Manual Deployment
+Outstanding facts, permissions and assets are tracked in
+[`CONTENT_TODO.md`](./CONTENT_TODO.md).
+
+## Routes
+
+`/` · `/work` · `/work/[slug]` · `/software` · `/websites` · `/events` ·
+`/events/[slug]` · `/community` · `/about` · `/contact` · `/resume` ·
+`/privacy`, plus `not-found` and `error`.
+
+The four capability routes share one `LensPage` component and differ only in
+copy and ordering.
+
+Filtering on `/work` and `/events` is done by the server from `searchParams`.
+The filter controls are links, so they produce real shareable URLs, work
+without JavaScript, are keyboard-operable by default, and ship no filter JS —
+while still being a soft navigation.
+
+## Design system
+
+The visual language is an **instrument panel**: the site is built on a
+verification state machine, so it reads as a control surface rather than a
+magazine. Amber on near-black is the palette of instrument displays, which is
+why the brand accent stayed and the structure around it changed.
+
+Tokens live in `app/globals.css` as HSL triplets, consumed through
+`tailwind.config.ts`. Both themes are complete and every pair is checked
+against WCAG 2.2 AA — measured ratios are recorded in a comment beside the
+values. Note the two border tokens: `--border` is a decorative hairline at
+1.3:1 and must never be the only thing marking an interactive boundary;
+`--border-strong` is 3.4:1 and is what inputs and controls use, per WCAG 2.2
+§1.4.11.
+
+Type is **Archivo** for display (width axis set slightly expanded, so
+headlines read as equipment labelling), **Geist** for body, and **IBM Plex
+Mono** for all telemetry — statuses, dates, counts, labels.
+
+Motion is one orchestrated hero sequence plus once-only scroll reveals, and
+everything is gated behind `prefers-reduced-motion: no-preference` so a
+reduced-motion visitor gets the finished composition, not a degraded one.
+
+### Brand assets
+
+Every icon and logo is generated from one master by a single script:
 
 ```bash
-# Build the application
-npm run build
-
-# Start production server
-npm run start
+node scripts/build-brand-assets.mjs
 ```
 
-### Environment Variables
+| Output | Size | Used by |
+| --- | --- | --- |
+| `app/icon.png` | 128 | Favicon (Next's icon convention) |
+| `app/apple-icon.png` | 180 | iOS home screen |
+| `public/images/brand/logo.png` | 512 | Header, footer, social card |
+| `public/images/brand/logo-email.png` | 128 | Transactional email |
 
-Create a `.env.local` file for environment-specific variables:
+The master lives at `assets/brand/logo-master.png` — **outside `public/`**, so
+the 4.5 MB original is never deployed or served.
 
-```env
-NEXT_PUBLIC_SITE_URL=https://your-domain.com
-NEXT_PUBLIC_GA_ID=your-google-analytics-id
-```
+Two things the script handles that matter:
 
----
+- It crops to the bounding box of *opaque* pixels rather than trimming on
+  colour, which removes the generator watermark and the soft drop shadow
+  (both low-alpha, both outside the mark) and centres the mark optically at
+  every size.
+- It quantises the palette. The mark is a photographic brushed-metal render,
+  so a full-colour PNG of it is large; this takes the favicon from 113 kB to
+  9.7 kB with no visible loss at the sizes actually rendered.
 
-## ⚡ Performance
+The master **must have a real alpha channel**. The mark sits on both the
+near-black and the warm cream theme, so anything with a background baked in
+is unusable as site chrome — it reads as a white sticker on the dark theme.
 
-### Lighthouse Scores
+One theme correction is applied in CSS, not in the asset. On dark the mark
+measures ~6.2:1 and needs nothing; on cream its champagne highlights measure
+~1.05:1 and wash out, dragging the whole mark to ~2.9:1. The `.brand-mark`
+class applies a mild darkening in light theme only, lifting it to ~3.9:1.
 
-- **Performance**: 95+
-- **Accessibility**: 100
-- **Best Practices**: 100
-- **SEO**: 100
+### The hero field
 
-### Optimizations
+The signature element is a 3D node field where **every node is one published
+project**, positioned by the disciplines it belongs to and coloured by its
+real status. It is generated by `lib/content/system-field.ts` from the same
+query layer as the pages, so it cannot drift from the truth and an
+unpublished item can no more appear in it than on `/work`.
 
-- ✅ Server-Side Rendering (SSR)
-- ✅ Static Site Generation (SSG)
-- ✅ Image optimization with Next.js Image
-- ✅ Code splitting and lazy loading
-- ✅ Minified CSS and JavaScript
-- ✅ CDN delivery via Vercel
-- ✅ Responsive images
-- ✅ Efficient caching strategies
+It is built in three layers:
 
----
+| File | Role |
+| --- | --- |
+| `components/three/system-field.config.ts` | Every tunable value — radius, speed, sizes, colours, link density. Start here. |
+| `components/three/system-field-static.tsx` | Server-rendered SVG projection of the same data. Ships in the initial HTML, no JavaScript. |
+| `components/three/system-field-canvas.tsx` | The WebGL scene (React Three Fiber). |
 
-## 🎨 Customization
+three.js is ~160 kB, so it is dynamically imported with `ssr: false` after
+mount: the homepage's First Load JS is 111 kB against a 109 kB baseline, and
+the 3D can never affect LCP. If WebGL is unavailable, the connection is on
+save-data, the device reports fewer than four cores, or JavaScript is off, the
+SVG underneath simply remains — showing the same information.
 
-### Theme Colors
+To retune it, edit the config file. To remove it entirely, drop
+`<SystemField />` from `app/page.tsx`; the SVG keeps working on its own.
 
-Edit `app/globals.css` to customize the color scheme:
+## Deployment
 
-```css
-:root {
-  --background: 0 0% 100%;
-  --foreground: 0 0% 3.9%;
-  --primary: 0 0% 9%;
-  /* ... more variables */
-}
-```
+Deploys on Vercel from `main`. Set `BREVO_API_KEY`, `BREVO_SENDER_EMAIL` and
+`CONTACT_RECIPIENT_EMAIL` in the project's environment variables; the sender
+address must be verified in Brevo.
 
-### Adding Projects
-
-Add new projects to `lib/all-projects.ts`:
-
-```typescript
-{
-  id: 28,
-  name: "Your Project",
-  status: "Active",
-  category: "Web App",
-  keyTech: "Next.js, TypeScript",
-  description: "Your project description",
-  demoUrl: "https://demo.com",
-  githubUrl: "https://github.com/..."
-}
-```
-
-### Modifying Components
-
-All components are in the `components/` directory and use TypeScript for type safety.
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Please follow these steps:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-### Code Style
-
-- Follow TypeScript best practices
-- Use ESLint and Prettier for formatting
-- Write meaningful commit messages
-- Add tests for new features
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 📧 Contact
-
-**Mohamed Aslam Abdul Gafoor**
-
-- 🌐 Portfolio: [https://myportfolio-aslam.vercel.app](https://myportfolio-aslam.vercel.app)
-- 💼 LinkedIn: [mohamed-aslam-abdul](https://www.linkedin.com/in/mohamed-aslam-abdul)
-- 🐙 GitHub: [@TeckTinkerere](https://github.com/TeckTinkerere)
-- 📧 Email: aslam040607@gmail.com
-
----
-
-## 🙏 Acknowledgments
-
-- [Next.js](https://nextjs.org/) - React framework
-- [Tailwind CSS](https://tailwindcss.com/) - CSS framework
-- [Shadcn/ui](https://ui.shadcn.com/) - Component library
-- [Radix UI](https://www.radix-ui.com/) - Accessible components
-- [Lucide](https://lucide.dev/) - Icon library
-- [Vercel](https://vercel.com/) - Deployment platform
-
----
-
-<div align="center">
-
-### ⭐ Star this repository if you find it helpful!
-
-Made with 🫀 by Mohamed Aslam
-
-</div>
+Run through [`docs/release-checklist.md`](./docs/release-checklist.md) before
+promoting to production — in particular the content-safety grep, which
+confirms no unpublished item reached a client bundle.

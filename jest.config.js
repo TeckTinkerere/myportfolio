@@ -10,6 +10,13 @@ const customJestConfig = {
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   testEnvironment: 'jest-environment-jsdom',
   testPathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/node_modules/'],
+  moduleNameMapper: {
+    // The real package throws by design when imported outside a server
+    // component. That guard is what protects the content layer in the app,
+    // but under Jest it would block the very tests that verify the layer, so
+    // it is stubbed here only.
+    '^server-only$': '<rootDir>/test/stubs/server-only.js',
+  },
   collectCoverageFrom: [
     'components/**/*.{js,jsx,ts,tsx}',
     'lib/**/*.{js,jsx,ts,tsx}',
