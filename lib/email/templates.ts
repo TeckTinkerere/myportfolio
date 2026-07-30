@@ -15,7 +15,7 @@ import { ENQUIRY_TYPES, type ContactInput } from '@/lib/validation/contact'
  * siteConfig.url: an email is a durable artifact, and a preview deployment's
  * URL will stop resolving long before the email stops being read.
  */
-const LOGO_URL = 'https://mohdaslam.dev/images/brand/logo-email.png'
+const LOGO_URL = 'https://www.mohdaslam.dev/images/brand/logo-email.png'
 
 /**
  * Everything interpolated below comes from a public form, so it is escaped.

@@ -32,10 +32,19 @@ export const siteConfig = {
   locale: 'en-SG',
 
   /**
-   * Canonical origin. NEXT_PUBLIC_SITE_URL lets Vercel preview deployments
-   * generate correct absolute URLs; the production domain is the fallback.
+   * Canonical origin. Must match the host that actually serves the site,
+   * or every canonical URL points at something that immediately redirects.
+   *
+   * Vercel currently has www as the primary domain and 308-redirects the
+   * apex to it, so this is www. If you make the apex primary in Vercel →
+   * Domains (which matches the PRD's stated primary domain and is the
+   * tidier end state), change this back to https://mohdaslam.dev in the
+   * same sitting — the two settings have to agree.
+   *
+   * NEXT_PUBLIC_SITE_URL overrides it so preview deployments emit their own
+   * origin rather than claiming to be production.
    */
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://mohdaslam.dev',
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.mohdaslam.dev',
 
   contact: {
     email: 'aslam040607@gmail.com',
