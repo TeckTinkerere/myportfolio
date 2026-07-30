@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 
 import { LensPage } from '@/components/layout/lens-page'
 import { Section } from '@/components/layout/section'
+import { ProcessFlow } from '@/components/system/diagram'
 
 export const metadata: Metadata = {
   title: 'Websites & Web Products',
@@ -11,37 +12,34 @@ export const metadata: Metadata = {
 }
 
 const SERVICES = [
-  'Landing and informational websites',
-  'Community or event websites',
+  'Landing and informational sites',
+  'Community and event sites',
   'Early-stage MVP interfaces',
-  'Website redesign and information-architecture improvement',
-  'Responsive frontend implementation',
-  'Basic full-stack features where the scope suits it',
+  'Redesign and information architecture',
+  'Responsive frontend build',
+  'Light full-stack features',
 ]
 
 const PROCESS = [
-  { step: 'Clarify', body: 'What the site is for, and who it is actually for.' },
-  {
-    step: 'Agree',
-    body: 'Scope, content, who supplies what, and the deadline — in writing.',
-  },
+  { step: 'Clarify', body: 'What it is for, and who for.' },
+  { step: 'Agree', body: 'Scope, content, owners, deadline — in writing.' },
   { step: 'Structure', body: 'Information architecture and visual direction.' },
   { step: 'Build', body: 'Responsive implementation.' },
-  { step: 'Hand over', body: 'Review, test, and make sure you can run it without me.' },
+  { step: 'Hand over', body: 'Review, test, and you can run it without me.' },
 ]
 
 const YOU_PROVIDE = [
-  'A clear goal for the site, even a rough one.',
-  'Your copy, or the raw material for it.',
-  'Logos, photographs and any brand assets you already have.',
-  'One person who can make decisions and give feedback.',
+  'A goal, even a rough one',
+  'Copy, or the raw material for it',
+  'Logos, photos, existing brand assets',
+  'One person who can decide',
 ]
 
 const NOT_INCLUDED = [
-  'Ongoing content writing or copywriting as a service.',
-  'Long-term maintenance retainers.',
-  'Large e-commerce builds or complex payment integrations.',
-  'Anything needing a team — I work alone, and I would rather say so than overpromise.',
+  'Ongoing copywriting',
+  'Maintenance retainers',
+  'Large e-commerce or complex payments',
+  'Anything needing a team',
 ]
 
 export default function WebsitesPage() {
@@ -49,7 +47,7 @@ export default function WebsitesPage() {
     <LensPage
       lens="websites"
       title="Practical websites and web products built around a clear goal."
-      intro="I help early-stage teams, student initiatives, and community organisations turn an idea into a clear, responsive website or usable first product. I work on my own — this is not an agency, and the scope I take on reflects that."
+      intro="I help early-stage teams, student initiatives and community organisations turn an idea into a clear, responsive website or a usable first product. I work alone — not an agency, and the scope reflects that."
       ctaLabel="Have a website or first product in mind?"
       ctaHref="/contact?type=website"
     >
@@ -72,7 +70,7 @@ export default function WebsitesPage() {
 
           <div>
             <h2 className="font-display text-title font-semibold text-ink">
-              What I would need from you
+              What I need from you
             </h2>
             <ul className="mt-5 flex flex-col gap-2.5">
               {YOU_PROVIDE.map((item) => (
@@ -105,23 +103,14 @@ export default function WebsitesPage() {
         <h2 id="process-heading" className="font-display text-title font-semibold text-ink">
           How a project runs
         </h2>
-        <ol className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-          {PROCESS.map((phase, index) => (
-            <li key={phase.step} className="rounded-sm border border-border p-4">
-              <span className="label-mono text-accent">
-                {String(index + 1).padStart(2, '0')}
-              </span>
-              <h3 className="mt-2 text-sm font-semibold text-ink">{phase.step}</h3>
-              <p className="mt-1.5 text-sm leading-relaxed text-ink-muted">
-                {phase.body}
-              </p>
-            </li>
-          ))}
-        </ol>
-        {/* PRD s9.2: no fixed prices in v1 — scope first, then a quote. */}
-        <p className="prose-measure mt-6 text-sm text-ink-muted">
-          I do not publish fixed prices, because the useful number depends on scope. Tell
-          me what you are trying to do and I will come back with a scoped estimate.
+        <ProcessFlow
+          steps={PROCESS}
+          caption="Five stages. Scope is agreed in writing at stage two, before anything is built."
+        />
+        {/* No fixed prices in v1 — scope first, then a quote. */}
+        <p className="prose-measure text-sm text-ink-muted">
+          No fixed price list: the useful number depends on scope. Tell me what you are
+          trying to do and I will come back with a scoped estimate.
         </p>
       </Section>
     </LensPage>

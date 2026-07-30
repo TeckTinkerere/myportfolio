@@ -52,7 +52,7 @@ export default async function WorkPage({
         as="h1"
         eyebrow="Archive"
         title="Everything I can show you"
-        description="Each item states what I actually did and where it got to. Concepts are labelled as concepts."
+        description="Each item states what I did and where it got to. Concepts are labelled as concepts."
       />
 
       <WorkFilters

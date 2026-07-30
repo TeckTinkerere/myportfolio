@@ -3,8 +3,11 @@ import Image from 'next/image'
 
 import { CtaLink } from '@/components/layout/cta-link'
 import { Section, SectionHeader } from '@/components/layout/section'
+import { Panel } from '@/components/system/panel'
+import { Timeline } from '@/components/system/diagram'
 import {
-  bio,
+  bioOpener,
+  bioPoints,
   capabilities,
   education,
   experience,
@@ -22,6 +25,8 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   const recognition = getRecognition()
+  const placements = recognition.filter((item) => item.placement)
+  const certifications = recognition.filter((item) => !item.placement)
 
   return (
     <>
@@ -31,17 +36,26 @@ export default function AboutPage() {
             <h1 className="font-display text-headline font-semibold text-ink">
               {siteConfig.descriptor}
             </h1>
-            <div className="prose-measure mt-6">
-              {bio.map((paragraph) => (
-                <p key={paragraph.slice(0, 32)}>{paragraph}</p>
+
+            {/* One human sentence, then points. */}
+            <p className="prose-measure mt-6 text-lg leading-relaxed text-ink">
+              {bioOpener}
+            </p>
+
+            <ul className="prose-measure mt-6 flex flex-col gap-3">
+              {bioPoints.map((point) => (
+                <li key={point} className="flex gap-3 text-base leading-relaxed text-ink-muted">
+                  <span aria-hidden className="mt-2 size-1.5 shrink-0 rounded-full bg-accent" />
+                  {point}
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
 
           <div className="relative aspect-[4/5] overflow-hidden rounded-sm border border-border bg-surface-raised lg:sticky lg:top-24">
             <Image
               src="/images/profile/portrait.jpg"
-              alt={`${siteConfig.name}`}
+              alt={siteConfig.name}
               fill
               sizes="(max-width: 1024px) 100vw, 33vw"
               className="object-cover"
@@ -51,41 +65,66 @@ export default function AboutPage() {
         </div>
       </Section>
 
-      <Section aria-labelledby="principles-heading">
-        <SectionHeader eyebrow="How I work" title="Three things I hold to" />
-        <ol className="grid gap-5 sm:grid-cols-3">
-          {principles.map((principle, index) => (
-            <li key={principle.title} className="rounded-sm border border-border p-5">
-              <span className="label-mono text-accent">
-                {String(index + 1).padStart(2, '0')}
-              </span>
-              <h3 className="mt-3 text-base font-semibold text-ink">
-                {principle.title}
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-ink-muted">
-                {principle.body}
-              </p>
-            </li>
+      {/*
+        Replaces the stacked date/role prose blocks. Durations are positioned
+        from real start/end dates in content/profile.ts, on one shared axis.
+      */}
+      <Section aria-labelledby="timeline-heading">
+        <SectionHeader
+          as="h2"
+          eyebrow="Timeline"
+          title="What I have been doing"
+        />
+        <div id="timeline-heading" className="sr-only">
+          Timeline
+        </div>
+        <Timeline
+          caption="Roles by duration. Study runs underneath all of it."
+          tracks={[
+            {
+              label: education.qualification,
+              sublabel: education.institution,
+              start: education.start,
+              end: education.end,
+              ongoing: true,
+            },
+            ...experience.map((item) => ({
+              label: item.role,
+              sublabel: item.organisation,
+              start: item.start,
+              end: item.end,
+              ongoing: item.end === null,
+              accent: item.kind === 'build',
+            })),
+          ]}
+        />
+
+        <dl className="mt-2 grid gap-4 sm:grid-cols-2">
+          {experience.map((item) => (
+            <div key={`${item.organisation}-${item.role}`} className="border-t border-border pt-3">
+              <dt className="text-sm font-semibold text-ink">
+                {item.role}
+                <span className="font-normal text-accent"> · {item.organisation}</span>
+              </dt>
+              <dd className="mt-1 text-sm leading-relaxed text-ink-muted">{item.summary}</dd>
+            </div>
           ))}
-        </ol>
+        </dl>
       </Section>
 
-      <Section aria-labelledby="experience-heading" className="pt-0">
-        <SectionHeader eyebrow="Timeline" title="What I have been doing" />
-        <ol className="flex flex-col">
-          {experience.map((item) => (
-            <li
-              key={`${item.organisation}-${item.role}`}
-              className="grid gap-2 border-t border-border py-6 sm:grid-cols-[12rem_1fr] sm:gap-8"
-            >
-              <p className="label-mono pt-1 text-ink-muted">{item.timeframe}</p>
-              <div>
-                <h3 className="text-base font-semibold text-ink">{item.role}</h3>
-                <p className="mt-0.5 text-sm text-accent">{item.organisation}</p>
-                <p className="mt-2 text-sm leading-relaxed text-ink-muted">
-                  {item.summary}
-                </p>
-              </div>
+      <Section aria-labelledby="principles-heading" className="pt-0">
+        <SectionHeader eyebrow="How I work" title="Three things I hold to" />
+        <ol className="grid gap-4 sm:grid-cols-3">
+          {principles.map((principle, index) => (
+            <li key={principle.title}>
+              <Panel className="h-full" designation={`Step ${index + 1}`}>
+                <div className="p-5">
+                  <h3 className="text-base font-semibold text-ink">{principle.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-ink-muted">
+                    {principle.body}
+                  </p>
+                </div>
+              </Panel>
             </li>
           ))}
         </ol>
@@ -93,31 +132,31 @@ export default function AboutPage() {
 
       <Section aria-labelledby="education-heading" className="pt-0">
         <SectionHeader eyebrow="Education" title={education.qualification} />
-        <div className="rounded-sm border border-border p-6">
-          <p className="text-sm font-medium text-ink">{education.institution}</p>
-          <p className="label-mono mt-1 text-ink-muted">{education.timeframe}</p>
-          <h3 className="label-mono mt-6 text-ink-muted">Relevant coursework</h3>
-          <ul className="mt-3 flex flex-wrap gap-2">
-            {education.coursework.map((course) => (
-              <li
-                key={course}
-                className="rounded-full border border-border px-3 py-1 text-xs text-ink-muted"
-              >
-                {course}
-              </li>
-            ))}
-          </ul>
-        </div>
+        <Panel designation={education.institution} meta={education.timeframe}>
+          <div className="p-5">
+            <h3 className="label-mono text-ink-muted">Relevant coursework</h3>
+            <ul className="mt-3 flex flex-wrap gap-2">
+              {education.coursework.map((course) => (
+                <li
+                  key={course}
+                  className="rounded-full border border-border px-3 py-1 text-xs text-ink-muted"
+                >
+                  {course}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Panel>
       </Section>
 
       <Section aria-labelledby="leadership-heading" className="pt-0">
         <SectionHeader eyebrow="Also" title="Committees and community roles" />
-        <ul className="grid gap-4 sm:grid-cols-3">
+        <ul className="grid gap-px overflow-hidden rounded-sm border border-border bg-border sm:grid-cols-3">
           {leadership.map((role) => (
-            <li key={role.organisation} className="rounded-sm border border-border p-5">
+            <li key={role.organisation} className="bg-surface p-5">
               <p className="text-sm font-semibold text-ink">{role.role}</p>
               <p className="mt-1.5 text-sm text-ink-muted">{role.organisation}</p>
-              <p className="label-mono mt-3 text-ink-muted">{role.timeframe}</p>
+              <p className="label-mono tnum mt-3 text-ink-muted">{role.timeframe}</p>
             </li>
           ))}
         </ul>
@@ -127,11 +166,11 @@ export default function AboutPage() {
         <SectionHeader
           eyebrow="Capabilities"
           title="What I work with"
-          description="Listed, not ranked. Where each of these was actually used is visible in the work."
+          description="Listed, not ranked. Where each was used is visible in the work."
         />
-        <dl className="grid gap-6 sm:grid-cols-2">
+        <dl className="grid gap-px overflow-hidden rounded-sm border border-border bg-border sm:grid-cols-2">
           {capabilities.map((group) => (
-            <div key={group.group} className="rounded-sm border border-border p-5">
+            <div key={group.group} className="bg-surface p-5">
               <dt className="label-mono text-accent">{group.group}</dt>
               <dd className="mt-3 text-sm leading-relaxed text-ink-muted">
                 {group.items.join(' · ')}
@@ -141,54 +180,56 @@ export default function AboutPage() {
         </dl>
       </Section>
 
-      {/*
-        Not in the PRD, but dated third-party evidence is exactly what PRD
-        s3.4 asks every claim to be backed by. Competitive placements are
-        marked; course completions are not, so an attendance certificate is
-        never presented as an award.
-      */}
       <Section aria-labelledby="recognition-heading" id="recognition" className="pt-0">
         <SectionHeader
           eyebrow="Recognition"
           title="Awards and certifications"
           description="Issued by third parties, on the dates shown."
         />
-        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {recognition.map((item) => (
-            <li key={item.slug} className="rounded-sm border border-border bg-surface p-5">
-              {item.placement ? (
-                <p className="label-mono text-accent">{item.placement}</p>
-              ) : (
-                <p className="label-mono text-ink-muted">Certification</p>
-              )}
-              <h3 className="mt-2.5 text-sm font-semibold leading-snug text-ink">
-                {item.title}
-              </h3>
-              <p className="mt-1.5 text-xs text-ink-muted">
+
+        <ul className="grid gap-px overflow-hidden rounded-sm border border-border bg-border sm:grid-cols-3">
+          {placements.map((item) => (
+            <li key={item.slug} className="bg-surface p-5">
+              <p className="font-display text-2xl font-semibold text-accent">
+                {item.placement}
+              </p>
+              <p className="mt-2 text-sm font-medium leading-snug text-ink">{item.title}</p>
+              <p className="label-mono tnum mt-2 text-ink-muted">
                 {item.issuer} · {item.date}
               </p>
-              {item.summary ? (
-                <p className="mt-3 text-sm leading-relaxed text-ink-muted">
-                  {item.summary}
-                </p>
-              ) : null}
+            </li>
+          ))}
+        </ul>
+
+        {/* Course completions, kept visually subordinate to the placements so
+            an attendance certificate never reads as an award. */}
+        <h3 className="label-mono mt-8 text-ink-muted">Certifications</h3>
+        <ul className="mt-3 flex flex-col gap-2">
+          {certifications.map((item) => (
+            <li key={item.slug} className="flex flex-wrap gap-x-3 text-sm text-ink-muted">
+              <span className="text-ink">{item.title}</span>
+              <span className="tnum">
+                {item.issuer} · {item.date}
+              </span>
             </li>
           ))}
         </ul>
       </Section>
 
       <Section className="pt-0">
-        <div className="rounded-sm border border-border bg-surface p-8">
-          <h2 className="font-display text-title font-semibold text-ink">
-            Want to talk about something specific?
-          </h2>
-          <div className="mt-6 flex flex-wrap gap-3">
-            <CtaLink href="/contact">Get in touch</CtaLink>
-            <CtaLink href="/resume" variant="secondary">
-              Read the résumé
-            </CtaLink>
+        <Panel designation="Next step">
+          <div className="p-8">
+            <h2 className="font-display text-title font-semibold text-ink">
+              Want to talk about something specific?
+            </h2>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <CtaLink href="/contact">Get in touch</CtaLink>
+              <CtaLink href="/resume" variant="secondary">
+                Read the résumé
+              </CtaLink>
+            </div>
           </div>
-        </div>
+        </Panel>
       </Section>
     </>
   )

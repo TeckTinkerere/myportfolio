@@ -4,12 +4,11 @@ export const localloco: PortfolioProjectInput = {
   slug: 'localloco',
   title: 'LocalLoco',
   proofVerb: 'BUILT',
-  oneLiner:
-    'Neighbourhood deal discovery, where the listings come from residents rather than from a sales team.',
+  oneLiner: 'Neighbourhood deal discovery, sourced by residents rather than a sales team.',
   shortSummary:
-    'A hyperlocal business discovery platform. Residents submit neighbourhood deals, volunteers moderate them, and businesses can see whether a promotion actually got used.',
+    'Hyperlocal business discovery. Residents submit deals, volunteers moderate them, and QR redemption tells the business whether a promotion actually got used.',
   longSummary:
-    'Small neighbourhood businesses rarely have the time or budget to keep listings current on the big platforms, so their promotions stay invisible outside their own shopfront. LocalLoco inverts that: residents submit what they find, a volunteer moderation layer keeps the quality usable, and QR-based redemption gives the business a way to tell whether the promotion did anything. The hard parts were location queries that stay fast, and a moderation workflow that a handful of volunteers can actually keep up with.',
+    'Small neighbourhood businesses rarely have time to keep listings current on the big platforms, so their promotions stay invisible outside their own shopfront. LocalLoco inverts that: residents submit, volunteers moderate, and QR redemption gives the business a real signal. The hard parts were keeping location queries fast and keeping the moderation queue small enough for a few people to clear.',
 
   lenses: ['general', 'software', 'websites'],
   status: 'prototype',
@@ -23,31 +22,31 @@ export const localloco: PortfolioProjectInput = {
   tier: 1,
 
   responsibilities: [
-    'Designed the split between a Next.js front end and a FastAPI service so the two could be deployed and changed independently.',
-    'Modelled and implemented the location-based query layer in PostgreSQL.',
-    'Built the resident submission flow and the volunteer moderation queue behind it.',
-    'Implemented QR generation and redemption tracking so a business can see redemptions rather than impressions.',
-    'Built the mobile-first responsive interface.',
+    'Split a Next.js front end from a FastAPI service so each deploys independently',
+    'Modelled and built the location query layer in PostgreSQL',
+    'Resident submission flow and the volunteer moderation queue behind it',
+    'QR generation and redemption tracking — redemptions, not impressions',
+    'Mobile-first responsive interface',
   ],
 
   constraints: [
-    'Content quality depends entirely on volunteers, so the moderation queue had to stay small enough for a few people to clear.',
-    'Almost all real usage is on a phone, often on mobile data, which set the performance budget.',
-    'Location queries over a growing dataset degrade quickly if modelled naively.',
-    'No marketing budget — the product has to be useful on first visit or the visit is wasted.',
+    'Content quality depends entirely on volunteers',
+    'Almost all real use is on a phone, often on mobile data',
+    'Location queries degrade fast if modelled naively',
+    'No marketing budget — it has to be useful on first visit',
   ],
 
   outcomes: [
-    'A working prototype is deployed and publicly reachable.',
-    'Location queries are served through PostGIS rather than application-side distance filtering, which is what keeps them viable as the dataset grows.',
-    'Submission and moderation are separate stages, so unreviewed resident content is never publicly visible.',
-    'Redemption tracking gives participating businesses a usable signal instead of a vanity metric.',
+    'Working prototype deployed and publicly reachable',
+    'Location queries served through PostGIS rather than application-side filtering, which is what keeps them viable as data grows',
+    'Submission and moderation are separate stages, so unreviewed content is never public',
+    'Redemption tracking gives businesses a real signal instead of a vanity metric',
   ],
 
   learnings: [
-    'A community-sourced catalogue lives or dies on moderation throughput, not on how good the submission form is.',
-    'Choosing PostGIS early avoided a rewrite that would have been painful once real data existed.',
-    'I over-invested in the business analytics view before there were enough redemptions to make it meaningful.',
+    'A community catalogue lives or dies on moderation throughput, not on the submission form',
+    'Choosing PostGIS early avoided a painful rewrite once real data existed',
+    'I over-invested in the business analytics view before there were enough redemptions to make it meaningful',
   ],
 
   technologies: [
@@ -62,9 +61,9 @@ export const localloco: PortfolioProjectInput = {
 
   /**
    * The previous portfolio published "reduced spam by 95%", "99.5% uptime",
-   * "page load under 2 seconds" and "real-time updates within 500ms". None of
-   * them had a measurement method or a source, so they are recorded here as
-   * unverified and are excluded from rendering by getDisplayableMetrics().
+   * "page load under 2 seconds" and "real-time updates within 500ms". None
+   * had a measurement method or source, so they are recorded here as
+   * unverified and excluded from rendering by getDisplayableMetrics().
    * See CONTENT_TODO.md.
    */
   metrics: [
@@ -74,12 +73,7 @@ export const localloco: PortfolioProjectInput = {
       verified: false,
       permissionStatus: 'pending',
     },
-    {
-      value: '99.5%',
-      label: 'Uptime',
-      verified: false,
-      permissionStatus: 'pending',
-    },
+    { value: '99.5%', label: 'Uptime', verified: false, permissionStatus: 'pending' },
   ],
 
   evidence: [

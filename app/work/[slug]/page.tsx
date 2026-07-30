@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
 import { Section } from '@/components/layout/section'
+import { CaseSpine } from '@/components/system/diagram'
 import { ProjectCard } from '@/components/projects/project-card'
 import { StatusBadge } from '@/components/projects/status-badge'
 import { siteConfig } from '@/content/site-config'
@@ -134,44 +135,35 @@ export default async function CaseStudyPage({
         </dl>
       </Section>
 
-      {project.longSummary ? (
-        <Section aria-labelledby="challenge-heading">
-          <h2 id="challenge-heading" className="font-display text-title font-semibold text-ink">
-            The problem
-          </h2>
-          <div className="prose-measure mt-4">
-            <p>{project.longSummary}</p>
-          </div>
-        </Section>
-      ) : (
-        <Section>
-          <div className="prose-measure">
-            <p>{project.shortSummary}</p>
-          </div>
-        </Section>
-      )}
+      <Section aria-labelledby="challenge-heading">
+        <h2 id="challenge-heading" className="font-display text-title font-semibold text-ink">
+          The problem
+        </h2>
+        <div className="prose-measure mt-4">
+          <p>{project.longSummary ?? project.shortSummary}</p>
+        </div>
+      </Section>
 
-      {project.responsibilities.length > 0 ? (
-        <ListSection
-          id="responsibility"
-          heading="What I owned"
-          intro="Specifically mine, as distinct from work that belonged to teammates, partners or volunteers."
-          items={project.responsibilities}
+      {/*
+        The spine replaces four stacked list sections — what I owned,
+        constraints, outcome, reflection — with one scannable view of the
+        whole arc. The lists are still there for assistive tech, inside the
+        diagram component.
+      */}
+      <Section aria-labelledby="spine-heading" className="pt-0">
+        <h2 id="spine-heading" className="sr-only">
+          How the project ran
+        </h2>
+        <CaseSpine
+          caption="What I owned, what constrained it, and where it got to."
+          stages={[
+            { label: 'I owned', items: project.responsibilities },
+            { label: 'Constraints', items: project.constraints },
+            { label: 'Outcome', items: project.outcomes },
+            { label: 'Learned', items: project.learnings ?? [] },
+          ]}
         />
-      ) : null}
-
-      {project.constraints.length > 0 ? (
-        <ListSection
-          id="constraints"
-          heading="Constraints"
-          intro="The conditions that shaped the decisions."
-          items={project.constraints}
-        />
-      ) : null}
-
-      {project.outcomes.length > 0 ? (
-        <ListSection id="outcome" heading="Outcome" items={project.outcomes} />
-      ) : null}
+      </Section>
 
       {metrics.length > 0 ? (
         <Section aria-labelledby="metrics-heading" className="pt-0">
@@ -198,15 +190,6 @@ export default async function CaseStudyPage({
             ))}
           </dl>
         </Section>
-      ) : null}
-
-      {project.learnings && project.learnings.length > 0 ? (
-        <ListSection
-          id="reflection"
-          heading="Reflection"
-          intro="What worked, what was difficult, and what I would do differently."
-          items={project.learnings}
-        />
       ) : null}
 
       {project.technologies && project.technologies.length > 0 ? (
@@ -279,31 +262,3 @@ function Fact({ label, value }: { label: string; value: string }) {
   )
 }
 
-function ListSection({
-  id,
-  heading,
-  intro,
-  items,
-}: {
-  id: string
-  heading: string
-  intro?: string
-  items: string[]
-}) {
-  return (
-    <Section aria-labelledby={`${id}-heading`} className="pt-0">
-      <h2 id={`${id}-heading`} className="font-display text-title font-semibold text-ink">
-        {heading}
-      </h2>
-      {intro ? <p className="prose-measure mt-3 text-sm text-ink-muted">{intro}</p> : null}
-      <ul className="prose-measure mt-5 flex flex-col gap-3">
-        {items.map((item) => (
-          <li key={item} className="flex gap-3 text-base leading-relaxed text-ink-muted">
-            <span aria-hidden className="mt-2 size-1.5 shrink-0 rounded-full bg-accent" />
-            {item}
-          </li>
-        ))}
-      </ul>
-    </Section>
-  )
-}
