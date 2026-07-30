@@ -81,9 +81,9 @@ describe('evidence and metrics', () => {
   })
 
   it('excludes the unverified LocalLoco metrics inherited from the old site', () => {
-    const localloco = getPublicProjects().find((p) => p.slug === 'localloco')!
-    expect(localloco.metrics?.length).toBeGreaterThan(0)
-    expect(getDisplayableMetrics(localloco)).toHaveLength(0)
+    const locallocoApp = getPublicProjects().find((p) => p.slug === 'localloco-app')!
+    expect(locallocoApp.metrics?.length).toBeGreaterThan(0)
+    expect(getDisplayableMetrics(locallocoApp)).toHaveLength(0)
   })
 
   it('only exposes evidence links marked public, each with a label', () => {

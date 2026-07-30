@@ -18,36 +18,40 @@ export const archiveProjects: PortfolioProjectInput[] = [
     title: 'Recenter',
     proofVerb: 'BUILT',
     oneLiner:
-      'A mindfulness app with a guided meditation timer and a journal that works offline.',
+      'A wellness app for a two-minute reset: guided breathing, reflection, or creative flow.',
     shortSummary:
-      'A React application pairing a guided meditation timer with a private journal held in local storage, so entries stay on the device and work without a connection.',
+      'A Next.js app offering three short wellness modes — guided breathing, reflective journaling, and creative expression — with ambient audio, running entirely in the browser.',
     lenses: ['software', 'websites'],
-    status: 'archived',
+    status: 'live',
     visibility: 'public',
     permissionStatus: 'not-required',
     role: 'Frontend developer',
     timeframeLabel: 'Personal project',
     responsibilities: [
-      'Built the meditation timer and its audio handling.',
+      'Built the guided breathing, reflection and creative-flow modes.',
+      'Built the ambient audio handling.',
       'Implemented journaling against the Local Storage API so entries never leave the device.',
       'Built the responsive interface.',
     ],
     constraints: [
       'No backend, so anything persistent had to survive in the browser alone.',
     ],
-    outcomes: ['Deployed and publicly reachable.'],
-    technologies: ['React', 'JavaScript', 'CSS'],
+    outcomes: [
+      'Rebuilt on Next.js and moved to a production domain (recenter.mohdaslam.dev).',
+      'Grew from a single timer-and-journal tool into three distinct wellness modes.',
+    ],
+    technologies: ['Next.js', 'TypeScript', 'Tailwind CSS'],
     evidence: [
       {
-        label: 'Recenter live demo',
+        label: 'Recenter live site',
         type: 'live-site',
-        href: 'https://v0-recenter.vercel.app/',
+        href: 'https://recenter.mohdaslam.dev',
         public: true,
       },
     ],
     coverImage: {
       src: '/images/projects/Recenter.png',
-      alt: 'Recenter meditation timer and journal interface',
+      alt: 'Recenter landing screen offering three modes: Breathe, Reflect, and Create',
       permissionStatus: 'not-required',
     },
   },
@@ -79,6 +83,13 @@ export const archiveProjects: PortfolioProjectInput[] = [
         public: true,
       },
     ],
+    // Captured by scripts/refresh-project-screenshots.ts from the live site
+    // rather than hand-uploaded — see README's "Project screenshots" section.
+    coverImage: {
+      src: '/images/projects/kreatorsnest-live.png',
+      alt: 'KreatorsNest landing page: "Crafting tools & knowledge for the modern creative", with a sidebar and a guided-or-explore browsing choice',
+      permissionStatus: 'not-required',
+    },
   },
   {
     slug: 'connectsphere',
@@ -291,5 +302,127 @@ export const archiveProjects: PortfolioProjectInput[] = [
     constraints: ['Scoped to the module brief.'],
     outcomes: ['Completed and submitted as coursework.'],
     technologies: ['OWASP Top 10', 'Web security', 'Vulnerability assessment'],
+  },
+  {
+    slug: 'localloco-business',
+    title: 'LocalLoco for Business',
+    proofVerb: 'BUILT',
+    oneLiner: 'The merchant-facing side of LocalLoco: why to join, and how.',
+    shortSummary:
+      'A marketing and merchant-onboarding site for LocalLoco, pitching local businesses on joining the platform, separate from the consumer app itself.',
+    lenses: ['websites'],
+    status: 'live',
+    visibility: 'public',
+    permissionStatus: 'not-required',
+    role: 'Full-stack developer and co-founder',
+    timeframeLabel: 'Personal project',
+    responsibilities: [
+      'Built the merchant-facing landing page and value proposition.',
+      'Built the business sign-up and pricing pathway.',
+    ],
+    constraints: [
+      'Has to make the case to a business owner who has never heard of LocalLoco, separately from the consumer app.',
+    ],
+    outcomes: ['Deployed and publicly reachable at a dedicated domain.'],
+    /**
+     * The live page claims specific traction numbers (businesses joined,
+     * deals posted, community members) and shows named merchant
+     * testimonials. Neither is published here: www.localloco.sg — the
+     * actual consumer app — currently shows no live deals, which
+     * contradicts the marketing page's numbers closely enough that they
+     * cannot be treated as verified. See CONTENT_TODO.md.
+     */
+    technologies: ['Next.js', 'TypeScript', 'Tailwind CSS'],
+    evidence: [
+      {
+        label: 'LocalLoco for Business',
+        type: 'live-site',
+        href: 'https://info.localloco.sg',
+        public: true,
+      },
+    ],
+    coverImage: {
+      src: '/images/projects/localloco-business-live.png',
+      alt: 'LocalLoco for Business landing page: "Bringing Local Businesses & Communities Together — One Deal at a Time"',
+      permissionStatus: 'not-required',
+    },
+    lastVerifiedAt: '2026-07',
+  },
+  {
+    slug: 'livnow',
+    title: 'Liv&Now',
+    proofVerb: 'BUILT',
+    oneLiner: 'A streetwear storefront for a premium Indian oversized-fit brand.',
+    shortSummary:
+      'An e-commerce storefront for Liv&Now, a streetwear brand manufactured in Tiruppur — a browsable product catalogue with collections, pricing and a custom-order path.',
+    lenses: ['websites'],
+    status: 'live',
+    visibility: 'public',
+    permissionStatus: 'not-required',
+    role: 'Developer',
+    timeframeLabel: 'Personal project',
+    responsibilities: [
+      'Built the product catalogue and collection browsing.',
+      'Built the storefront pages and site search.',
+    ],
+    constraints: [
+      'A brand storefront has to read as a real retail experience, not a template.',
+    ],
+    outcomes: ['Live storefront with a working, browsable product catalogue.'],
+    technologies: ['Next.js', 'TypeScript', 'Tailwind CSS'],
+    evidence: [
+      {
+        label: 'Liv&Now live site',
+        type: 'live-site',
+        href: 'https://livnow.mohdaslam.dev',
+        public: true,
+      },
+    ],
+    coverImage: {
+      src: '/images/projects/livnow-live.png',
+      alt: 'Liv&Now homepage hero: "Streetwear Engineered", Spring Summer 2026',
+      permissionStatus: 'not-required',
+    },
+    lastVerifiedAt: '2026-07',
+  },
+  {
+    slug: 'future-tainment',
+    title: 'Future-tainment',
+    proofVerb: 'BUILT',
+    oneLiner: 'An AI content-creation tool for scripts, voice, and video.',
+    shortSummary:
+      'An AI-powered content creation platform — script writing, environment design, voice generation and video creation — built around a credit-based usage system.',
+    lenses: ['software', 'websites'],
+    /**
+     * The live deployment shows "Firebase Not Configured" and offers a
+     * demo-mode fallback with simulated data — direct evidence the backend
+     * is not wired up in production, not an inference.
+     */
+    status: 'prototype',
+    visibility: 'public',
+    permissionStatus: 'not-required',
+    role: 'Developer',
+    timeframeLabel: 'Personal project',
+    responsibilities: [
+      'Built the script generation tool and its credit-based usage system.',
+      'Built the demo-mode fallback for exploring the product without live authentication.',
+    ],
+    constraints: ['Production authentication (Firebase) is not yet configured.'],
+    outcomes: ['Full UI and demo-mode flow deployed and explorable without an account.'],
+    technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Firebase'],
+    evidence: [
+      {
+        label: 'Future-tainment live site',
+        type: 'live-site',
+        href: 'https://future-tainment.mohdaslam.dev',
+        public: true,
+      },
+    ],
+    coverImage: {
+      src: '/images/projects/future-tainment-live.png',
+      alt: 'Future-tainment script generator interface with a script type selector and generated-script panel',
+      permissionStatus: 'not-required',
+    },
+    lastVerifiedAt: '2026-07',
   },
 ]

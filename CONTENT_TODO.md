@@ -94,9 +94,9 @@ hosting.
 ### Metrics currently withheld
 
 These were published on the old site with no measurement method or source.
-They are stored in `content/projects/localloco.ts` as `verified: false` and
-cannot render. To publish one, add a `publicSourceUrl` and set `verified: true`
-— the schema rejects a verified metric with no source.
+They are stored in `content/projects/localloco-app.ts` as `verified: false`
+and cannot render. To publish one, add a `publicSourceUrl` and set
+`verified: true` — the schema rejects a verified metric with no source.
 
 - `[VERIFY]` LocalLoco "reduced spam by 95%" — measured how, over what period?
 - `[VERIFY]` LocalLoco "99.5% uptime" — from which monitor?
@@ -104,6 +104,27 @@ cannot render. To publish one, add a `publicSourceUrl` and set `verified: true`
 - `[VERIFY]` StartupLink "100% email verification success rate"
 - `[VERIFY]` "50,000+ lines of code", "500+ GitHub contributions" — these were
   in `lib/professional-profile.ts` and are not carried over.
+
+### LocalLoco for Business — marketing claims (added 2026-07-31)
+
+`info.localloco.sg` (the merchant marketing site, `localloco-business.ts`)
+states specific traction numbers — "50+ Businesses joined", "200+ Deals
+posted", "1,000+ Community members" — and shows five named merchant
+testimonials with attributed names, business names and neighbourhoods.
+
+**None of this is published.** `www.localloco.sg`, the actual consumer app,
+showed "No deals available yet" when checked the same day — which
+contradicts the marketing page's numbers closely enough that they cannot be
+treated as verified. This may be placeholder copy that was never swapped
+for real figures, or it may be real and just not reflected in the app yet;
+either way it needs a source before it can go on the portfolio.
+
+- `[VERIFY]` Are the "50+ / 200+ / 1,000+" figures real, and if so, current
+  as of what date? Add `publicSourceUrl` per metric before publishing any of
+  them.
+- `[TESTIMONIAL]` Each of the five merchant quotes needs written permission
+  from the named person before it can be quoted anywhere, per PRD s8.7 —
+  same rule as every other testimonial on this site.
 
 ### Repository links
 

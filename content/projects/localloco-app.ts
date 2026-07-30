@@ -1,7 +1,14 @@
 import type { PortfolioProjectInput } from '@/lib/content/schema'
 
-export const localloco: PortfolioProjectInput = {
-  slug: 'localloco',
+/**
+ * LocalLoco has two live surfaces: this is the consumer app
+ * (www.localloco.sg). The business-facing marketing site is a separate,
+ * smaller entry — see localloco-business.ts. They used to be one project
+ * entry pointing at a throwaway v0 preview URL; split and re-pointed at the
+ * real production domains once both went live.
+ */
+export const locallocoApp: PortfolioProjectInput = {
+  slug: 'localloco-app',
   title: 'LocalLoco',
   proofVerb: 'BUILT',
   oneLiner: 'Neighbourhood deal discovery, sourced by residents rather than a sales team.',
@@ -37,7 +44,7 @@ export const localloco: PortfolioProjectInput = {
   ],
 
   outcomes: [
-    'Working prototype deployed and publicly reachable',
+    'Moved from a throwaway v0 preview to the production domain (www.localloco.sg), with real auth middleware wired up',
     'Location queries served through PostGIS rather than application-side filtering, which is what keeps them viable as data grows',
     'Submission and moderation are separate stages, so unreviewed content is never public',
     'Redemption tracking gives businesses a real signal instead of a vanity metric',
@@ -78,16 +85,16 @@ export const localloco: PortfolioProjectInput = {
 
   evidence: [
     {
-      label: 'LocalLoco live prototype',
+      label: 'LocalLoco — the app',
       type: 'live-site',
-      href: 'https://v0-local-loco-website.vercel.app/',
+      href: 'https://www.localloco.sg',
       public: true,
     },
   ],
 
   coverImage: {
-    src: '/images/projects/locallocomvp.png',
-    alt: 'LocalLoco interface showing neighbourhood deals listed by location',
+    src: '/images/projects/localloco-app-live.png',
+    alt: 'LocalLoco consumer app: "Discover Local Deals, Singapore" with a search bar, currently showing an empty "No deals available yet" state',
     permissionStatus: 'not-required',
   },
 

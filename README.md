@@ -99,6 +99,36 @@ change is needed.
 Outstanding facts, permissions and assets are tracked in
 [`CONTENT_TODO.md`](./CONTENT_TODO.md).
 
+### Project screenshots
+
+```bash
+npm run refresh:screenshots            # every project with a live-site link
+npm run refresh:screenshots -- localloco-app   # just one
+```
+
+`scripts/refresh-project-screenshots.ts` reads the real content model —
+`getPublicProjects()`, the same function the site itself calls — so the list
+of URLs to capture can never drift from what is actually published. For every
+project carrying a `public: true` evidence link of type `live-site`, it opens
+the URL in a headless Chromium (Playwright), screenshots it, and overwrites
+that project's existing `coverImage` file in place. Nothing about the content
+model changes; only the image on disk does.
+
+This is deliberately a **maintenance script, not a runtime feature**. The
+alternative — rendering a live screenshot on every page view via a
+third-party service or an embedded iframe — would make the site's own load
+time and reliability depend on someone else's server, which conflicts with
+the performance work done elsewhere in this codebase. Run the script instead,
+whenever a project's live site changes enough to be worth a new cover image.
+
+A project with a live-site link but no `coverImage` yet gets a new file at
+`public/images/projects/<slug>-live.png`, and the script prints the path — add
+the `coverImage` field yourself, since the alt text needs a real description,
+not a generated one.
+
+Requires Chromium once: `npx playwright install chromium` (a few hundred MB,
+downloaded to a local cache, never shipped to the site).
+
 ## Routes
 
 `/` · `/work` · `/work/[slug]` · `/software` · `/websites` · `/events` ·

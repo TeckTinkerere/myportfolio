@@ -1,7 +1,7 @@
 import { archiveProjects } from '@/content/projects/archive'
 import { ecoramadan } from '@/content/projects/ecoramadan'
 import { enterpriseAutomation } from '@/content/projects/enterprise-automation'
-import { localloco } from '@/content/projects/localloco'
+import { locallocoApp } from '@/content/projects/localloco-app'
 import { startuplink } from '@/content/projects/startuplink'
 import { parseProjects } from '@/lib/content/schema'
 
@@ -20,7 +20,7 @@ import { parseProjects } from '@/lib/content/schema'
  */
 export const projects = parseProjects([
   startuplink,
-  localloco,
+  locallocoApp,
   ecoramadan,
   enterpriseAutomation,
   ...archiveProjects,

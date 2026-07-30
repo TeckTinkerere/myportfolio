@@ -66,7 +66,7 @@ export const startuplink: PortfolioProjectInput = {
     {
       label: 'StartupLink live MVP',
       type: 'live-site',
-      href: 'https://v0-poly-start-connect.vercel.app/',
+      href: 'https://startuplink.mohdaslam.dev',
       public: true,
     },
   ],
