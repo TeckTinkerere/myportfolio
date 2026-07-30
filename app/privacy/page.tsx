@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 
 import { Section } from '@/components/layout/section'
+import { Panel } from '@/components/system/panel'
 import { siteConfig } from '@/content/site-config'
 
 export const metadata: Metadata = {
@@ -10,80 +11,108 @@ export const metadata: Metadata = {
   alternates: { canonical: '/privacy' },
 }
 
+/** What the site does and does not collect, as a scannable ledger. */
+const COLLECTION = [
+  { item: 'Advertising or analytics trackers', state: 'no', detail: 'None on any page' },
+  { item: 'Identifying cookies', state: 'no', detail: 'None' },
+  { item: 'Theme preference', state: 'local', detail: 'Stored in your browser, never sent' },
+  { item: 'Contact form submission', state: 'yes', detail: 'Only if you send one' },
+] as const
+
+const FORM_FIELDS = [
+  { field: 'Name, email, enquiry type, message', need: 'Required' },
+  { field: 'Organisation', need: 'Optional' },
+  { field: 'Target date, scope, budget', need: 'Optional — website enquiries' },
+  { field: 'Event date, location, audience, role', need: 'Optional — event enquiries' },
+] as const
+
+const HANDLING = [
+  ['Purpose', 'So I can reply to you. Nothing else.'],
+  ['Where it goes', 'My inbox, via an email delivery provider'],
+  ['Stored in a database?', 'No'],
+  ['Added to a mailing list?', 'No'],
+  ['Shared with anyone?', 'No'],
+  ['Quoted publicly?', 'Never without asking you first'],
+  ['Retention', 'Kept while the conversation is useful, then deleted'],
+  ['Spam protection', 'Hidden field plus a rate limit. No CAPTCHA, no bot scoring'],
+] as const
+
+const STATE_MARK = {
+  no: { glyph: '○', tone: 'text-ink-muted', label: 'Not collected' },
+  local: { glyph: '◐', tone: 'text-accent', label: 'Device only' },
+  yes: { glyph: '●', tone: 'text-success', label: 'Collected' },
+} as const
+
 export default function PrivacyPage() {
   return (
     <Section className="max-w-3xl">
       <h1 className="font-display text-headline font-semibold text-ink">Privacy</h1>
-      <p className="mt-4 text-sm text-ink-muted">
+      <p className="mt-4 text-base text-ink-muted">
         Plain language, because a privacy notice nobody reads protects nobody.
       </p>
 
-      <div className="prose-measure mt-10 flex flex-col gap-8">
-        <section>
-          <h2 className="font-display text-title font-semibold text-ink">What this site collects</h2>
-          <p className="mt-3">
-            Nothing at all, unless you use the contact form. There are no advertising
-            trackers, no third-party analytics scripts and no cookies used to identify
-            you. Your theme preference is stored in your own browser and never sent
-            anywhere.
-          </p>
-        </section>
+      <Panel designation="What this site collects" className="mt-10">
+        <ul className="flex flex-col">
+          {COLLECTION.map(({ item, state, detail }) => {
+            const mark = STATE_MARK[state]
+            return (
+              <li
+                key={item}
+                className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-border px-5 py-3 last:border-b-0"
+              >
+                {/* Glyph and written state, so colour is never doing it alone. */}
+                <span aria-hidden className={`text-[0.7em] leading-none ${mark.tone}`}>
+                  {mark.glyph}
+                </span>
+                <span className="min-w-0 flex-1 text-sm text-ink">{item}</span>
+                <span className="label-mono text-ink-muted">
+                  <span className="sr-only">{mark.label}: </span>
+                  {detail}
+                </span>
+              </li>
+            )
+          })}
+        </ul>
+      </Panel>
 
-        <section>
-          <h2 className="font-display text-title font-semibold text-ink">If you use the contact form</h2>
-          <p className="mt-3">
-            The form collects your name, your email address, the type of enquiry, your
-            message, and — depending on the enquiry type — optional details such as a
-            target date, rough scope or audience size. Organisation is optional.
-          </p>
-          <p className="mt-3">
-            That information is used for one purpose: so I can reply to you. It is sent to
-            my own inbox through an email delivery provider. It is not stored in a
-            database on this site, not added to a mailing list, and not shared with anyone
-            else.
-          </p>
-        </section>
-
-        <section>
-          <h2 className="font-display text-title font-semibold text-ink">How long I keep it</h2>
-          <p className="mt-3">
-            Your message stays in my inbox for as long as the conversation is useful, and
-            is deleted once it is not. If you would like me to delete an enquiry sooner,
-            email me and I will.
-          </p>
-        </section>
-
-        <section>
-          <h2 className="font-display text-title font-semibold text-ink">Testimonials and quoting</h2>
-          <p className="mt-3">
-            I will not quote anything you send me publicly — on this site or anywhere else
-            — without asking you first and getting a clear yes.
-          </p>
-        </section>
-
-        <section>
-          <h2 className="font-display text-title font-semibold text-ink">Spam protection</h2>
-          <p className="mt-3">
-            The form uses a hidden field that humans never see and a basic rate limit per
-            network address. No CAPTCHA, no behavioural profiling, no third-party bot
-            scoring.
-          </p>
-        </section>
-
-        <section>
-          <h2 className="font-display text-title font-semibold text-ink">Getting in touch about this</h2>
-          <p className="mt-3">
-            Questions about any of the above, or a request to delete something, go to{' '}
-            <a
-              href={`mailto:${siteConfig.contact.email}`}
-              className="text-accent underline-offset-4 hover:underline"
+      <Panel designation="If you use the contact form" className="mt-6">
+        <dl className="flex flex-col">
+          {FORM_FIELDS.map(({ field, need }) => (
+            <div
+              key={field}
+              className="flex flex-wrap items-baseline gap-x-3 border-b border-border px-5 py-3 last:border-b-0"
             >
-              {siteConfig.contact.email}
-            </a>
-            .
-          </p>
-        </section>
-      </div>
+              <dt className="min-w-0 flex-1 text-sm text-ink">{field}</dt>
+              <dd className="label-mono text-ink-muted">{need}</dd>
+            </div>
+          ))}
+        </dl>
+      </Panel>
+
+      <Panel designation="How it is handled" className="mt-6">
+        <dl className="flex flex-col">
+          {HANDLING.map(([question, answer]) => (
+            <div
+              key={question}
+              className="grid gap-1 border-b border-border px-5 py-3 last:border-b-0 sm:grid-cols-[13rem_1fr] sm:gap-4"
+            >
+              <dt className="label-mono pt-0.5 text-ink-muted">{question}</dt>
+              <dd className="text-sm text-ink">{answer}</dd>
+            </div>
+          ))}
+        </dl>
+      </Panel>
+
+      <p className="mt-8 text-sm text-ink-muted">
+        Questions, or a request to delete something —{' '}
+        <a
+          href={`mailto:${siteConfig.contact.email}`}
+          className="text-accent underline-offset-4 hover:underline"
+        >
+          {siteConfig.contact.email}
+        </a>
+        .
+      </p>
     </Section>
   )
 }

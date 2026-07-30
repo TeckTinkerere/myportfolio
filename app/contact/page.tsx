@@ -30,8 +30,7 @@ export default async function ContactPage({
         <div>
           <h1 className="font-display text-headline font-semibold text-ink">Get in touch</h1>
           <p className="prose-measure mt-4 text-base leading-relaxed text-ink-muted">
-            Tell me what you are trying to do. The more concrete you can be, the more
-            useful my reply will be.
+            Tell me what you are trying to do. The more concrete, the more useful my reply.
           </p>
 
           <div className="mt-10">
@@ -57,16 +56,14 @@ export default async function ContactPage({
           <div className="rounded-sm border border-border p-6">
             <h2 className="text-sm font-semibold text-ink">What happens next</h2>
             <p className="mt-2 text-sm leading-relaxed text-ink-muted">
-              I read everything and usually reply within a day or two. If it is a website
-              or event enquiry, I will come back with questions before any numbers.
+              I read everything and usually reply within a day or two. Website and event enquiries get questions before numbers.
             </p>
           </div>
 
           <div className="rounded-sm border border-border p-6">
             <h2 className="text-sm font-semibold text-ink">Your information</h2>
             <p className="mt-2 text-sm leading-relaxed text-ink-muted">
-              What you send is used only so I can reply. No mailing list, no sharing, and
-              nothing quoted publicly without asking you first.
+              Used only so I can reply. No mailing list, no sharing, nothing quoted publicly without asking first.
             </p>
             <Link
               href="/privacy"

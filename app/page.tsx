@@ -159,7 +159,7 @@ function SelectedWork({
       <SectionHeader
         eyebrow="Selected work"
         title="Things I built, ran, or helped happen"
-        description="Four pieces of work that show the range: a product, a platform, a community initiative and facilitation."
+        description="A product, a platform, a community initiative, and facilitation."
         action={
           <Link
             href="/work"
@@ -225,7 +225,7 @@ function WorkingStyle() {
       <SectionHeader
         eyebrow="How I work"
         title="Useful where a project needs both building and follow-through"
-        description="I can move between technical implementation, product decisions, operations and communication without losing sight of the people using the result."
+        description="Technical implementation, product decisions, operations and communication — without losing sight of who uses the result."
       />
       {/* Numbered because this genuinely is a sequence — each step depends on
           the one before it. Nothing else on the page is numbered. */}

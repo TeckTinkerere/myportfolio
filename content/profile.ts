@@ -1,44 +1,46 @@
 /**
- * Personal narrative, working principles, timeline and résumé source data.
+ * Personal narrative, principles, timeline and résumé source data.
  *
- * Everything here is drawn from material already present in the previous
- * portfolio. Two deliberate changes:
+ * Written as points rather than prose: the substance is unchanged, the word
+ * count is roughly half. Each page keeps one human sentence at the top —
+ * a fully bulleted biography reads like a spec sheet.
  *
- * 1. The old /about page led with "Co-Founder & CEO of Local Loco". LocalLoco
- *    is a prototype, and PRD s3.6 rules out an inflated founder biography, so
- *    the title here is co-founder and the work is described by what was
- *    actually built.
- * 2. Skill proficiency percentages are gone entirely (PRD s3.9).
- *
- * The PRD describes an enterprise technology role. No record of it exists in
- * this repository, so it is not asserted here. See CONTENT_TODO.md.
+ * Experience entries carry real `start`/`end` dates, not just display
+ * strings, because the /about timeline positions bars from them. `end: null`
+ * means ongoing.
  */
 
 export const principles = [
   {
     title: 'Make the problem concrete',
-    body: 'Most stuck projects are stuck because nobody has written down precisely what is wrong. I start by turning a vague complaint into something specific enough to disagree with.',
+    body: 'Most stuck projects are stuck because nobody wrote down precisely what is wrong.',
   },
   {
     title: 'Build the smallest credible version',
-    body: 'Small enough to finish, real enough that using it tells you something true. Anything larger is a guess with more code in it.',
+    body: 'Small enough to finish, real enough that using it tells you something true.',
   },
   {
-    title: 'Communicate clearly and improve from reality',
-    body: 'Whether it is a deployment or an event, the first contact with real people is the only honest feedback. I plan for that moment rather than around it.',
+    title: 'Improve from reality',
+    body: 'First contact with real people is the only honest feedback. Plan for it.',
   },
 ] as const
 
-export const bio = [
-  'I work across software, automation, web products, community initiatives and technology events. Those look like separate things, but they are the same skill applied in different rooms: take something unclear, give it a structure, and get it in front of people.',
-  'Most of what I build starts as a problem someone described badly. A neighbourhood business that cannot get its promotions seen. Students and student founders who cannot find each other. A community that wants to recycle but has no process for it. The work is turning that into something that runs.',
-  'I am most useful where a project needs both building and follow-through — where somebody has to make the technical decisions and also make sure the thing actually gets used.',
+/** One human opener, then the facts. */
+export const bioOpener =
+  'I take unclear problems, give them a structure, and get them in front of people.'
+
+export const bioPoints = [
+  'Software, automation, web products, community initiatives, technology events — one skill, different rooms.',
+  'Most of it starts as a badly described problem: a shop nobody can find, students and founders who never meet, a community with no process.',
+  'Most useful where a project needs both the technical decisions and the follow-through.',
 ] as const
 
 export const education = {
   qualification: 'Diploma in Information Technology',
   institution: 'Singapore Polytechnic',
   timeframe: '2023 – present',
+  start: '2023-04',
+  end: null,
   coursework: [
     'Object-oriented programming (Java)',
     'Web development',
@@ -49,47 +51,67 @@ export const education = {
   ],
 } as const
 
+export type ExperienceEntry = {
+  role: string
+  organisation: string
+  timeframe: string
+  /** YYYY-MM. Drives the timeline. */
+  start: string
+  /** null means ongoing. */
+  end: string | null
+  summary: string
+  kind: 'build' | 'operate'
+}
+
 /** Reverse chronological. Only roles with a recorded timeframe appear. */
-export const experience = [
+export const experience: ExperienceEntry[] = [
   {
-    role: 'Founder and full-stack developer',
+    role: 'Founder, full-stack developer',
     organisation: 'StartupLink',
-    timeframe: 'April 2025 – present',
-    summary:
-      'Building a closed student–startup network with verified founder onboarding and role-based access.',
+    timeframe: 'Apr 2025 – present',
+    start: '2025-04',
+    end: null,
+    summary: 'Closed student–founder network. Verified onboarding, role-based access.',
+    kind: 'build',
   },
   {
-    role: 'Co-founder and full-stack developer',
+    role: 'Co-founder, full-stack developer',
     organisation: 'LocalLoco',
-    timeframe: 'September 2024 – present',
-    summary:
-      'Building a hyperlocal business discovery platform with community submission, volunteer moderation and QR-based redemption tracking.',
+    timeframe: 'Sep 2024 – present',
+    start: '2024-09',
+    end: null,
+    summary: 'Hyperlocal discovery. Community submission, volunteer moderation, QR redemption.',
+    kind: 'build',
   },
   {
     role: 'Event Assistant',
     organisation: 'Adecco',
-    timeframe: 'April – May 2025',
-    summary:
-      'Supported polling station setup, overnight watch duty and wheelchair access management for the 2025 Singapore General Election.',
+    timeframe: 'Apr – May 2025',
+    start: '2025-04',
+    end: '2025-05',
+    summary: 'Singapore General Election 2025: polling setup, overnight watch, wheelchair access.',
+    kind: 'operate',
   },
   {
     role: 'Freelance video editor',
     organisation: 'Independent',
-    timeframe: 'September 2024 – present',
-    summary:
-      'Class montages, an exchange-visit farewell video and a leadership camp recap.',
+    timeframe: 'Sep 2024 – present',
+    start: '2024-09',
+    end: null,
+    summary: 'Class montages, exchange farewell film, leadership camp recap.',
+    kind: 'operate',
   },
-] as const
+]
 
 export const leadership = [
   {
-    role: 'Organising committee member',
-    organisation: 'LEAP 2026, School of Computing (SOC-CLS)',
+    role: 'Organising committee',
+    organisation: 'LEAP 2026, School of Computing',
     timeframe: '2025 – present',
   },
   {
-    role: 'Assistant Quartermaster, main committee',
-    organisation: 'SPCyclists',
+    role: 'Assistant Quartermaster',
+    organisation: 'SPCyclists main committee',
     timeframe: '2025 – present',
   },
   {
@@ -100,9 +122,8 @@ export const leadership = [
 ] as const
 
 /**
- * Capability groupings for /about and /resume. Deliberately unranked — no
- * percentages, no self-awarded mastery levels (PRD s3.9). Evidence for each
- * lives in the projects that used it.
+ * Capability groupings. Deliberately unranked — no percentages, no
+ * self-awarded mastery levels. Evidence lives in the projects that used them.
  */
 export const capabilities = [
   {
@@ -136,11 +157,10 @@ export const capabilities = [
 ] as const
 
 /**
- * Résumé PDF. No file exists in the repository, so /resume renders a
- * print-styled HTML page and the download control stays hidden rather than
- * pointing at a 404. Set this once a PDF is added to public/resume/.
+ * Résumé PDF. No file exists yet, so /resume renders a print-styled page and
+ * the download control stays hidden rather than pointing at a 404. Set this
+ * once a PDF is added to public/resume/.
  */
 export const resumePdf: { href: string; updated: string } | null = null
 
-/** Shown on /resume so a reader knows how current the page is. */
 export const resumeLastUpdated = '2026-07'

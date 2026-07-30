@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { CtaLink } from '@/components/layout/cta-link'
 import { Section, SectionHeader } from '@/components/layout/section'
 import { WorkFilters, type FilterOption } from '@/components/projects/work-filters'
+import { RoleLadder } from '@/components/system/diagram'
 import { EVENT_ROLE_LABELS } from '@/content/events'
 import { getPublicEvents } from '@/lib/content/queries'
 import type { EventRole } from '@/lib/content/schema'
@@ -39,9 +40,8 @@ export default async function EventsPage({
             Technology events that stay clear, energetic, and human.
           </h1>
           <p className="prose-measure mt-5 text-lg leading-relaxed text-ink-muted">
-            I facilitate and support technology events — hackathons, workshops and
-            community programmes. Every entry below states the exact role I performed,
-            because supporting an event and hosting one are not the same job.
+            I facilitate and support technology events. Every entry states the exact
+            role I performed — supporting an event and hosting one are not the same job.
           </p>
         </div>
       </Section>
@@ -50,7 +50,20 @@ export default async function EventsPage({
         <SectionHeader
           eyebrow="Event record"
           title="What I have actually done"
-          description="Filter by the role performed."
+          
+        />
+
+        {/*
+          The ladder is deliberately honest: it shows all five role types and
+          marks how many published records evidence each. Four are empty, and
+          saying so is better than implying a fuller record than exists.
+        */}
+        <RoleLadder
+          caption="Roles I can currently evidence. Empty rows are real experience awaiting date and organiser confirmation."
+          rungs={Object.entries(EVENT_ROLE_LABELS).map(([value, label]) => ({
+            label,
+            count: all.filter((event) => event.role === value).length,
+          }))}
         />
 
         <WorkFilters
@@ -121,10 +134,8 @@ export default async function EventsPage({
             More event work is being verified
           </h3>
           <p className="prose-measure mt-2 text-sm leading-relaxed text-ink-muted">
-            I have hosted, co-hosted and supported more events than are listed here. They
-            are not published yet because I would rather confirm each date, organiser and
-            exact role than round them up from memory. This page will grow as each one is
-            confirmed.
+            More than is listed here. Each needs its date, organiser and exact role
+            confirmed before it goes up.
           </p>
           <p className="mt-4 text-sm text-ink-muted">
             Looking for someone for a specific date?{' '}

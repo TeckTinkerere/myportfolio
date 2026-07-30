@@ -5,11 +5,11 @@ export const startuplink: PortfolioProjectInput = {
   title: 'StartupLink',
   proofVerb: 'BUILT',
   oneLiner:
-    'A closed network where students and verified student founders can find each other without the noise of an open platform.',
+    'A closed network where students and verified student founders can find each other.',
   shortSummary:
-    'A student–startup collaboration platform built around verified founder onboarding and role-based access, so that the people in the network are who they say they are.',
+    'Student–startup collaboration platform. Founder accounts are verified before they can post, and what you can see depends on the role you hold.',
   longSummary:
-    'Student founders and students looking for early-stage experience are hard to match. Open platforms make it easy to post but hard to trust; institutional channels are trusted but slow and closed. StartupLink is my attempt at the middle: a small network where founder accounts are verified before they can post, and where what you can see depends on the role you hold.',
+    'Student founders and students wanting early-stage experience are hard to match. Open platforms make posting easy but trust hard; institutional channels are trusted but slow and closed. StartupLink is the middle: a small network where founders are verified first, and access follows role.',
 
   lenses: ['general', 'software', 'websites', 'community'],
   status: 'in-development',
@@ -24,32 +24,32 @@ export const startuplink: PortfolioProjectInput = {
   tier: 1,
 
   responsibilities: [
-    'Framed the problem and decided what the first version would deliberately not do.',
-    'Built the authentication flow, including the email-domain check that gates founder accounts.',
-    'Designed the role model and enforced it in database security rules rather than in the interface.',
-    'Built the multi-step onboarding, including persisting partial progress so a dropped session is recoverable.',
-    'Built the messaging interface between students and founders.',
-    'Designed and implemented the responsive interface.',
+    'Framed the problem; decided what v1 would deliberately not do',
+    'Built the auth flow, including the email-domain check gating founders',
+    'Enforced the role model in database security rules, not the interface',
+    'Multi-step onboarding with partial progress persisted across sessions',
+    'Student–founder messaging interface',
+    'Responsive interface design and implementation',
   ],
 
   constraints: [
-    'Single developer working around a full-time diploma course.',
-    'Trust is the entire product. A platform with unverified founders is worse than no platform, so verification had to work before anything else was worth building.',
-    'No budget for paid identity verification, so verification had to be built from signals already available.',
-    'No existing user base to validate against — the network is only useful once both sides are present.',
+    'Sole developer, around a full-time diploma',
+    'Trust is the product — verification had to work before anything else was worth building',
+    'No budget for paid identity verification',
+    'No user base to validate against; a two-sided network needs both sides',
   ],
 
   outcomes: [
-    'A working MVP is deployed and publicly reachable.',
-    'Founder verification runs server-side through a cloud function rather than in the client, so the check cannot be bypassed by manipulating the interface.',
-    'Role-based access is enforced in Firestore security rules, meaning a compromised or modified client still cannot read data belonging to another role.',
-    'Onboarding retains partial progress across sessions.',
+    'Working MVP deployed and publicly reachable',
+    'Founder verification runs server-side in a cloud function, so it cannot be bypassed from the client',
+    'Role access enforced in Firestore rules — a modified client still cannot read another role’s data',
+    'Onboarding survives a dropped session',
   ],
 
   learnings: [
-    'Putting authorisation in security rules rather than in components was the decision that made the rest of the app safe to iterate on quickly.',
-    'Verification is a product problem before it is a technical one — deciding what counts as proof of being a founder was harder than implementing the check.',
-    'Building both sides of a two-sided network at once was a mistake in sequencing; the student side would have been easier to validate first.',
+    'Authorisation in security rules rather than components is what made fast iteration safe',
+    'Verification was a product problem before a technical one — defining proof of founder status was the hard part',
+    'Building both sides of the network at once was the wrong sequence; the student side was easier to validate first',
   ],
 
   technologies: [
