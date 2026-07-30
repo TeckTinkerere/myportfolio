@@ -11,11 +11,12 @@ import { ENQUIRY_TYPES, type ContactInput } from '@/lib/validation/contact'
  * this, since most clients block remote images until the reader allows them —
  * so the mark is an enhancement, never the only way to read the message.
  *
- * The logo is referenced at the production origin rather than
- * siteConfig.url: an email is a durable artifact, and a preview deployment's
- * URL will stop resolving long before the email stops being read.
+ * The logo resolves against siteConfig.url so it always matches the origin
+ * the site is actually served from. Emails are only sent where the Brevo
+ * keys exist — production — so this never points at a preview URL that
+ * would stop resolving.
  */
-const LOGO_URL = 'https://www.mohdaslam.dev/images/brand/logo-email.png'
+const LOGO_URL = `${siteConfig.url}/images/brand/logo-email.png`
 
 /**
  * Everything interpolated below comes from a public form, so it is escaped.
