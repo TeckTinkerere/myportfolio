@@ -92,46 +92,55 @@ export const archiveProjects: PortfolioProjectInput[] = [
     },
   },
   {
+    /**
+     * Formerly two separate placeholder entries: an unevidenced
+     * "ConnectSphere" concept (attendee matching, QR check-in) and
+     * "ConnectSPM", a student networking platform "currently being
+     * reworked". The rework became this — a live event-networking product
+     * with sponsor ROI reporting, tiered pricing, and a real account-
+     * creation flow at connectsp.mohdaslam.dev. Merged into one entry
+     * rather than kept as two, since publishing both would describe the
+     * same product twice at different stages of the same idea.
+     */
     slug: 'connectsphere',
     title: 'ConnectSphere',
     proofVerb: 'BUILT',
-    oneLiner:
-      'Event networking where attendees are matched rather than left to find each other.',
+    oneLiner: 'Event networking with a sponsor-facing ROI report, not just a chat room.',
     shortSummary:
-      'An event networking platform pairing attendee matching with QR-based check-in, so introductions happen on purpose instead of by chance.',
+      'A QR-accessible networking room for event attendees, with connection tracking and an exportable sponsor report — built for organizers who need to show sponsors more than a headcount.',
     lenses: ['software', 'events', 'websites'],
-    status: 'in-development',
+    status: 'live',
     visibility: 'public',
     permissionStatus: 'not-required',
     role: 'Developer',
-    timeframeLabel: 'In development',
+    timeframeLabel: 'Personal project',
     responsibilities: [
-      'Designed the attendee matching approach.',
-      'Built QR-based check-in and authentication.',
+      'Built the QR-accessible event room and attendee discovery flow.',
+      'Built one-tap connection tracking and the sponsor ROI export.',
+      'Built role-based onboarding for attendees versus organizers.',
+      'Built the tiered pricing and account system.',
     ],
     constraints: [
-      'Matching quality depends on attendee data that most events collect only minimally.',
+      'Sponsor-facing reporting only has something to show once organizers actually get attendees into a room, so early adoption matters more than the reporting features themselves.',
     ],
-    outcomes: ['In active development; not yet publicly deployed.'],
-    technologies: ['Next.js', 'Supabase'],
-  },
-  {
-    slug: 'connectspm',
-    title: 'ConnectSPM',
-    proofVerb: 'BUILT',
-    oneLiner: 'A student networking platform, currently being reworked.',
-    shortSummary:
-      'A student networking platform built on Next.js and Supabase, currently undergoing feature and performance rework.',
-    lenses: ['software', 'websites', 'community'],
-    status: 'in-development',
-    visibility: 'public',
-    permissionStatus: 'not-required',
-    role: 'Developer',
-    timeframeLabel: 'In development',
-    responsibilities: ['Built the platform and is currently reworking it.'],
-    constraints: ['Rework is ongoing alongside other commitments.'],
-    outcomes: ['In active development; not yet publicly deployed.'],
-    technologies: ['Next.js', 'Supabase'],
+    outcomes: [
+      'Live product with working account creation, attendee/organizer role selection, and tiered pricing (free, $149 per event Pro, custom Enterprise).',
+    ],
+    technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Supabase'],
+    evidence: [
+      {
+        label: 'ConnectSphere live site',
+        type: 'live-site',
+        href: 'https://connectsp.mohdaslam.dev',
+        public: true,
+      },
+    ],
+    coverImage: {
+      src: '/images/projects/connectsphere-live.png',
+      alt: 'ConnectSphere landing page hero: "Prove Your Event Created Real Connections"',
+      permissionStatus: 'not-required',
+    },
+    lastVerifiedAt: '2026-07',
   },
   {
     slug: 'devmegle',
