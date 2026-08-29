@@ -1,0 +1,20 @@
+{
+  "name": "@mohdaslam/ui",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "//": "Subpaths only, deliberately no '.' barrel — see README, Shared packages.",
+  "exports": {
+    "./cn": "./src/cn.ts",
+    "./section": "./src/section.tsx",
+    "./theme-provider": "./src/theme-provider.tsx",
+    "./theme-toggle": "./src/theme-toggle.tsx",
+    "./styles.css": "./src/styles.css",
+    "./tailwind-preset": "./src/tailwind-preset.ts"
+  },
+  "peerDependencies": {
+    "next-themes": "*",
+    "react": "*",
+    "tailwindcss": "*"
+  }
+}

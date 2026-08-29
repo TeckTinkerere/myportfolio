@@ -7,8 +7,22 @@ on:
     branches: [main]
 
 jobs:
+  # Both apps are verified on every push, even when a change only touches
+  # one of them. They share packages/ui and packages/content-rules, so a
+  # change to either app's shared surface can break the other — which is
+  # precisely the failure a per-app pipeline would let through.
   verify:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        app:
+          - name: site
+            workspace: '@mohdaslam/site'
+          - name: emcee
+            workspace: '@mohdaslam/emcee'
+
+    name: verify (${{ matrix.app.name }})
     steps:
       - uses: actions/checkout@v4
 
@@ -18,24 +32,30 @@ jobs:
           node-version: '22'
           cache: 'npm'
 
+      # One install at the workspace root links both apps and both packages.
       - name: Install dependencies
         run: npm ci
 
       - name: Type check
-        run: npm run typecheck
+        run: npm run typecheck --workspace ${{ matrix.app.workspace }}
 
       - name: Lint
-        run: npm run lint
+        run: npm run lint --workspace ${{ matrix.app.workspace }}
 
-      # Content-schema rules (PRD s14.2) run here. A public item with a pending
-      # permission, a missing alt text, or a duplicate slug fails the build.
+      # Content-schema rules run here. For the site that is PRD s14.2 — a
+      # public item with a pending permission, a missing alt text or a
+      # duplicate slug fails the build. For the emcee app it is the run-sheet
+      # schema, including the rule that a published sheet naming a speaker
+      # needs approved permission.
       - name: Test
-        run: npm test
+        run: npm run test --workspace ${{ matrix.app.workspace }}
 
       - name: Build
-        run: npm run build
+        run: npm run build --workspace ${{ matrix.app.workspace }}
 
       # Confirms no unpublished item, unverified metric or secret reached a
-      # client bundle or a prerendered page.
+      # client bundle or a prerendered page. Site only — the emcee app has no
+      # equivalent corpus of withheld content to leak.
       - name: Content safety gate
-        run: npm run check:leaks
+        if: matrix.app.name == 'site'
+        run: npm run check:leaks --workspace ${{ matrix.app.workspace }}

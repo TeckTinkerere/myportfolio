@@ -1,11 +1,11 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
+node_modules/
 
-# next.js
-/.next/
-/out/
+# next.js — build output lives inside each app
+.next/
+out/
 
 # production
 /build
@@ -26,7 +26,7 @@ yarn-error.log*
 # Private content: unpublished verification notes, permission records and any
 # item whose visibility is not public. Never committed, never imported by app
 # code, never present in a build. See PRD s13.1.
-/content/private/
+apps/*/content/private/
 
 # test output
 /coverage/

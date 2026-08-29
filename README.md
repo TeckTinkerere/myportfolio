@@ -1,259 +1,112 @@
-# mohdaslam.dev
+# mohdaslam.dev — workspace
 
-Personal site for Mohamed Aslam — technology builder and community operator,
-Singapore.
+Two separately deployed sites that share one design system.
 
-Built as a proof-of-work platform rather than a decorative portfolio: one
-typed content source feeds five audience lenses, and the build refuses to
-publish anything whose facts or permissions have not been settled.
+```
+apps/
+  site/              mohdaslam.dev        — the portfolio
+  emcee/             emcee.mohdaslam.dev  — event hosting run sheets
+packages/
+  ui/                tokens, Tailwind preset, cn, Section, theme plumbing
+  content-rules/     visibility, permission and the isPublished() gate
+```
+
+## Why two apps rather than one
+
+The run sheets started as `/emcee` on the portfolio. They were split out
+because they are used differently: a run sheet is an operating document read
+off a phone while a room waits, and it should not be coupled to a deploy of a
+portfolio page. Separate Vercel projects mean a change to one site cannot
+break or redeploy the other.
+
+What they must still agree on is shared, not copied:
+
+- **`packages/ui`** — every colour, type scale and component class. A token
+  moves in one file and both sites move with it.
+- **`packages/content-rules`** — what "published" means. Both sites gate
+  their content through the same `isPublished()`. Two copies of that rule is
+  exactly how one site starts publishing something the other would withhold.
+
+`/emcee` and `/emcee/:slug` on the portfolio are permanent redirects to the
+emcee site, so links shared before the split still work.
 
 ## Quick start
 
 ```bash
 npm ci
-cp .env.example .env.local   # optional — the site runs without it
-npm run dev
 ```
 
-Nothing in `.env.local` is required to run the site. Without the Brevo keys
-the contact form still renders and validates; it just reports that delivery
-is not connected yet rather than pretending to send.
-
-## Scripts
+One install at the root links both apps and both packages.
 
 | Command | What it does |
 | --- | --- |
-| `npm run dev` | Development server |
-| `npm run build` | Production build (runs `typecheck` first via `prebuild`) |
-| `npm run typecheck` | `tsc --noEmit` |
-| `npm run lint` | ESLint via `next lint` |
-| `npm test` | Jest — content rules, contact validation, link integrity |
-| `npm run verify` | typecheck → lint → test → build |
+| `npm run dev` | Portfolio on :3000 |
+| `npm run dev:emcee` | Emcee site on :3001 |
+| `npm run verify` | Full gate for both apps |
+| `npm run verify --workspace @mohdaslam/site` | Just the portfolio |
+| `npm run verify --workspace @mohdaslam/emcee` | Just the emcee site |
 
-## Stack
+CI runs the full gate for both apps on every push, even when a change touches
+only one — a change to a shared package can break the other app, which is
+precisely the failure a per-app pipeline would let through.
 
-Next.js 15 (App Router) · React 19 · TypeScript strict · Tailwind CSS 3 · Zod ·
-next-themes · a handful of Radix primitives · Jest.
+## Shared packages
 
-Server components by default. Only three things ship client JavaScript: the
-mobile navigation drawer, the theme toggle, and the contact form.
+Both packages ship **TypeScript source**, not build output. Each app
+therefore needs three things, and all three are already wired:
 
-## How content works
+1. `transpilePackages` in `next.config.mjs`
+2. `../../packages/ui/src/**` in the Tailwind `content` globs, so Tailwind
+   sees classes used inside the package
+3. `moduleNameMapper` entries in `jest.config.js`, so Jest compiles them
+   rather than skipping them as `node_modules`
 
-All content lives in `content/` as typed TypeScript. There is no CMS.
+Two deliberate quirks worth knowing before editing them:
 
-```
-content/
-  site-config.ts       identity, nav, contact — the single source of truth
-  profile.ts           bio, principles, timeline, education, résumé data
-  projects/            one file per case study, plus archive.ts for compact entries
-  events/index.ts      event records
-  recognition.ts       third-party awards and certifications
-lib/content/
-  schema.ts            Zod schemas + inferred types
-  queries.ts           server-only: the publication boundary
-  public-view.ts       narrows a project before it crosses into a client component
-```
+- **`@mohdaslam/ui` has no barrel.** Import from the subpath —
+  `@mohdaslam/ui/cn`, `@mohdaslam/ui/section`. A barrel made every
+  `import { cn }` drag `ThemeToggle`, `next-themes` and two lucide icons into
+  whatever chunk asked for a class merger: about 10 kB on every route with
+  site chrome. The `exports` map has no `"."` entry so this cannot regress by
+  accident.
+- **CSS is imported by relative path**, not package specifier —
+  `@import '../../../packages/ui/src/styles.css'`. `postcss-import` resolves
+  with its own resolver and does not read a package's `exports` map. It must
+  run before Tailwind, which is why each app's `postcss.config.mjs` lists it
+  first: the shared stylesheet uses `@layer` and `@apply`, and Tailwind can
+  only process those once the import has been inlined.
 
-### The build fails on bad content
-
-`content/projects/index.ts` calls `parseProjects()` at module scope. Because
-the route pages import it, a schema violation throws during static generation
-and fails `next build`, naming the slug and the field. Unlike a type error,
-this cannot be silenced by a config flag.
-
-The build refuses to publish when:
-
-- an item claims `visibility: 'public'` while its permission is `pending` or `prohibited`
-- a published image has no alt text
-- a published Tier 1 case study has no outcome or no long summary
-- a metric is marked `verified` without a `publicSourceUrl`
-- a sanitised item has no confidentiality note
-- two items share a slug
-- a testimonial has not been permission-cleared
-
-### The publication boundary
-
-`lib/content/queries.ts` imports `server-only`, so a client component that
-reaches for the content set fails the build instead of quietly bundling it.
-Everything public flows through `getPublicProjects()` / `getPublicEvents()`,
-which filter on visibility *and* permission in one place.
-
-Consequences worth knowing:
-
-- An item with a pending permission is authored in the repo but appears on no
-  page, in no sitemap, and in no `generateStaticParams` output.
-- Unverified metrics are stored but can never render — `getDisplayableMetrics()`
-  is the only way a component can read them.
-- Anything genuinely private is simply not in the repository. A `noindex` tag
-  or a hidden URL is not access control.
-
-### Adding or changing content
-
-Edit the relevant file in `content/`. A project is authored once; its status,
-role and summary update everywhere it appears — homepage, `/work`, and each
-capability route it is tagged for. To publish the enterprise automation case
-study, fill in its fields and change `permissionStatus` to `approved`; no code
-change is needed.
-
-Outstanding facts, permissions and assets are tracked in
-[`CONTENT_TODO.md`](./CONTENT_TODO.md).
-
-### Project screenshots
-
-```bash
-npm run refresh:screenshots            # every project with a live-site link
-npm run refresh:screenshots -- localloco-app   # just one
-```
-
-`scripts/refresh-project-screenshots.ts` reads the real content model —
-`getPublicProjects()`, the same function the site itself calls — so the list
-of URLs to capture can never drift from what is actually published. For every
-project carrying a `public: true` evidence link of type `live-site`, it opens
-the URL in a headless Chromium (Playwright), screenshots it, and overwrites
-that project's existing `coverImage` file in place. Nothing about the content
-model changes; only the image on disk does.
-
-This is deliberately a **maintenance script, not a runtime feature**. The
-alternative — rendering a live screenshot on every page view via a
-third-party service or an embedded iframe — would make the site's own load
-time and reliability depend on someone else's server, which conflicts with
-the performance work done elsewhere in this codebase. Run the script instead,
-whenever a project's live site changes enough to be worth a new cover image.
-
-A project with a live-site link but no `coverImage` yet gets a new file at
-`public/images/projects/<slug>-live.png`, and the script prints the path — add
-the `coverImage` field yourself, since the alt text needs a real description,
-not a generated one.
-
-Requires Chromium once: `npx playwright install chromium` (a few hundred MB,
-downloaded to a local cache, never shipped to the site).
-
-## Routes
-
-`/` · `/work` · `/work/[slug]` · `/software` · `/websites` · `/events` ·
-`/events/[slug]` · `/community` · `/about` · `/contact` · `/resume` ·
-`/privacy`, plus `not-found` and `error`.
-
-The four capability routes share one `LensPage` component and differ only in
-copy and ordering.
-
-Filtering on `/work` and `/events` is done by the server from `searchParams`.
-The filter controls are links, so they produce real shareable URLs, work
-without JavaScript, are keyboard-operable by default, and ship no filter JS —
-while still being a soft navigation.
-
-## Design system
-
-The visual language is an **instrument panel**: the site is built on a
-verification state machine, so it reads as a control surface rather than a
-magazine. Amber on near-black is the palette of instrument displays, which is
-why the brand accent stayed and the structure around it changed.
-
-Tokens live in `app/globals.css` as HSL triplets, consumed through
-`tailwind.config.ts`. Both themes are complete and every pair is checked
-against WCAG 2.2 AA — measured ratios are recorded in a comment beside the
-values. Note the two border tokens: `--border` is a decorative hairline at
-1.3:1 and must never be the only thing marking an interactive boundary;
-`--border-strong` is 3.4:1 and is what inputs and controls use, per WCAG 2.2
-§1.4.11.
-
-Type is **Archivo** for display (width axis set slightly expanded, so
-headlines read as equipment labelling), **Geist** for body, and **IBM Plex
-Mono** for all telemetry — statuses, dates, counts, labels.
-
-Motion is one orchestrated hero sequence plus once-only scroll reveals, and
-everything is gated behind `prefers-reduced-motion: no-preference` so a
-reduced-motion visitor gets the finished composition, not a degraded one.
-
-### Brand assets
-
-Every icon and logo is generated from one master by a single script:
-
-```bash
-node scripts/build-brand-assets.mjs
-```
-
-| Output | Size | Used by |
-| --- | --- | --- |
-| `app/icon.png` | 128 | Favicon (Next's icon convention) |
-| `app/apple-icon.png` | 180 | iOS home screen |
-| `public/images/brand/logo.png` | 512 | Header, footer, social card |
-| `public/images/brand/logo-email.png` | 128 | Transactional email |
-
-The master lives at `assets/brand/logo-master.png` — **outside `public/`**, so
-the 4.5 MB original is never deployed or served.
-
-Two things the script handles that matter:
-
-- It crops to the bounding box of *opaque* pixels rather than trimming on
-  colour, which removes the generator watermark and the soft drop shadow
-  (both low-alpha, both outside the mark) and centres the mark optically at
-  every size.
-- It quantises the palette. The mark is a photographic brushed-metal render,
-  so a full-colour PNG of it is large; this takes the favicon from 113 kB to
-  9.7 kB with no visible loss at the sizes actually rendered.
-
-The master **must have a real alpha channel**. The mark sits on both the
-near-black and the warm cream theme, so anything with a background baked in
-is unusable as site chrome — it reads as a white sticker on the dark theme.
-
-One theme correction is applied in CSS, not in the asset. On dark the mark
-measures ~6.2:1 and needs nothing; on cream its champagne highlights measure
-~1.05:1 and wash out, dragging the whole mark to ~2.9:1. The `.brand-mark`
-class applies a mild darkening in light theme only, lifting it to ~3.9:1.
-
-### The hero field
-
-The signature element is a 3D node field where **every node is one published
-project**, positioned by the disciplines it belongs to and coloured by its
-real status. It is generated by `lib/content/system-field.ts` from the same
-query layer as the pages, so it cannot drift from the truth and an
-unpublished item can no more appear in it than on `/work`.
-
-It is built in three layers:
-
-| File | Role |
-| --- | --- |
-| `components/three/system-field.config.ts` | Every tunable value — radius, speed, sizes, colours, link density. Start here. |
-| `components/three/system-field-static.tsx` | Server-rendered SVG projection of the same data. Ships in the initial HTML, no JavaScript. |
-| `components/three/system-field-canvas.tsx` | The WebGL scene (React Three Fiber). |
-
-three.js is ~160 kB, so it is dynamically imported with `ssr: false` after
-mount: the homepage's First Load JS is 111 kB against a 109 kB baseline, and
-the 3D can never affect LCP. If WebGL is unavailable, the connection is on
-save-data, the device reports fewer than four cores, or JavaScript is off, the
-SVG underneath simply remains — showing the same information.
-
-To retune it, edit the config file. To remove it entirely, drop
-`<SystemField />` from `app/page.tsx`; the SVG keeps working on its own.
+Fonts are declared per app rather than shared. `next/font` has to be called
+from the app for the compiler to self-host the files, and each app is
+entitled to its own weights.
 
 ## Deployment
 
-Deploys on Vercel from `main`.
+Two Vercel projects from this one repository. Both need their **Root
+Directory** set, which is a dashboard setting and not something in this repo:
 
-### Contact form environment
+| Project | Root Directory | Domain |
+| --- | --- | --- |
+| portfolio | `apps/site` | `mohdaslam.dev` |
+| emcee | `apps/emcee` | `emcee.mohdaslam.dev` |
 
-**All three are required.** With any of them missing the form renders and
-validates normally but reports itself unavailable, and logs exactly which
-variable is absent — check the Vercel runtime logs.
+Leave "Include files outside of the Root Directory" enabled — it is on by
+default for a monorepo and is what lets each app reach `packages/`.
 
-| Variable | Notes |
-| --- | --- |
-| `BREVO_API_KEY` | Brevo → SMTP & API → API Keys. Nothing sends without it. |
-| `BREVO_SENDER_EMAIL` | Must be a **verified** sender in Brevo, or Brevo rejects with `400 invalid_parameter`. |
-| `CONTACT_RECIPIENT_EMAIL` | Destination. `SUPPORT_EMAIL` is accepted as an alias. |
+Environment variables:
 
-`BREVO_SENDER_NAME` is optional and falls back to `APP_NAME`, then
-`"Portfolio"`.
+| Variable | Project | Notes |
+| --- | --- | --- |
+| `NEXT_PUBLIC_SITE_URL` | both | The host that project actually serves. |
+| `NEXT_PUBLIC_EMCEE_URL` | portfolio | Target of the `/emcee` redirects. Defaults to `https://emcee.mohdaslam.dev`. |
+| `NEXT_PUBLIC_PORTFOLIO_URL` | emcee | Used for the footer link back. Defaults to `https://mohdaslam.dev`. |
+| `BREVO_*`, `CONTACT_RECIPIENT_EMAIL` | portfolio | Contact form — see [`apps/site/README.md`](apps/site/README.md). |
 
-Delivery failures log Brevo's own error code, because the two common
-production faults look identical otherwise: a bad key returns `401
-unauthorized`, an unverified sender returns `400 invalid_parameter`.
+## The two sites
 
-Also make sure `NEXT_PUBLIC_SITE_URL` matches the host Vercel actually
-serves — see the note in `content/site-config.ts`.
-
-Run through [`docs/release-checklist.md`](./docs/release-checklist.md) before
-promoting to production — in particular the content-safety grep, which
-confirms no unpublished item reached a client bundle.
+- [`apps/site/README.md`](apps/site/README.md) — content model, the
+  publication boundary, project sharing and short links, the design system,
+  the hero field, contact form setup.
+- [`apps/emcee/README.md`](apps/emcee/README.md) — the run-sheet model, why
+  clock times are computed rather than authored, and what publishing a sheet
+  actually exposes.

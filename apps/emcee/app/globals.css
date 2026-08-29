@@ -1,0 +1,6 @@
+/*
+  Shared design system — see packages/ui/src/styles.css. Imported by path
+  rather than package specifier because postcss-import does not read a
+  package's "exports" map; the same note applies in apps/site.
+*/
+@import '../../../packages/ui/src/styles.css';

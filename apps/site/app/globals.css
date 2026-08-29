@@ -1,0 +1,16 @@
+/*
+  The design system is shared with the emcee app and lives in
+  packages/ui/src/styles.css — tokens, base layer, the .panel / .label-mono
+  component and utility classes, and the motion rules. postcss-import inlines
+  it before Tailwind runs, so the @apply and @layer rules inside it are
+  processed normally; see postcss.config.mjs.
+
+  Imported by path rather than as '@mohdaslam/ui/styles.css' because
+  postcss-import resolves with its own resolver, which does not read a
+  package's "exports" map. Build tooling already reaches the package this way
+  — see the content glob in tailwind.config.ts. Application code should still
+  import from '@mohdaslam/ui'.
+
+  App-specific CSS belongs below the import, not in the package.
+*/
+@import '../../../packages/ui/src/styles.css';
