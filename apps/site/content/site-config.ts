@@ -79,6 +79,8 @@ export const capabilityRoutes = [
     href: '/software',
     label: 'Software & Automation',
     lens: 'software',
+    /** Short line for the illustrated homepage tiles. */
+    tagline: 'Tools and automation that hold up.',
     description:
       'Reliable tools, operational automation, and product systems built around real constraints.',
   },
@@ -86,6 +88,7 @@ export const capabilityRoutes = [
     href: '/websites',
     label: 'Websites & Products',
     lens: 'websites',
+    tagline: 'Sites and first products, live fast.',
     description:
       'Clear, responsive websites and early-stage digital products designed to become usable quickly.',
   },
@@ -93,6 +96,7 @@ export const capabilityRoutes = [
     href: '/events',
     label: 'Events & Facilitation',
     lens: 'events',
+    tagline: 'Hosting, workshops, hackathons.',
     description:
       'Technology events, workshops, and hackathons kept clear, energetic, and human.',
   },
@@ -100,6 +104,7 @@ export const capabilityRoutes = [
     href: '/community',
     label: 'Community Initiatives',
     lens: 'community',
+    tagline: 'Ideas turned into pilots.',
     description:
       'Ideas turned into structured pilots through partnerships, coordination, and ground execution.',
   },

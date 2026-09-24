@@ -7,6 +7,7 @@
   "exports": {
     "./cn": "./src/cn.ts",
     "./section": "./src/section.tsx",
+    "./illustrations": "./src/illustrations.tsx",
     "./theme-provider": "./src/theme-provider.tsx",
     "./theme-toggle": "./src/theme-toggle.tsx",
     "./styles.css": "./src/styles.css",

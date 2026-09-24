@@ -1,17 +1,19 @@
 /**
  * Identity for the emcee site.
  *
- * Deliberately its own file rather than an import from the portfolio: these
- * are two separately deployed sites, and the emcee site should not fail to
- * build because a value moved in the other one. The overlap is three
- * strings, and they change roughly never.
+ * This is a standalone hosting site, not an annex of the portfolio: it has
+ * its own name, its own booking route and no links back. Values that happen
+ * to match the portfolio (name, email) are restated here on purpose — the two
+ * sites deploy separately, and this one should not fail to build because a
+ * value moved in the other.
  */
 export const emceeConfig = {
-  name: 'Run Sheets',
+  name: 'Mohamed Aslam · Host',
   owner: 'Mohamed Aslam',
-  descriptor: 'Event hosting run sheets',
+  descriptor: 'Host · Emcee · Facilitator',
+  headline: 'I keep the room on time and on side.',
   description:
-    'Run sheets for hosting events — running order, host notes, transitions and announcements, built to be read from a phone while a room is waiting.',
+    'Mohamed Aslam hosts tech meetups, hackathons and workshops in Singapore — keeping the programme on time and the room with it.',
 
   /**
    * Canonical origin. Vercel sets NEXT_PUBLIC_SITE_URL on the emcee project;
@@ -19,6 +21,15 @@ export const emceeConfig = {
    */
   url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://emcee.mohdaslam.dev',
 
-  /** The portfolio this site broke out of. Shown once, in the footer. */
-  portfolioUrl: process.env.NEXT_PUBLIC_PORTFOLIO_URL ?? 'https://mohdaslam.dev',
+  location: 'Singapore',
+
+  booking: {
+    email: 'aslam040607@gmail.com',
+    linkedin: 'https://www.linkedin.com/in/mohamed-aslam-abdul',
+  },
 } as const
+
+/** A mailto that arrives with the three things needed to say yes or no. */
+export const bookingHref = `mailto:${emceeConfig.booking.email}?subject=${encodeURIComponent(
+  'Hosting enquiry',
+)}&body=${encodeURIComponent('Event:\nDate:\nAudience size:\nFormat:\n')}`

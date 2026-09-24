@@ -109,6 +109,9 @@ export const runSheetSchema = z
      * the event records, so it cannot check that a slug resolves to
      * something published, and a link it cannot verify is one it should not
      * be constructing. The author pastes a URL they have actually opened.
+     *
+     * Not rendered: this site stands on its own and does not send visitors
+     * back to the portfolio. Kept as a record of where the event lives.
      */
     eventUrl: z.string().url().optional(),
 

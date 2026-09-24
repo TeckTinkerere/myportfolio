@@ -1,3 +1,4 @@
+import { LENS_ART } from '@/components/illustrations/art'
 import { CtaLink } from '@/components/layout/cta-link'
 import { Section, SectionHeader } from '@/components/layout/section'
 import { ProjectCard } from '@/components/projects/project-card'
@@ -29,15 +30,23 @@ export function LensPage({
   children?: React.ReactNode
 }) {
   const projects = getProjectsByLens(lens)
+  const Art = LENS_ART[lens]
 
   return (
     <>
       <Section className="pb-0">
-        <div className="max-w-3xl">
-          <h1 className="text-headline font-semibold text-ink">{title}</h1>
-          <p className="prose-measure mt-5 text-lg leading-relaxed text-ink-muted">
-            {intro}
-          </p>
+        <div className="grid items-center gap-10 lg:grid-cols-[1.4fr_1fr]">
+          <div className="max-w-3xl">
+            <h1 className="text-headline font-semibold text-ink">{title}</h1>
+            <p className="prose-measure mt-5 text-lg leading-relaxed text-ink-muted">
+              {intro}
+            </p>
+          </div>
+          {Art ? (
+            <div className="panel hidden rounded-sm bg-surface-raised p-8 sm:block">
+              <Art />
+            </div>
+          ) : null}
         </div>
       </Section>
 
@@ -48,7 +57,6 @@ export function LensPage({
           <SectionHeader
             eyebrow="Selected work"
             title="Relevant work"
-            
           />
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {projects.map((project) => (

@@ -47,7 +47,7 @@ export default function WebsitesPage() {
     <LensPage
       lens="websites"
       title="Practical websites and web products built around a clear goal."
-      intro="I help early-stage teams, student initiatives and community organisations turn an idea into a clear, responsive website or a usable first product. I work alone — not an agency, and the scope reflects that."
+      intro="Clear, responsive sites and first products for early-stage teams, student initiatives and community groups. Just me — not an agency."
       ctaLabel="Have a website or first product in mind?"
       ctaHref="/contact?type=website"
     >

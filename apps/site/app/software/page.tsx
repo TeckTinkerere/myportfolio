@@ -16,7 +16,7 @@ export default function SoftwarePage() {
     <LensPage
       lens="software"
       title="Software built for real operational problems."
-      intro="Automation, web applications, internal tooling and early-stage products. The strongest work usually turns a repetitive or unclear process into something reliable, observable and usable."
+      intro="Automation, web apps, internal tools and early products — turning a repetitive or unclear process into something reliable."
       ctaLabel="Working on something that needs building properly rather than quickly?"
       ctaHref="/contact?type=technical"
     >

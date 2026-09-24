@@ -62,7 +62,7 @@ export default async function RunSheetPage({
         <nav aria-label="Breadcrumb" className="mb-8">
           <ol className="flex items-center gap-1.5 text-xs text-ink-muted">
             <li>
-              <Link href="/" className="hover:text-ink">
+              <Link href="/#run-sheets" className="hover:text-ink">
                 Run sheets
               </Link>
             </li>
@@ -90,16 +90,6 @@ export default async function RunSheetPage({
             </p>
           ) : null}
 
-          {sheet.eventUrl ? (
-            <p className="mt-4 text-sm">
-              <a
-                href={sheet.eventUrl}
-                className="text-accent underline-offset-4 hover:underline"
-              >
-                See the record for this event
-              </a>
-            </p>
-          ) : null}
         </header>
       </Section>
 

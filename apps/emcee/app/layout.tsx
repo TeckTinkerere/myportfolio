@@ -6,7 +6,7 @@ import type { Metadata, Viewport } from 'next'
 import { Archivo, Geist, IBM_Plex_Mono } from 'next/font/google'
 import Link from 'next/link'
 
-import { emceeConfig } from '@/content/site-config'
+import { bookingHref, emceeConfig } from '@/content/site-config'
 
 import './globals.css'
 
@@ -32,21 +32,27 @@ const mono = IBM_Plex_Mono({
   display: 'swap',
 })
 
+const NAV = [
+  { href: '/#rooms', label: 'Rooms' },
+  { href: '/#approach', label: 'Approach' },
+  { href: '/#run-sheets', label: 'Run sheets' },
+] as const
+
 export const metadata: Metadata = {
   metadataBase: new URL(emceeConfig.url),
   title: {
-    default: `${emceeConfig.name} — ${emceeConfig.owner}`,
+    default: `${emceeConfig.owner} — Host & Emcee`,
     template: `%s | ${emceeConfig.name}`,
   },
   description: emceeConfig.description,
-  authors: [{ name: emceeConfig.owner, url: emceeConfig.portfolioUrl }],
+  authors: [{ name: emceeConfig.owner, url: emceeConfig.url }],
   alternates: { canonical: '/' },
   openGraph: {
     type: 'website',
     locale: 'en_SG',
     url: emceeConfig.url,
     siteName: emceeConfig.name,
-    title: `${emceeConfig.name} — ${emceeConfig.owner}`,
+    title: `${emceeConfig.owner} — Host & Emcee`,
     description: emceeConfig.description,
   },
   robots: { index: true, follow: true },
@@ -79,9 +85,9 @@ export default function RootLayout({
 
           <div className="flex min-h-dvh flex-col">
             {/*
-              Chrome is deliberately thinner than the portfolio's. There is
-              one section here, and a host mid-show should not be navigating
-              — the header is a way back to the list and nothing else.
+              Section links are anchors on the one-page home, so from a run
+              sheet they route back to it. Book is the only filled control in
+              the chrome — it is the one thing this site asks a visitor to do.
             */}
             <header className="sticky top-0 z-50 border-b border-border/70 bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/70">
               <div className="container flex h-16 items-center justify-between gap-4">
@@ -91,7 +97,24 @@ export default function RootLayout({
                 >
                   {emceeConfig.name}
                 </Link>
-                <ThemeToggle />
+                <nav aria-label="Primary" className="flex items-center gap-1 sm:gap-2">
+                  {NAV.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className="hidden rounded-sm px-2.5 py-1.5 text-sm text-ink-muted transition-colors hover:text-ink md:inline-block"
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                  <a
+                    href={bookingHref}
+                    className="ml-1 rounded-sm bg-accent px-3.5 py-1.5 text-sm font-medium text-accent-contrast transition-opacity hover:opacity-90"
+                  >
+                    Book
+                  </a>
+                  <ThemeToggle />
+                </nav>
               </div>
             </header>
 
@@ -102,14 +125,22 @@ export default function RootLayout({
             <footer className="border-t border-border">
               <div className="container flex flex-wrap items-center justify-between gap-4 py-8 text-xs text-ink-muted">
                 <p>
-                  {emceeConfig.descriptor} — {emceeConfig.owner}
+                  {emceeConfig.owner} — {emceeConfig.descriptor} · {emceeConfig.location}
                 </p>
-                <a
-                  href={emceeConfig.portfolioUrl}
-                  className="text-accent underline-offset-4 hover:underline"
-                >
-                  mohdaslam.dev
-                </a>
+                <div className="flex gap-5">
+                  <a
+                    href={`mailto:${emceeConfig.booking.email}`}
+                    className="text-accent underline-offset-4 hover:underline"
+                  >
+                    Email
+                  </a>
+                  <a
+                    href={emceeConfig.booking.linkedin}
+                    className="text-accent underline-offset-4 hover:underline"
+                  >
+                    LinkedIn
+                  </a>
+                </div>
               </div>
             </footer>
           </div>
