@@ -1,7 +1,14 @@
 # emcee.mohdaslam.dev
 
-Run sheets for hosting events. Deployed separately from the portfolio — see
-the [root README](../../README.md) for why, and for the Vercel setup.
+A standalone hosting site: rooms hosted, how a room is run, run sheets and a
+booking route. Deployed separately from the portfolio and deliberately does
+not link back to it — see the [root README](../../README.md) for the Vercel
+setup.
+
+The hosting record lives in [`content/hosting.ts`](content/hosting.ts) and
+the booking contact in [`content/site-config.ts`](content/site-config.ts).
+Illustrations come from `@mohdaslam/ui/illustrations`, shared with the
+portfolio.
 
 ## Quick start
 
@@ -85,4 +92,4 @@ without changing the answer.
 
 ## Routes
 
-`/` · `/[slug]`, plus `not-found`, `robots.txt` and `sitemap.xml`.
+`/` (home: hero, rooms, approach, run sheets, booking) · `/[slug]` (a run sheet), plus `not-found`, `robots.txt` and `sitemap.xml`.

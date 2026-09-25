@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
+import { LENS_ART } from '@/components/illustrations/art'
 import { StatusBadge } from '@/components/projects/status-badge'
 import type { PortfolioProject } from '@/lib/content/schema'
 import { cn } from '@/lib/utils'
@@ -29,6 +30,12 @@ export function ProjectCard({
    */
   action?: React.ReactNode
 }) {
+  // No screenshot (a pilot, a community initiative) still gets a picture:
+  // the illustration for the first lens that has one ('general' has none).
+  const fallbackLens = project.lenses.find((lens) => LENS_ART[lens])
+  const FallbackArt =
+    project.coverImage || !fallbackLens ? undefined : LENS_ART[fallbackLens]
+
   return (
     <article
       className={cn(
@@ -50,6 +57,15 @@ export function ProjectCard({
             sizes={featured ? '(max-width: 640px) 100vw, 40vw' : '(max-width: 768px) 100vw, 33vw'}
             className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
           />
+        </div>
+      ) : FallbackArt ? (
+        <div
+          className={cn(
+            'flex aspect-[16/9] w-full shrink-0 items-center justify-center overflow-hidden border-b border-border bg-surface-raised px-12 py-4',
+            featured && 'sm:aspect-[4/3] sm:w-2/5 sm:border-b-0 sm:border-r',
+          )}
+        >
+          <FallbackArt className="max-h-full transition-transform duration-500 group-hover:scale-[1.04]" />
         </div>
       ) : null}
 

@@ -1,6 +1,9 @@
+import { Crosshair, Package, RefreshCw } from 'lucide-react'
+import Image from 'next/image'
 import Link from 'next/link'
 
 import { EventCard } from '@/components/events/event-card'
+import { LENS_ART } from '@/components/illustrations/art'
 import { CtaLink } from '@/components/layout/cta-link'
 import { Section, SectionHeader } from '@/components/layout/section'
 import { Reveal } from '@/components/motion/reveal'
@@ -123,25 +126,38 @@ function Capabilities() {
       <h2 id="capabilities-heading" className="sr-only">
         What I work on
       </h2>
-      <ul className="grid gap-px overflow-hidden rounded-sm border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
-        {capabilityRoutes.map((route, index) => (
-          <li key={route.href}>
-            <Reveal delay={index * 60}>
-              <Link
-                href={route.href}
-                className="group flex h-full flex-col bg-surface p-5 transition-colors hover:bg-surface-raised"
-              >
-                <span className="label-mono text-accent opacity-0 transition-opacity group-hover:opacity-100">
-                  Open
-                </span>
-                <h3 className="mt-3 text-sm font-semibold text-ink">{route.label}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-ink-muted">
-                  {route.description}
-                </p>
-              </Link>
-            </Reveal>
-          </li>
-        ))}
+      <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {capabilityRoutes.map((route, index) => {
+          const Art = LENS_ART[route.lens]
+          return (
+            <li key={route.href}>
+              <Reveal delay={index * 60} className="h-full">
+                <Link
+                  href={route.href}
+                  className="panel group flex h-full flex-col rounded-sm transition-colors hover:border-border-strong"
+                >
+                  <div className="flex aspect-[3/2] items-center justify-center overflow-hidden border-b border-border bg-surface-raised px-8 py-5">
+                    {Art ? (
+                      <Art className="max-h-full transition-transform duration-500 group-hover:scale-[1.05]" />
+                    ) : null}
+                  </div>
+                  <div className="flex flex-1 items-end justify-between gap-3 p-4">
+                    <div>
+                      <h3 className="text-sm font-semibold text-ink">{route.label}</h3>
+                      <p className="mt-1 text-sm text-ink-muted">{route.tagline}</p>
+                    </div>
+                    <span
+                      aria-hidden
+                      className="text-accent transition-transform group-hover:translate-x-0.5"
+                    >
+                      →
+                    </span>
+                  </div>
+                </Link>
+              </Reveal>
+            </li>
+          )
+        })}
       </ul>
     </Section>
   )
@@ -201,16 +217,29 @@ function Recognition() {
         </h2>
         <ul className="grid gap-px bg-border sm:grid-cols-3">
           {placements.map((item) => (
-            <li key={item.slug} className="bg-surface p-5">
-              <p className="font-display text-2xl font-semibold text-accent">
-                {item.placement}
-              </p>
-              <p className="mt-2 text-sm font-medium leading-snug text-ink">
-                {item.title}
-              </p>
-              <p className="label-mono tnum mt-2 text-ink-muted">
-                {item.issuer} · {item.date.slice(0, 4)}
-              </p>
+            <li key={item.slug} className="flex flex-col bg-surface">
+              {item.image ? (
+                <div className="relative aspect-[4/3] overflow-hidden border-b border-border bg-surface-raised">
+                  <Image
+                    src={item.image.src}
+                    alt={item.image.alt}
+                    fill
+                    sizes="(max-width: 640px) 100vw, 33vw"
+                    className="object-contain p-3"
+                  />
+                </div>
+              ) : null}
+              <div className="p-5">
+                <p className="font-display text-2xl font-semibold text-accent">
+                  {item.placement}
+                </p>
+                <p className="mt-2 text-sm font-medium leading-snug text-ink">
+                  {item.title}
+                </p>
+                <p className="label-mono tnum mt-2 text-ink-muted">
+                  {item.issuer} · {item.date.slice(0, 4)}
+                </p>
+              </div>
             </li>
           ))}
         </ul>
@@ -219,13 +248,24 @@ function Recognition() {
   )
 }
 
+/** One glyph per step: pin the problem down, ship the small thing, iterate. */
+const PRINCIPLE_ICONS = [Crosshair, Package, RefreshCw] as const
+
+function PrincipleIcon({ index }: { index: number }) {
+  const Icon = PRINCIPLE_ICONS[index] ?? Crosshair
+  return (
+    <span className="mb-4 flex size-11 items-center justify-center rounded-sm border border-accent/40 bg-accent/10 text-accent">
+      <Icon aria-hidden className="size-5" />
+    </span>
+  )
+}
+
 function WorkingStyle() {
   return (
     <Section aria-labelledby="style-heading">
       <SectionHeader
         eyebrow="How I work"
-        title="Useful where a project needs both building and follow-through"
-        description="Technical implementation, product decisions, operations and communication — without losing sight of who uses the result."
+        title="Build it, then make it run"
       />
       {/* Numbered because this genuinely is a sequence — each step depends on
           the one before it. Nothing else on the page is numbered. */}
@@ -234,6 +274,7 @@ function WorkingStyle() {
           <Reveal as="li" key={principle.title} delay={index * 70}>
             <Panel className="h-full" designation={`Step ${index + 1}`}>
               <div className="p-5">
+                <PrincipleIcon index={index} />
                 <h3 className="text-base font-semibold text-ink">{principle.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-ink-muted">
                   {principle.body}
@@ -251,16 +292,29 @@ function FinalCta() {
   return (
     <Section aria-labelledby="cta-heading">
       <Panel designation="Get in touch" className="relative overflow-hidden">
-        <div className="p-8 sm:p-12">
-          <h2
-            id="cta-heading"
-            className="max-w-2xl font-display text-headline font-semibold text-ink"
-          >
-            Have a technical problem, website, event, or community idea worth moving
-            forward?
-          </h2>
-          <div className="mt-8">
-            <CtaLink href="/contact">Discuss an opportunity</CtaLink>
+        <div className="grid sm:grid-cols-[1fr_16rem] lg:grid-cols-[1fr_20rem]">
+          <div className="p-8 sm:p-12">
+            <h2
+              id="cta-heading"
+              className="max-w-2xl font-display text-headline font-semibold text-ink"
+            >
+              Got a problem, product, or event worth moving forward?
+            </h2>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <CtaLink href="/contact">Discuss an opportunity</CtaLink>
+              <CtaLink href="/about" variant="secondary">
+                About me
+              </CtaLink>
+            </div>
+          </div>
+          <div className="relative min-h-[18rem] border-t border-border sm:border-l sm:border-t-0">
+            <Image
+              src="/images/events/facilitating.jpg"
+              alt={`${siteConfig.name} speaking at a technology workshop`}
+              fill
+              sizes="(max-width: 640px) 100vw, 20rem"
+              className="object-cover object-top"
+            />
           </div>
         </div>
       </Panel>

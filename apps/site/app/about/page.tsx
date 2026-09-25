@@ -16,6 +16,7 @@ import {
 } from '@/content/profile'
 import { siteConfig } from '@/content/site-config'
 import { getRecognition } from '@/lib/content/queries'
+import type { PortfolioImage } from '@/lib/content/schema'
 
 export const metadata: Metadata = {
   title: 'About',
@@ -187,30 +188,37 @@ export default function AboutPage() {
           description="Issued by third parties, on the dates shown."
         />
 
-        <ul className="grid gap-px overflow-hidden rounded-sm border border-border bg-border sm:grid-cols-3">
+        <ul className="grid gap-4 sm:grid-cols-3">
           {placements.map((item) => (
-            <li key={item.slug} className="bg-surface p-5">
-              <p className="font-display text-2xl font-semibold text-accent">
-                {item.placement}
-              </p>
-              <p className="mt-2 text-sm font-medium leading-snug text-ink">{item.title}</p>
-              <p className="label-mono tnum mt-2 text-ink-muted">
-                {item.issuer} · {item.date}
-              </p>
+            <li key={item.slug} className="panel flex flex-col rounded-sm">
+              <CertificateImage image={item.image} />
+              <div className="p-5">
+                <p className="font-display text-2xl font-semibold text-accent">
+                  {item.placement}
+                </p>
+                <p className="mt-2 text-sm font-medium leading-snug text-ink">{item.title}</p>
+                <p className="label-mono tnum mt-2 text-ink-muted">
+                  {item.issuer} · {item.date}
+                </p>
+              </div>
             </li>
           ))}
         </ul>
 
         {/* Course completions, kept visually subordinate to the placements so
-            an attendance certificate never reads as an award. */}
-        <h3 className="label-mono mt-8 text-ink-muted">Certifications</h3>
-        <ul className="mt-3 flex flex-col gap-2">
+            an attendance certificate never reads as an award: smaller, no
+            placement line, and after the awards. */}
+        <h3 className="label-mono mt-10 text-ink-muted">Certifications</h3>
+        <ul className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
           {certifications.map((item) => (
-            <li key={item.slug} className="flex flex-wrap gap-x-3 text-sm text-ink-muted">
-              <span className="text-ink">{item.title}</span>
-              <span className="tnum">
-                {item.issuer} · {item.date}
-              </span>
+            <li key={item.slug} className="flex flex-col overflow-hidden rounded-sm border border-border bg-surface">
+              <CertificateImage image={item.image} />
+              <div className="p-3">
+                <p className="text-xs font-medium leading-snug text-ink">{item.title}</p>
+                <p className="tnum mt-1 text-[0.7rem] text-ink-muted">
+                  {item.issuer} · {item.date.slice(0, 4)}
+                </p>
+              </div>
             </li>
           ))}
         </ul>
@@ -232,5 +240,20 @@ export default function AboutPage() {
         </Panel>
       </Section>
     </>
+  )
+}
+
+function CertificateImage({ image }: { image?: PortfolioImage }) {
+  if (!image) return null
+  return (
+    <div className="relative aspect-[4/3] overflow-hidden border-b border-border bg-surface-raised">
+      <Image
+        src={image.src}
+        alt={image.alt}
+        fill
+        sizes="(max-width: 640px) 50vw, 20vw"
+        className="object-contain p-2"
+      />
+    </div>
   )
 }

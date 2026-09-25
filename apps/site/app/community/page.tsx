@@ -16,7 +16,7 @@ export default function CommunityPage() {
     <LensPage
       lens="community"
       title="Community ideas turned into structured, measurable action."
-      intro="Initiatives where good intentions need planning, partnerships and ground execution to become real. Coordination is usually the hard part, not the idea."
+      intro="Good intentions, given the planning, partners and ground work to become real."
       ctaLabel="Working on an initiative that needs someone to make it run?"
       ctaHref="/contact?type=community"
     >
