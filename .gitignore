@@ -34,3 +34,8 @@ apps/*/content/private/
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+# graphify knowledge graph — generated locally, rebuilt by `graphify update .`
+graphify-out/
+
+# Claude Code hooks point at machine-specific paths
+.claude/settings.json
