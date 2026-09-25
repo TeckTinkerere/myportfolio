@@ -14,3 +14,28 @@
   App-specific CSS belongs below the import, not in the package.
 */
 @import '../../../packages/ui/src/styles.css';
+
+/*
+  Résumé on paper: one column, tight rhythm, no console chrome. The screen
+  layout's panels and section spacing are built for scrolling, not for A4.
+*/
+@media print {
+  .resume section {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+
+  .resume .panel {
+    background: transparent;
+  }
+
+  .resume .panel::before,
+  .resume .panel::after {
+    display: none;
+  }
+
+  .resume h2,
+  .resume li {
+    break-inside: avoid;
+  }
+}

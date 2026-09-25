@@ -12,7 +12,7 @@ import { primaryNav } from '@/content/site-config'
  */
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-50 border-b border-border/70 bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/70">
+    <header className="print-hidden sticky top-0 z-50 border-b border-border/70 bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/70">
       <div className="container flex h-16 items-center justify-between gap-4">
         <Wordmark />
 
