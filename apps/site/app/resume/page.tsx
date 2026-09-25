@@ -1,7 +1,28 @@
-import { Printer } from 'lucide-react'
+import {
+  ArrowUpRight,
+  Code2,
+  Database,
+  Download,
+  Github,
+  GraduationCap,
+  Hammer,
+  Linkedin,
+  Mail,
+  MapPin,
+  MessagesSquare,
+  Radio,
+  Users,
+  Wrench,
+} from 'lucide-react'
 import type { Metadata } from 'next'
+import Image from 'next/image'
+import Link from 'next/link'
 
+import { LENS_ART } from '@/components/illustrations/art'
 import { Section } from '@/components/layout/section'
+import { CareerTrack } from '@/components/resume/career-track'
+import { PrintButton } from '@/components/resume/print-button'
+import { GridBackdrop } from '@/components/system/panel'
 import {
   capabilities,
   education,
@@ -11,7 +32,12 @@ import {
   resumePdf,
 } from '@/content/profile'
 import { siteConfig } from '@/content/site-config'
-import { getRecognition } from '@/lib/content/queries'
+import {
+  getFeaturedProjects,
+  getPublicEvents,
+  getPublicProjects,
+  getRecognition,
+} from '@/lib/content/queries'
 
 export const metadata: Metadata = {
   title: 'Résumé',
@@ -19,158 +45,466 @@ export const metadata: Metadata = {
   alternates: { canonical: '/resume' },
 }
 
+/** Whole months between two YYYY-MM values; an open end means "now". */
+function monthsBetween(start: string, end: string | null) {
+  const [sy, sm] = start.split('-').map(Number)
+  const now = new Date()
+  const [ey, em] = end ? end.split('-').map(Number) : [now.getFullYear(), now.getMonth() + 1]
+  return (ey! - sy!) * 12 + (em! - sm!) + 1
+}
+
+function formatSpan(months: number) {
+  const years = Math.floor(months / 12)
+  const rest = months % 12
+  return [years ? `${years} yr` : '', rest ? `${rest} mo` : ''].filter(Boolean).join(' ')
+}
+
+const CAPABILITY_ICONS = [Code2, Database, Wrench, MessagesSquare] as const
+
 export default function ResumePage() {
-  const placements = getRecognition().filter((item) => item.placement)
+  // Best placing first: "1st place" before "2nd place".
+  const placements = getRecognition()
+    .filter((item) => item.placement)
+    .sort((a, b) => parseInt(a.placement!, 10) - parseInt(b.placement!, 10))
+  const events = getPublicEvents()
+  const projects = getPublicProjects()
+  const featured = getFeaturedProjects('general', 3)
+
+  // Earliest build role, so "building since" is read off the record.
+  const buildingSince = experience
+    .filter((item) => item.kind === 'build')
+    .map((item) => item.start)
+    .sort()[0]
+    ?.slice(0, 4)
+
+  const stats = [
+    { value: String(projects.length), label: 'Published projects' },
+    { value: String(events.length), label: 'Events worked' },
+    { value: String(placements.length), label: 'Competition placings' },
+    ...(buildingSince ? [{ value: buildingSince, label: 'Building since' }] : []),
+  ]
 
   return (
-    <Section className="max-w-4xl">
-      <header className="border-b border-border pb-8">
-        <div className="flex flex-wrap items-start justify-between gap-4">
-          <div>
-            {/* The one place the full legal name is appropriate (PRD FR-08). */}
-            <h1 className="font-display text-headline font-semibold text-ink">
-              {siteConfig.legalName}
-            </h1>
-            <p className="mt-2 text-base text-ink-muted">{siteConfig.descriptor}</p>
-          </div>
+    <div className="resume">
+      <Hero stats={stats} />
 
-          <div className="flex flex-col items-start gap-3 print-hidden">
-            {/*
-              No PDF exists in the repository. Rather than link to a 404, the
-              page is print-styled so it can be saved as PDF today, and the
-              download control appears automatically once resumePdf is set in
-              content/profile.ts. See CONTENT_TODO.md.
-            */}
-            {resumePdf ? (
-              <a
-                href={resumePdf.href}
-                className="inline-flex items-center gap-2 rounded-sm bg-accent px-4 py-2 text-sm font-medium text-accent-contrast"
+      <Section aria-labelledby="track-heading" className="pb-0 print:hidden">
+        <Heading id="track-heading" eyebrow="At a glance" title="Career track" />
+        <CareerTrack
+          caption="Positioned from real dates. Diamonds are events; filled ones I hosted."
+          lanes={[
+            {
+              name: 'Study',
+              kind: 'bars',
+              tone: 'study',
+              bars: [
+                {
+                  label: 'Diploma in IT',
+                  sublabel: education.institution,
+                  start: education.start,
+                  end: education.end,
+                },
+              ],
+            },
+            {
+              name: 'Build',
+              kind: 'bars',
+              tone: 'accent',
+              bars: experience
+                .filter((item) => item.kind === 'build')
+                .map((item) => ({
+                  label: item.organisation,
+                  sublabel: item.role.split(',')[0]!,
+                  start: item.start,
+                  end: item.end,
+                })),
+            },
+            {
+              name: 'Operate',
+              kind: 'bars',
+              tone: 'neutral',
+              bars: experience
+                .filter((item) => item.kind === 'operate')
+                .map((item) => ({
+                  label: item.organisation,
+                  sublabel: item.role,
+                  start: item.start,
+                  end: item.end,
+                })),
+            },
+            {
+              name: 'Events',
+              kind: 'points',
+              points: events.map((event) => ({
+                label: event.name,
+                date: event.date,
+                highlight: event.role === 'host-emcee',
+              })),
+            },
+          ]}
+        />
+      </Section>
+
+      <Section aria-labelledby="experience-heading" className="pb-0">
+        <Heading id="experience-heading" eyebrow="Experience" title="Where I’ve worked" />
+        <ol className="grid gap-4 md:grid-cols-2 print:grid-cols-1 print:gap-3">
+          {experience.map((item) => {
+            const Icon = item.kind === 'build' ? Hammer : Radio
+            return (
+              <li
+                key={`${item.organisation}-${item.role}`}
+                className="panel flex gap-4 rounded-sm p-5 print:border-0 print:p-0"
               >
-                Download PDF
-              </a>
-            ) : null}
-            <p className="inline-flex items-center gap-2 text-xs text-ink-muted">
-              <Printer aria-hidden className="size-3.5" />
-              Print this page to save a PDF
-            </p>
-          </div>
-        </div>
+                <span
+                  className={
+                    item.kind === 'build'
+                      ? 'flex size-11 shrink-0 items-center justify-center rounded-sm border border-accent/50 bg-accent/10 text-accent print:hidden'
+                      : 'flex size-11 shrink-0 items-center justify-center rounded-sm border border-border-strong/60 bg-surface-raised text-ink-muted print:hidden'
+                  }
+                >
+                  <Icon aria-hidden className="size-5" />
+                </span>
+                <div className="min-w-0 flex-1">
+                  <div className="flex flex-wrap items-baseline justify-between gap-x-3">
+                    <h3 className="font-display text-lg font-semibold text-ink">
+                      {item.organisation}
+                    </h3>
+                    <p className="label-mono tnum text-ink-muted">{item.timeframe}</p>
+                  </div>
+                  <p className="text-sm text-accent">{item.role}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-ink-muted">{item.summary}</p>
+                  <p className="label-mono tnum mt-3 text-ink-muted print:hidden">
+                    {item.kind === 'build' ? 'Build' : 'Operate'} ·{' '}
+                    {formatSpan(monthsBetween(item.start, item.end))}
+                    {item.end === null ? ' and counting' : ''}
+                  </p>
+                </div>
+              </li>
+            )
+          })}
+        </ol>
+      </Section>
 
-        <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-ink-muted">
-          <li>{siteConfig.location}</li>
-          <li>
-            <a href={`mailto:${siteConfig.contact.email}`} className="hover:text-ink">
-              {siteConfig.contact.email}
-            </a>
-          </li>
-          <li>
-            <a
-              href={siteConfig.contact.github}
-              target="_blank"
-              rel="noreferrer noopener"
-              className="hover:text-ink"
-            >
-              github.com/TeckTinkerere
-            </a>
-          </li>
-          <li>
-            <a
-              href={siteConfig.contact.linkedin}
-              target="_blank"
-              rel="noreferrer noopener"
-              className="hover:text-ink"
-            >
-              LinkedIn
-            </a>
-          </li>
-        </ul>
+      {featured.length > 0 ? (
+        <Section aria-labelledby="work-heading" className="pb-0 print:hidden">
+          <Heading
+            id="work-heading"
+            eyebrow="Selected work"
+            title="Proof, not adjectives"
+            action={
+              <Link href="/work" className="label-mono text-accent underline-offset-4 hover:underline">
+                All work →
+              </Link>
+            }
+          />
+          <ul className="grid gap-4 sm:grid-cols-3">
+            {featured.map((project) => {
+              const Art = project.coverImage
+                ? undefined
+                : LENS_ART[project.lenses.find((lens) => LENS_ART[lens]) ?? 'software']
+              return (
+                <li key={project.slug}>
+                  <Link
+                    href={`/work/${project.slug}`}
+                    className="panel group flex h-full flex-col overflow-hidden rounded-sm transition-colors hover:border-border-strong"
+                  >
+                    <div className="relative flex aspect-[16/10] items-center justify-center overflow-hidden border-b border-border bg-surface-raised">
+                      {project.coverImage ? (
+                        <Image
+                          src={project.coverImage.src}
+                          alt={project.coverImage.alt}
+                          fill
+                          sizes="(max-width: 640px) 100vw, 33vw"
+                          className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.04]"
+                        />
+                      ) : Art ? (
+                        <Art className="max-h-full px-10 py-4" />
+                      ) : null}
+                    </div>
+                    <div className="flex flex-1 items-start justify-between gap-3 p-4">
+                      <div>
+                        <p className="label-mono text-accent">{project.proofVerb}</p>
+                        <h3 className="mt-1.5 text-sm font-semibold text-ink">{project.title}</h3>
+                        <p className="mt-1 text-xs leading-relaxed text-ink-muted">
+                          {project.oneLiner}
+                        </p>
+                      </div>
+                      <ArrowUpRight
+                        aria-hidden
+                        className="size-4 shrink-0 text-ink-muted transition-colors group-hover:text-accent"
+                      />
+                    </div>
+                  </Link>
+                </li>
+              )
+            })}
+          </ul>
+        </Section>
+      ) : null}
 
-        <p className="mt-4 text-xs text-ink-muted">
-          Last updated {resumeLastUpdated}
-        </p>
-      </header>
-
-      <ResumeSection title="Experience">
-        <ol className="flex flex-col gap-6">
-          {experience.map((item) => (
-            <li key={`${item.organisation}-${item.role}`}>
-              <div className="flex flex-wrap items-baseline justify-between gap-x-4">
-                <h3 className="text-base font-semibold text-ink">{item.role}</h3>
-                <p className="label-mono text-ink-muted">{item.timeframe}</p>
+      <Section aria-labelledby="recognition-heading" className="pb-0">
+        <Heading id="recognition-heading" eyebrow="Recognition" title="Placed in competition" />
+        <ol className="grid gap-4 sm:grid-cols-3 print:grid-cols-1 print:gap-1">
+          {placements.map((item) => (
+            <li key={item.slug} className="panel flex flex-col rounded-sm print:border-0">
+              {item.image ? (
+                <div className="relative aspect-[4/3] overflow-hidden border-b border-border bg-surface-raised print:hidden">
+                  <Image
+                    src={item.image.src}
+                    alt={item.image.alt}
+                    fill
+                    sizes="(max-width: 640px) 100vw, 33vw"
+                    className="object-contain p-3"
+                  />
+                  <span className="tnum absolute left-3 top-3 flex size-10 items-center justify-center rounded-full bg-accent font-display text-lg font-semibold text-accent-contrast shadow">
+                    {item.placement!.split(' ')[0]}
+                  </span>
+                </div>
+              ) : null}
+              <div className="p-5 print:p-0">
+                <p className="font-display text-xl font-semibold text-accent print:inline print:text-sm print:text-ink">
+                  {item.placement}
+                </p>
+                <p className="mt-1.5 text-sm font-medium leading-snug text-ink print:mt-0 print:inline">
+                  <span className="hidden print:inline"> — </span>
+                  {item.title}
+                </p>
+                <p className="label-mono tnum mt-2 text-ink-muted print:mt-0">
+                  {item.issuer} · {item.date.slice(0, 4)}
+                </p>
               </div>
-              <p className="mt-0.5 text-sm text-accent">{item.organisation}</p>
-              <p className="mt-2 text-sm leading-relaxed text-ink-muted">
-                {item.summary}
-              </p>
             </li>
           ))}
         </ol>
-      </ResumeSection>
+      </Section>
 
-      <ResumeSection title="Education">
-        <div className="flex flex-wrap items-baseline justify-between gap-x-4">
-          <h3 className="text-base font-semibold text-ink">{education.qualification}</h3>
-          <p className="label-mono text-ink-muted">{education.timeframe}</p>
-        </div>
-        <p className="mt-0.5 text-sm text-accent">{education.institution}</p>
-        <p className="mt-2 text-sm leading-relaxed text-ink-muted">
-          {education.coursework.join(' · ')}
-        </p>
-      </ResumeSection>
-
-      <ResumeSection title="Selected recognition">
-        <ul className="flex flex-col gap-3">
-          {placements.map((item) => (
-            <li key={item.slug} className="text-sm">
-              <span className="font-medium text-ink">{item.placement}</span>
-              <span className="text-ink-muted">
-                {' '}
-                — {item.title}, {item.issuer} ({item.date.slice(0, 4)})
-              </span>
-            </li>
-          ))}
-        </ul>
-      </ResumeSection>
-
-      <ResumeSection title="Committees and community roles">
-        <ul className="flex flex-col gap-3">
-          {leadership.map((role) => (
-            <li key={role.organisation} className="text-sm">
-              <span className="font-medium text-ink">{role.role}</span>
-              <span className="text-ink-muted">
-                {' '}
-                — {role.organisation} ({role.timeframe})
-              </span>
-            </li>
-          ))}
-        </ul>
-      </ResumeSection>
-
-      <ResumeSection title="Capabilities">
-        <dl className="flex flex-col gap-4">
-          {capabilities.map((group) => (
-            <div key={group.group}>
-              <dt className="label-mono text-ink-muted">{group.group}</dt>
-              <dd className="mt-1 text-sm text-ink-muted">{group.items.join(' · ')}</dd>
+      <Section aria-labelledby="education-heading" className="pb-0">
+        <div className="grid gap-8 lg:grid-cols-[1.2fr_1fr]">
+          <div>
+            <Heading id="education-heading" eyebrow="Education" title="Studying" />
+            <div className="panel rounded-sm p-5 print:border-0 print:p-0">
+              <div className="flex gap-4">
+                <span className="flex size-11 shrink-0 items-center justify-center rounded-sm border border-border-strong/60 bg-surface-raised text-accent print:hidden">
+                  <GraduationCap aria-hidden className="size-5" />
+                </span>
+                <div>
+                  <h3 className="font-display text-lg font-semibold text-ink">
+                    {education.qualification}
+                  </h3>
+                  <p className="text-sm text-accent">
+                    {education.institution} · {education.timeframe}
+                  </p>
+                </div>
+              </div>
+              <ul className="mt-5 flex flex-wrap gap-2">
+                {education.coursework.map((course) => (
+                  <li
+                    key={course}
+                    className="rounded-full border border-border px-3 py-1 text-xs text-ink-muted print:border-0 print:px-0 print:after:content-['·'] print:after:ml-2 last:print:after:content-none"
+                  >
+                    {course}
+                  </li>
+                ))}
+              </ul>
             </div>
-          ))}
-        </dl>
-      </ResumeSection>
-    </Section>
+          </div>
+
+          <div>
+            <Heading id="committees-heading" eyebrow="Also" title="Committees" />
+            <ul className="flex flex-col gap-3">
+              {leadership.map((role) => (
+                <li
+                  key={role.organisation}
+                  className="panel flex items-center gap-4 rounded-sm p-4 print:border-0 print:p-0"
+                >
+                  <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-surface-raised text-accent print:hidden">
+                    <Users aria-hidden className="size-4" />
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-sm font-semibold text-ink">{role.role}</p>
+                    <p className="text-xs text-ink-muted">{role.organisation}</p>
+                  </div>
+                  <p className="label-mono tnum shrink-0 text-ink-muted">{role.timeframe}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </Section>
+
+      <Section aria-labelledby="capabilities-heading">
+        <Heading id="capabilities-heading" eyebrow="Capabilities" title="What I work with" />
+        {/* Unranked on purpose: no bars, no percentages, no self-scored mastery. */}
+        <div className="grid gap-4 sm:grid-cols-2 print:grid-cols-1 print:gap-2">
+          {capabilities.map((group, index) => {
+            const Icon = CAPABILITY_ICONS[index] ?? Code2
+            return (
+              <div key={group.group} className="panel rounded-sm p-5 print:border-0 print:p-0">
+                <h3 className="label-mono flex items-center gap-2 text-accent">
+                  <Icon aria-hidden className="size-4 print:hidden" />
+                  {group.group}
+                </h3>
+                <ul className="mt-4 flex flex-wrap gap-2 print:mt-1">
+                  {group.items.map((item) => (
+                    <li
+                      key={item}
+                      className="rounded-sm border border-border bg-surface-raised px-2.5 py-1 text-xs text-ink print:border-0 print:bg-transparent print:px-0 print:after:content-['·'] print:after:ml-2 last:print:after:content-none"
+                    >
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )
+          })}
+        </div>
+
+        <p className="label-mono mt-10 text-ink-muted">Last updated {resumeLastUpdated}</p>
+      </Section>
+    </div>
   )
 }
 
-function ResumeSection({
+function Hero({ stats }: { stats: { value: string; label: string }[] }) {
+  const contacts = [
+    { icon: MapPin, label: siteConfig.location },
+    {
+      icon: Mail,
+      label: siteConfig.contact.email,
+      href: `mailto:${siteConfig.contact.email}`,
+    },
+    {
+      icon: Github,
+      label: siteConfig.contact.github.replace('https://', ''),
+      href: siteConfig.contact.github,
+    },
+    { icon: Linkedin, label: 'LinkedIn', href: siteConfig.contact.linkedin },
+  ]
+
+  return (
+    <div className="relative overflow-hidden border-b border-border print:border-0">
+      <GridBackdrop className="print:hidden" />
+      <Section className="relative pb-12 pt-10 sm:pt-14 print:py-0">
+        <div className="grid items-center gap-8 md:grid-cols-[14rem_1fr] lg:grid-cols-[17rem_1fr] lg:gap-12 print:block">
+          <div className="relative mx-auto w-44 md:w-full print:hidden">
+            <div className="panel relative aspect-[4/5] overflow-hidden rounded-sm">
+              <Image
+                src="/images/profile/portrait.jpg"
+                alt={siteConfig.legalName}
+                fill
+                priority
+                sizes="(max-width: 768px) 11rem, 17rem"
+                className="object-cover object-[48%_30%]"
+              />
+            </div>
+            <span className="label-mono absolute -bottom-3 left-3 whitespace-nowrap rounded-sm bg-accent px-2 py-1 text-accent-contrast">
+              ● Open to projects
+            </span>
+          </div>
+
+          <div>
+            <p className="label-mono text-accent print:hidden">Résumé</p>
+            {/* The one place the full legal name is appropriate (PRD FR-08). */}
+            <h1 className="mt-3 font-display text-headline font-semibold text-ink sm:text-display print:mt-0 print:text-3xl">
+              {siteConfig.legalName}
+            </h1>
+            <p className="mt-2 text-lg text-ink-muted print:text-sm">{siteConfig.descriptor}</p>
+
+            <ul className="mt-5 flex flex-wrap gap-2 print:mt-2 print:gap-x-4">
+              {contacts.map(({ icon: Icon, label, href }) => {
+                const inner = (
+                  <>
+                    <Icon aria-hidden className="size-3.5 text-accent print:hidden" />
+                    {label}
+                  </>
+                )
+                const chip =
+                  'inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1.5 text-xs text-ink-muted print:border-0 print:bg-transparent print:p-0'
+                return (
+                  <li key={label}>
+                    {href ? (
+                      <a
+                        href={href}
+                        {...(href.startsWith('http')
+                          ? { target: '_blank', rel: 'noreferrer noopener' }
+                          : {})}
+                        className={`${chip} transition-colors hover:border-border-strong hover:text-ink`}
+                      >
+                        {inner}
+                      </a>
+                    ) : (
+                      <span className={chip}>{inner}</span>
+                    )}
+                  </li>
+                )
+              })}
+            </ul>
+
+            <div className="mt-6 flex flex-wrap gap-3 print:hidden">
+              {/*
+                No PDF exists in the repository yet. Rather than link to a
+                404, the page is print-styled, and the download control
+                appears automatically once resumePdf is set in
+                content/profile.ts. See CONTENT_TODO.md.
+              */}
+              {resumePdf ? (
+                <a
+                  href={resumePdf.href}
+                  className="inline-flex items-center gap-2 rounded-sm bg-accent px-4 py-2.5 text-sm font-medium text-accent-contrast"
+                >
+                  <Download aria-hidden className="size-4" />
+                  Download PDF
+                </a>
+              ) : null}
+              <PrintButton />
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2 rounded-sm bg-accent px-4 py-2.5 text-sm font-medium text-accent-contrast transition-opacity hover:opacity-90"
+              >
+                Get in touch
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        <dl className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-sm border border-border bg-border sm:grid-cols-4 print:hidden">
+          {stats.map((stat) => (
+            <div key={stat.label} className="flex flex-col-reverse justify-end bg-surface p-4 sm:p-5">
+              <dt className="label-mono mt-1 text-ink-muted">{stat.label}</dt>
+              <dd className="tnum font-display text-3xl font-semibold text-accent sm:text-4xl">
+                {stat.value}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </Section>
+    </div>
+  )
+}
+
+function Heading({
+  id,
+  eyebrow,
   title,
-  children,
+  action,
 }: {
+  id: string
+  eyebrow: string
   title: string
-  children: React.ReactNode
+  action?: React.ReactNode
 }) {
   return (
-    <section className="border-b border-border py-8 last:border-b-0">
-      <h2 className="label-mono mb-5 text-accent">{title}</h2>
-      {children}
-    </section>
+    <div className="mb-6 flex items-end justify-between gap-4 print:mb-2 print:border-b print:border-border print:pb-1">
+      <div>
+        <p className="label-mono mb-2 flex items-center gap-2.5 text-accent print:hidden">
+          <span aria-hidden className="h-px w-6 bg-accent/60" />
+          {eyebrow}
+        </p>
+        <h2 id={id} className="font-display text-title font-semibold text-ink print:text-base">
+          {title}
+        </h2>
+      </div>
+      {action ? <div className="shrink-0 print:hidden">{action}</div> : null}
+    </div>
   )
 }
