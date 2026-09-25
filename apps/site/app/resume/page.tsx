@@ -1,18 +1,12 @@
 import {
   ArrowUpRight,
-  Code2,
-  Database,
   Download,
   Github,
-  GraduationCap,
   Hammer,
   Linkedin,
   Mail,
   MapPin,
-  MessagesSquare,
   Radio,
-  Users,
-  Wrench,
 } from 'lucide-react'
 import type { Metadata } from 'next'
 import Image from 'next/image'
@@ -20,17 +14,16 @@ import Link from 'next/link'
 
 import { LENS_ART } from '@/components/illustrations/art'
 import { Section } from '@/components/layout/section'
-import { CareerTrack } from '@/components/resume/career-track'
-import { PrintButton } from '@/components/resume/print-button'
-import { GridBackdrop } from '@/components/system/panel'
+import { buildCareerLanes } from '@/components/profile/career-lanes'
+import { CareerTrack } from '@/components/profile/career-track'
+import { PrintButton } from '@/components/profile/print-button'
 import {
-  capabilities,
-  education,
-  experience,
-  leadership,
-  resumeLastUpdated,
-  resumePdf,
-} from '@/content/profile'
+  CapabilityGroups,
+  CommitteeList,
+  EducationCard,
+} from '@/components/profile/profile-blocks'
+import { GridBackdrop } from '@/components/system/panel'
+import { experience, resumeLastUpdated, resumePdf } from '@/content/profile'
 import { siteConfig } from '@/content/site-config'
 import {
   getFeaturedProjects,
@@ -58,8 +51,6 @@ function formatSpan(months: number) {
   const rest = months % 12
   return [years ? `${years} yr` : '', rest ? `${rest} mo` : ''].filter(Boolean).join(' ')
 }
-
-const CAPABILITY_ICONS = [Code2, Database, Wrench, MessagesSquare] as const
 
 export default function ResumePage() {
   // Best placing first: "1st place" before "2nd place".
@@ -92,56 +83,7 @@ export default function ResumePage() {
         <Heading id="track-heading" eyebrow="At a glance" title="Career track" />
         <CareerTrack
           caption="Positioned from real dates. Diamonds are events; filled ones I hosted."
-          lanes={[
-            {
-              name: 'Study',
-              kind: 'bars',
-              tone: 'study',
-              bars: [
-                {
-                  label: 'Diploma in IT',
-                  sublabel: education.institution,
-                  start: education.start,
-                  end: education.end,
-                },
-              ],
-            },
-            {
-              name: 'Build',
-              kind: 'bars',
-              tone: 'accent',
-              bars: experience
-                .filter((item) => item.kind === 'build')
-                .map((item) => ({
-                  label: item.organisation,
-                  sublabel: item.role.split(',')[0]!,
-                  start: item.start,
-                  end: item.end,
-                })),
-            },
-            {
-              name: 'Operate',
-              kind: 'bars',
-              tone: 'neutral',
-              bars: experience
-                .filter((item) => item.kind === 'operate')
-                .map((item) => ({
-                  label: item.organisation,
-                  sublabel: item.role,
-                  start: item.start,
-                  end: item.end,
-                })),
-            },
-            {
-              name: 'Events',
-              kind: 'points',
-              points: events.map((event) => ({
-                label: event.name,
-                date: event.date,
-                highlight: event.role === 'host-emcee',
-              })),
-            },
-          ]}
+          lanes={buildCareerLanes()}
         />
       </Section>
 
@@ -282,82 +224,19 @@ export default function ResumePage() {
         <div className="grid gap-8 lg:grid-cols-[1.2fr_1fr]">
           <div>
             <Heading id="education-heading" eyebrow="Education" title="Studying" />
-            <div className="panel rounded-sm p-5 print:border-0 print:p-0">
-              <div className="flex gap-4">
-                <span className="flex size-11 shrink-0 items-center justify-center rounded-sm border border-border-strong/60 bg-surface-raised text-accent print:hidden">
-                  <GraduationCap aria-hidden className="size-5" />
-                </span>
-                <div>
-                  <h3 className="font-display text-lg font-semibold text-ink">
-                    {education.qualification}
-                  </h3>
-                  <p className="text-sm text-accent">
-                    {education.institution} · {education.timeframe}
-                  </p>
-                </div>
-              </div>
-              <ul className="mt-5 flex flex-wrap gap-2">
-                {education.coursework.map((course) => (
-                  <li
-                    key={course}
-                    className="rounded-full border border-border px-3 py-1 text-xs text-ink-muted print:border-0 print:px-0 print:after:content-['·'] print:after:ml-2 last:print:after:content-none"
-                  >
-                    {course}
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <EducationCard />
           </div>
 
           <div>
             <Heading id="committees-heading" eyebrow="Also" title="Committees" />
-            <ul className="flex flex-col gap-3">
-              {leadership.map((role) => (
-                <li
-                  key={role.organisation}
-                  className="panel flex items-center gap-4 rounded-sm p-4 print:border-0 print:p-0"
-                >
-                  <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-surface-raised text-accent print:hidden">
-                    <Users aria-hidden className="size-4" />
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-sm font-semibold text-ink">{role.role}</p>
-                    <p className="text-xs text-ink-muted">{role.organisation}</p>
-                  </div>
-                  <p className="label-mono tnum shrink-0 text-ink-muted">{role.timeframe}</p>
-                </li>
-              ))}
-            </ul>
+            <CommitteeList />
           </div>
         </div>
       </Section>
 
       <Section aria-labelledby="capabilities-heading">
         <Heading id="capabilities-heading" eyebrow="Capabilities" title="What I work with" />
-        {/* Unranked on purpose: no bars, no percentages, no self-scored mastery. */}
-        <div className="grid gap-4 sm:grid-cols-2 print:grid-cols-1 print:gap-2">
-          {capabilities.map((group, index) => {
-            const Icon = CAPABILITY_ICONS[index] ?? Code2
-            return (
-              <div key={group.group} className="panel rounded-sm p-5 print:border-0 print:p-0">
-                <h3 className="label-mono flex items-center gap-2 text-accent">
-                  <Icon aria-hidden className="size-4 print:hidden" />
-                  {group.group}
-                </h3>
-                <ul className="mt-4 flex flex-wrap gap-2 print:mt-1">
-                  {group.items.map((item) => (
-                    <li
-                      key={item}
-                      className="rounded-sm border border-border bg-surface-raised px-2.5 py-1 text-xs text-ink print:border-0 print:bg-transparent print:px-0 print:after:content-['·'] print:after:ml-2 last:print:after:content-none"
-                    >
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )
-          })}
-        </div>
+        <CapabilityGroups />
 
         <p className="label-mono mt-10 text-ink-muted">Last updated {resumeLastUpdated}</p>
       </Section>
