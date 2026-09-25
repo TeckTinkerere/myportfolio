@@ -1,4 +1,3 @@
-import { Crosshair, Package, RefreshCw } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -7,6 +6,7 @@ import { LENS_ART } from '@/components/illustrations/art'
 import { CtaLink } from '@/components/layout/cta-link'
 import { Section, SectionHeader } from '@/components/layout/section'
 import { Reveal } from '@/components/motion/reveal'
+import { PrincipleIcon } from '@/components/profile/profile-blocks'
 import { ProjectCard } from '@/components/projects/project-card'
 import { PersonSchema } from '@/components/seo/person-schema'
 import { GridBackdrop, Panel } from '@/components/system/panel'
@@ -245,18 +245,6 @@ function Recognition() {
         </ul>
       </Panel>
     </Section>
-  )
-}
-
-/** One glyph per step: pin the problem down, ship the small thing, iterate. */
-const PRINCIPLE_ICONS = [Crosshair, Package, RefreshCw] as const
-
-function PrincipleIcon({ index }: { index: number }) {
-  const Icon = PRINCIPLE_ICONS[index] ?? Crosshair
-  return (
-    <span className="mb-4 flex size-11 items-center justify-center rounded-sm border border-accent/40 bg-accent/10 text-accent">
-      <Icon aria-hidden className="size-5" />
-    </span>
   )
 }
 
