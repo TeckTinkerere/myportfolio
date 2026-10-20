@@ -40,6 +40,9 @@ export default async function EditIndex() {
                   <Link href={`/edit/${p.id}/inbox`} className="text-ink-muted hover:text-ink">
                     Inbox{p.lead_count > 0 && ` (${p.lead_count})`}
                   </Link>
+                  <Link href={`/edit/${p.id}/nfc`} className="text-ink-muted hover:text-ink">
+                    NFC
+                  </Link>
                   {p.published_at && (
                     <a href={`/${p.handle}`} target="_blank" className="text-ink-muted hover:text-ink">
                       View

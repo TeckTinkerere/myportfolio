@@ -6,7 +6,8 @@ import { headers } from 'next/headers'
 import { z } from 'zod'
 
 import { getOwnerEmail, getPublishedCard, insertLead, recentLeadCounts } from '@/lib/data'
-import { optionalEnv, requireEnv } from '@/lib/env'
+import { emailConfigured, sendEmail } from '@/lib/email'
+import { requireEnv, siteUrl } from '@/lib/env'
 
 export type LeadState =
   | { status: 'idle' }
@@ -90,24 +91,24 @@ export async function submitLead(_prev: LeadState, form: FormData): Promise<Lead
   return { status: 'sent' }
 }
 
-/** Optional email to the owner via Resend. Skipped when not configured. */
+/** Email the card owner through Brevo. Skipped when email is not configured. */
 async function notifyOwner(profileId: string, cardName: string, fields: Record<string, string>) {
-  const key = optionalEnv('RESEND_API_KEY')
-  const from = optionalEnv('RESEND_FROM')
-  if (!key || !from) return
+  if (!emailConfigured()) return
   const to = await getOwnerEmail(profileId)
   if (!to) return
 
-  const lines = Object.entries(fields).map(([k, v]) => `${k}: ${v}`)
-  await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      from,
-      to,
-      reply_to: fields.email,
-      subject: `New contact from your card: ${fields.name}`,
-      text: `Someone sent their details through ${cardName}'s card.\n\n${lines.join('\n')}`,
-    }),
+  const lines = Object.entries(fields).map(([k, v]) => `${k[0].toUpperCase()}${k.slice(1)}: ${v}`)
+  await sendEmail({
+    to,
+    replyTo: fields.email,
+    subject: `New contact from your card: ${fields.name}`,
+    text: [
+      `Someone sent their details through ${cardName}'s card.`,
+      '',
+      ...lines,
+      '',
+      `See all submissions: ${siteUrl()}/edit`,
+      'Reply to this email to answer them directly.',
+    ].join('\n'),
   })
 }

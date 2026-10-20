@@ -63,14 +63,15 @@ export default function PrivacyPage() {
         <h2>Where data is kept</h2>
         <p>
           The database, file storage and authentication run on Neon (AWS Singapore region). The site is served by
-          Vercel. Data is encrypted in transit.
+          Vercel. Emails, such as password resets and contact-form notifications to card owners, are sent through
+          Brevo. Data is encrypted in transit.
         </p>
 
         <h2>Your rights and contact</h2>
         <p>
           To ask what is held about you, correct it, or have it deleted, email{' '}
-          <a href="mailto:aslam040607@gmail.com" className="text-accent underline-offset-4 hover:underline">
-            aslam040607@gmail.com
+          <a href="mailto:mohamedaslam.of@gmail.com" className="text-accent underline-offset-4 hover:underline">
+            mohamedaslam.of@gmail.com
           </a>
           . Requests are handled within 30 days.
         </p>

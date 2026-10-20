@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useActionState, useState } from 'react'
 
 import { signIn, signUp, type AuthState } from './actions'
@@ -53,6 +54,12 @@ export function LoginForm() {
             className={input}
           />
         </label>
+
+        {mode === 'in' && (
+          <Link href="/login/forgot" className="-mt-2 self-end text-xs text-ink-muted underline-offset-4 hover:text-ink hover:underline">
+            Forgot password?
+          </Link>
+        )}
 
         {state?.error && (
           <p role="alert" className="rounded-md border border-danger/40 bg-danger/10 px-3 py-2 text-danger">

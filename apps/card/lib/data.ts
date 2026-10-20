@@ -181,6 +181,28 @@ export async function deleteTag(id: string) {
   await sql`delete from tags where id = ${id}`
 }
 
+/** Tags pointing at one of the owner's cards. */
+export async function listCardTags(profileId: string, ownerId: string): Promise<TagRow[]> {
+  return (await sql`select t.id, t.label, t.profile_id, p.handle, t.created_at
+                    from tags t join profiles p on p.id = t.profile_id
+                    where t.profile_id = ${profileId} and p.owner_id = ${ownerId}
+                    order by t.created_at`) as TagRow[]
+}
+
+/** A tag with the owner of the card it points at, for the NFC reader. */
+export async function getTag(id: string): Promise<(TagRow & { owner_id: string | null }) | null> {
+  const rows = await sql`select t.id, t.label, t.profile_id, p.handle, p.owner_id, t.created_at
+                         from tags t left join profiles p on p.id = t.profile_id
+                         where t.id = ${id}`
+  return (rows[0] as (TagRow & { owner_id: string | null }) | undefined) ?? null
+}
+
+export async function deleteCardTag(tagId: string, profileId: string, ownerId: string) {
+  await sql`delete from tags t using profiles p
+            where t.id = ${tagId} and t.profile_id = ${profileId}
+              and p.id = t.profile_id and p.owner_id = ${ownerId}`
+}
+
 export async function listAllProfiles(): Promise<{ id: string; handle: string; email: string }[]> {
   return (await sql`select p.id, p.handle, u.email from profiles p
                     join neon_auth."user" u on u.id = p.owner_id order by p.handle`) as {

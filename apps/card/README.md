@@ -32,8 +32,10 @@ npm run dev:card                         # http://localhost:3002
 | `/<handle>/vcard` | Save contact (vCard 3.0, photo inlined). |
 | `/t/<tagId>` | What an NFC chip stores. 307 to the card it is assigned to. |
 | `/login` | Sign in, or create an account if your email is invited. |
+| `/login/forgot`, `/login/reset` | Password reset by emailed link (expires in 15 minutes). |
 | `/edit` | Your cards; `/edit/<id>` is the builder with a live preview. |
 | `/edit/<id>/inbox` | Contact-form submissions, CSV export. |
+| `/edit/<id>/nfc` | Read and write NFC tags for that card from the phone (Web NFC). |
 | `/admin` | Invites and NFC tags (admins only). |
 
 **Access control.** All queries run server-side. Every editor action calls
@@ -51,11 +53,30 @@ by the editor) and a `published` copy (what visitors see).
 
 ## Writing an NFC tag
 
-1. Admin → NFC tags → New tag, and pick the card it should open.
-2. In the NFC Tools app: Write → Add a record → URL → paste the tag URL →
-   Write, and hold the card to the phone.
-3. To move the physical card to another profile later, change it in Admin.
-   The chip does not need rewriting.
+**Android (Chrome):** open the card in the editor → NFC → Write to tag, and
+hold the card to the back of the phone. The same page reads a tag and says
+which card it opens, and can lock a tag permanently.
+
+**iPhone or any other browser:** Web NFC is Chrome-on-Android only. Copy a
+tag link from the NFC page (or Admin → NFC tags), then in the NFC Tools app:
+Write → Add a record → URL → paste → Write.
+
+Either way, the chip stores `/t/<tagId>`. To move a physical card to another
+profile later, change it in Admin; the chip does not need rewriting.
+
+## Email (Brevo)
+
+Two kinds of email, both through Brevo:
+
+- **Contact-form notifications** are sent by this app through Brevo's API.
+  Set `BREVO_API_KEY`, `EMAIL_FROM` (a sender verified in Brevo) and
+  optionally `EMAIL_FROM_NAME` on the Vercel project.
+- **Password-reset emails** are sent by Neon Auth. Until a custom provider is
+  set, Neon's shared, rate-limited sender is used. To send them from Brevo:
+  Neon console → project `mohdaslam-card` → Auth → Configuration → Email
+  provider → Custom SMTP, with host `smtp-relay.brevo.com`, port `587`, your
+  Brevo SMTP login and SMTP key (Brevo → SMTP & API → SMTP), and the same
+  sender as `EMAIL_FROM`.
 
 ## Deploying
 
@@ -71,8 +92,8 @@ with `vercel deploy --prod` after linking to `mohdaslam-card`.
 
 ## Not done yet
 
-- Email notifications for contact-form submissions need `RESEND_API_KEY` and
-  `RESEND_FROM`. Without them, submissions still land in the inbox.
+- Brevo is wired in but needs its keys (see Email above). Without them,
+  contact-form submissions still land in the inbox.
 - No CAPTCHA yet: the contact form relies on a honeypot plus hourly rate
   limits. Add Cloudflare Turnstile if spam shows up.
 - Replaced or removed images stay in the bucket. They are small; a cleanup
