@@ -21,6 +21,8 @@ jobs:
             workspace: '@mohdaslam/site'
           - name: emcee
             workspace: '@mohdaslam/emcee'
+          - name: card
+            workspace: '@mohdaslam/card'
 
     name: verify (${{ matrix.app.name }})
     steps:

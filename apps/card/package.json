@@ -1,0 +1,52 @@
+{
+  "name": "@mohdaslam/card",
+  "version": "1.0.0",
+  "private": true,
+  "//": "Next 16, unlike the other apps: @neondatabase/auth requires it. Everything else matches apps/emcee.",
+  "scripts": {
+    "dev": "next dev --port 3002",
+    "prebuild": "npm run typecheck",
+    "build": "next build",
+    "start": "next start --port 3002",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "jest",
+    "verify": "npm run typecheck && npm run lint && npm test && npm run build"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.1152.0",
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
+    "@mohdaslam/ui": "*",
+    "@neondatabase/auth": "0.6.0-beta",
+    "@neondatabase/serverless": "^1.2.0",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.454.0",
+    "next": "16.4.2",
+    "next-themes": "^0.4.4",
+    "qrcode-generator": "^1.5.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "server-only": "^0.0.1",
+    "tailwind-merge": "^2.5.5",
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^22",
+    "@types/react": "^19.1.6",
+    "@types/react-dom": "^19.1.6",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.2",
+    "jest": "^30.2.0",
+    "jest-environment-jsdom": "^30.2.0",
+    "postcss": "^8",
+    "postcss-import": "^16.1.0",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5"
+  }
+}

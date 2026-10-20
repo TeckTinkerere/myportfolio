@@ -1,0 +1,9 @@
+/*
+  Shared design system for the editor, login and admin chrome. Public cards
+  style themselves; see components/card/card-view.tsx.
+*/
+@import '../../../packages/ui/src/styles.css';
+
+dialog::backdrop {
+  backdrop-filter: blur(2px);
+}
