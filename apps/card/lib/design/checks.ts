@@ -1,5 +1,5 @@
 import { cardSize, MM_PER_INCH, ptToMm, SAFE } from './dimensions'
-import { elementText, type DesignContext } from './resolve'
+import { BINDING_LABELS, elementText, type DesignContext } from './resolve'
 import type { DesignDoc, DesignElement } from './schema'
 
 export interface PrintIssue {
@@ -35,7 +35,14 @@ export function printIssues(doc: DesignDoc, ctx: DesignContext): PrintIssue[] {
       if (outside && !decorative) add('warning', `${label} is outside the safe area and may be trimmed.`)
 
       if (el.type === 'text' && el.size < MIN_TEXT_PT) add('warning', `${label} is ${el.size}pt; under ${MIN_TEXT_PT}pt is hard to read in print.`)
-      if (el.type === 'text' && !elementText(el, ctx)) add('warning', `${label} is empty.`)
+      if (el.type === 'text' && !elementText(el, ctx)) {
+        add(
+          'warning',
+          el.binding
+            ? `The ${BINDING_LABELS[el.binding].toLowerCase()} box is empty because your card has no ${BINDING_LABELS[el.binding].toLowerCase()}. Add it on your card, or delete the box.`
+            : 'A text box is empty. Type something, or delete it.',
+        )
+      }
 
       if (el.type === 'qr' && Math.min(el.w, el.h) < MIN_QR_MM) {
         add('error', `QR code is ${Math.min(el.w, el.h).toFixed(1)}mm; make it at least ${MIN_QR_MM}mm or phones may not scan it.`)

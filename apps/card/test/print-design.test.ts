@@ -72,6 +72,13 @@ describe('print check', () => {
     expect(messages).toMatch(/5pt/)
   })
 
+  it('explains an empty linked box in terms of the card field', () => {
+    const issues = printIssues(applyTemplate(TEMPLATES.find((t) => t.id === 'aurora')!), { ...ctx, card: { ...ctx.card, company: '' } })
+    expect(issues.map((i) => i.message)).toContain(
+      'The company box is empty because your card has no company. Add it on your card, or delete the box.',
+    )
+  })
+
   it('flags an image that will print soft', () => {
     const doc = defaultDesign()
     doc.front.elements.push({

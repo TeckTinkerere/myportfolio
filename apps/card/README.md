@@ -62,6 +62,17 @@ WCAG 4.5:1 contrast ([lib/card/contrast.ts](lib/card/contrast.ts)).
 WhatsApp" once the contact is saved, with a message the owner writes. It is
 two taps because a browser cannot save a contact and open WhatsApp at once.
 
+**Print designer** (`/edit/<id>/print`). Designs the physical card, front
+and back, on a CR80 canvas in millimetres with bleed (3 mm) and safe-area
+(3 mm) guides. Text can be linked to the card's fields; QR codes can encode
+an NFC tag link. Six original templates, PVC or engraved metal/wood. A print
+check flags text outside the safe area, type under 6pt, QR under 14mm and
+images under 250 dpi. Exports run in the browser: a two-page print PDF at
+600 dpi with TrimBox/BleedBox and optional crop marks
+([lib/design/pdf.ts](lib/design/pdf.ts), no PDF library), 600 dpi PNGs, and
+trimmed SVGs for engravers. Stored in `card_designs`
+([db/migrations/0002_card_designs.sql](db/migrations/0002_card_designs.sql)).
+
 **Fast taps.** `/t/<tag>` reads from Vercel's data cache, not the database;
 tag changes expire it with `updateTag`. Cards preload no fonts, YouTube and
 Spotify load only when played, and the QR encoder loads on first use.
