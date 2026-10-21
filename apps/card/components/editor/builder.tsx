@@ -1,6 +1,6 @@
 'use client'
 
-import { ExternalLink, Nfc, Smartphone } from 'lucide-react'
+import { ExternalLink, IdCard, Nfc, Smartphone } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useMemo, useState, useTransition } from 'react'
 
@@ -167,6 +167,13 @@ export function Builder({
             <Smartphone className="h-4 w-4" aria-hidden />
             {showPreview ? 'Edit' : 'Preview'}
           </button>
+          <Link
+            href={`/edit/${id}/print`}
+            className="inline-flex items-center gap-1.5 rounded-md border border-border-strong px-3 py-2 text-sm hover:bg-surface-raised"
+          >
+            <IdCard className="h-4 w-4" aria-hidden />
+            Print design
+          </Link>
           <Link
             href={`/edit/${id}/nfc`}
             className="inline-flex items-center gap-1.5 rounded-md border border-border-strong px-3 py-2 text-sm hover:bg-surface-raised"

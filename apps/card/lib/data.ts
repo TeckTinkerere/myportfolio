@@ -147,6 +147,24 @@ export async function getOwnerEmail(profileId: string): Promise<string | null> {
   return (rows[0] as { email: string } | undefined)?.email ?? null
 }
 
+// ----------------------------------------------------------- print designs
+
+/** The saved print design for one of the owner's cards, unvalidated. */
+export async function getDesign(profileId: string, ownerId: string): Promise<unknown | null> {
+  const rows = await sql`select d.doc from card_designs d join profiles p on p.id = d.profile_id
+                         where d.profile_id = ${profileId} and p.owner_id = ${ownerId}`
+  return (rows[0] as { doc: unknown } | undefined)?.doc ?? null
+}
+
+export async function saveDesign(profileId: string, ownerId: string, doc: unknown): Promise<boolean> {
+  const rows = await sql`insert into card_designs (profile_id, doc)
+                         select p.id, ${JSON.stringify(doc)}::jsonb from profiles p
+                         where p.id = ${profileId} and p.owner_id = ${ownerId}
+                         on conflict (profile_id) do update set doc = excluded.doc, updated_at = now()
+                         returning profile_id`
+  return rows.length > 0
+}
+
 // ------------------------------------------------------------------- tags
 
 export interface TagRow {
