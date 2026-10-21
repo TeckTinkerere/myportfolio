@@ -19,7 +19,11 @@ const nextConfig = {
     // Uploaded photos, banners and logos live in the Neon Object Storage
     // bucket. lib/storage.ts refuses any image URL outside that bucket, so
     // this is the only remote host a card can show.
-    remotePatterns: [{ protocol: 'https', hostname: '**.aws.neon.tech' }],
+    // YouTube thumbnails stand in for the player until a visitor taps play.
+    remotePatterns: [
+      { protocol: 'https', hostname: '**.aws.neon.tech' },
+      { protocol: 'https', hostname: 'i.ytimg.com', pathname: '/vi/**' },
+    ],
   },
 
   async headers() {

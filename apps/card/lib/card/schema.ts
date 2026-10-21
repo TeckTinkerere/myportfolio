@@ -37,9 +37,18 @@ export type SocialNetwork = (typeof SOCIAL_NETWORKS)[number]
 export const QUICK_ACTIONS = ['call', 'email', 'whatsapp', 'share'] as const
 export type QuickAction = (typeof QUICK_ACTIONS)[number]
 
-export const TEMPLATES = ['classic', 'split', 'minimal'] as const
-export const FONTS = ['sans', 'serif', 'rounded'] as const
+export const TEMPLATES = ['classic', 'cover', 'split', 'minimal'] as const
+// 'system' uses the phone's own font: nothing to download, and it covers
+// Tamil, Chinese, Arabic and other scripts the web fonts do not.
+export const FONTS = ['system', 'sans', 'serif', 'rounded'] as const
 export const BUTTON_STYLES = ['rounded', 'pill', 'square'] as const
+export const BACKGROUND_STYLES = ['gradient', 'solid', 'image'] as const
+export const ROW_STYLES = ['soft', 'solid', 'outline'] as const
+export const AVATAR_SHAPES = ['circle', 'rounded', 'square'] as const
+export const ALIGNMENTS = ['center', 'left'] as const
+export const TEXT_SIZES = ['normal', 'large'] as const
+export const LANGUAGES = ['en', 'ms', 'ta', 'zh'] as const
+export const AFTER_SAVE = ['none', 'whatsapp'] as const
 
 const text = (max: number) => z.string().trim().max(max)
 
@@ -166,21 +175,39 @@ export const cardSchema = z.object({
     email: z.union([z.string().trim().email('Enter a valid email'), z.literal('')]).default(''),
     website: optionalUrl,
     address: text(200).default(''),
+    // A separate WhatsApp number, for people whose WhatsApp is not their
+    // main phone. Empty means "use phone".
+    whatsapp: text(40).default(''),
     quickActions: z
       .array(z.enum(QUICK_ACTIONS))
       .max(4)
       .default(['call', 'email', 'share'])
       .refine((a) => new Set(a).size === a.length, 'Each quick action can appear once'),
+    saveLabel: text(40).default('Save contact'),
+    // What the Save contact button offers once the contact is saved.
+    afterSave: z.enum(AFTER_SAVE).default('none'),
+    whatsappMessage: text(300).default(''),
   }),
   theme: z.object({
     template: z.enum(TEMPLATES).default('classic'),
-    accent: hex.default('#1d4ed8'),
+    // Bright enough to stand out on the default dark-blue background.
+    accent: hex.default('#3b82f6'),
     background: z.object({
+      style: z.enum(BACKGROUND_STYLES).default('gradient'),
       from: hex.default('#0f172a'),
       to: hex.default('#1e3a8a'),
+      angle: z.number().int().min(0).max(360).default(165),
+      image: optionalUrl,
+      // How much the image is dimmed (or lightened, for dark text) so text
+      // stays readable on top of it.
+      overlay: z.number().int().min(0).max(90).default(45),
     }),
     text: z.enum(['light', 'dark']).default('light'),
     buttons: z.enum(BUTTON_STYLES).default('rounded'),
+    rows: z.enum(ROW_STYLES).default('soft'),
+    avatar: z.enum(AVATAR_SHAPES).default('circle'),
+    align: z.enum(ALIGNMENTS).default('center'),
+    textSize: z.enum(TEXT_SIZES).default('normal'),
     font: z.enum(FONTS).default('sans'),
   }),
   meta: z.object({
@@ -188,6 +215,8 @@ export const cardSchema = z.object({
     description: text(160).default(''),
     // Off search engines unless the owner opts in.
     noindex: z.boolean().default(true),
+    // Language of the card's text, for screen readers and correct fonts.
+    lang: z.enum(LANGUAGES).default('en'),
   }),
   widgets: z.array(widgetSchema).max(40).default([]),
 })
@@ -197,7 +226,7 @@ export type CardInput = z.input<typeof cardSchema>
 
 /** Every image field on a card, for checks that apply to all of them. */
 export function cardImages(doc: CardDoc): string[] {
-  return [doc.header.photo, doc.header.banner, doc.header.logo].filter(Boolean)
+  return [doc.header.photo, doc.header.banner, doc.header.logo, doc.theme.background.image].filter(Boolean)
 }
 
 /** A readable one-line summary of the first validation problem. */

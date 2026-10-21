@@ -2,11 +2,12 @@
 
 import { randomUUID } from 'node:crypto'
 
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, updateTag } from 'next/cache'
 import { redirect } from 'next/navigation'
 
 import { newCard } from '@/lib/card/defaults'
 import { handleProblem, normaliseHandle } from '@/lib/card/handles'
+import { TAGS_CACHE_TAG } from '@/lib/card/tags'
 import { cardImages, cardSchema, firstIssue } from '@/lib/card/schema'
 import {
   createProfile,
@@ -68,6 +69,7 @@ export async function publishCard(id: string): Promise<Result<{ handle: string }
   const handle = await publishProfile(id, member.id)
   if (!handle) return { ok: false, error: 'Card not found.' }
   revalidatePath(`/${handle}`)
+  updateTag(TAGS_CACHE_TAG)
   return { ok: true, handle }
 }
 
@@ -76,6 +78,7 @@ export async function unpublishCard(id: string): Promise<Result> {
   const handle = await unpublishProfile(id, member.id)
   if (!handle) return { ok: false, error: 'Card not found.' }
   revalidatePath(`/${handle}`)
+  updateTag(TAGS_CACHE_TAG)
   return { ok: true }
 }
 
@@ -95,6 +98,7 @@ export async function renameCard(id: string, rawHandle: string): Promise<Result<
   // because they point at the profile, not the handle.
   revalidatePath(`/${profile.handle}`)
   revalidatePath(`/${handle}`)
+  updateTag(TAGS_CACHE_TAG)
   return { ok: true, handle }
 }
 
@@ -107,10 +111,11 @@ export async function deleteCard(id: string, form: FormData) {
   }
   await deleteProfile(id, member.id)
   revalidatePath(`/${profile.handle}`)
+  updateTag(TAGS_CACHE_TAG)
   redirect('/edit')
 }
 
-const IMAGE_KINDS = new Set(['photo', 'banner', 'logo'])
+const IMAGE_KINDS = new Set(['photo', 'banner', 'logo', 'background'])
 
 export async function uploadImage(id: string, kind: string, form: FormData): Promise<Result<{ url: string }>> {
   const member = await requireMember()

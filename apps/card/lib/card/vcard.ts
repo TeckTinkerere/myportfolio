@@ -51,6 +51,7 @@ export function buildVCard(doc: CardDoc, cardUrl: string, photo?: VCardPhoto): s
   }
 
   if (h.phone) add(`tel:${h.phone}`, `TEL;TYPE=CELL:${escapeValue(h.phone)}`)
+  if (h.whatsapp) add(`tel:${h.whatsapp}`, `TEL;TYPE=CELL:${escapeValue(h.whatsapp)}`)
   if (h.email) add(`email:${h.email}`, `EMAIL;TYPE=INTERNET:${escapeValue(h.email)}`)
   if (h.website) add(`url:${h.website}`, `URL:${escapeValue(h.website)}`)
   if (h.address) add(`adr:${h.address}`, `ADR;TYPE=WORK:;;${escapeValue(h.address)};;;;`)

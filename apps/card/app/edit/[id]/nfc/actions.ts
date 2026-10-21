@@ -1,8 +1,8 @@
 'use server'
 
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, updateTag } from 'next/cache'
 
-import { newTagId, TAG_PATTERN } from '@/lib/card/tags'
+import { newTagId, TAG_PATTERN, TAGS_CACHE_TAG } from '@/lib/card/tags'
 import { createTag, deleteCardTag, getProfile, getTag } from '@/lib/data'
 import { requireMember } from '@/lib/session'
 
@@ -20,6 +20,7 @@ export async function createCardTag(
   const id = newTagId()
   await createTag(id, label.trim().slice(0, 60), profileId)
   revalidatePath(`/edit/${profileId}/nfc`)
+  updateTag(TAGS_CACHE_TAG)
   return { ok: true, id }
 }
 
@@ -28,6 +29,7 @@ export async function removeCardTag(profileId: string, tagId: string) {
   if (!TAG_PATTERN.test(tagId)) return
   await deleteCardTag(tagId, profileId, member.id)
   revalidatePath(`/edit/${profileId}/nfc`)
+  updateTag(TAGS_CACHE_TAG)
 }
 
 export type TagLookup =

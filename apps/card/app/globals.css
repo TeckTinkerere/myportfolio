@@ -7,3 +7,25 @@
 dialog::backdrop {
   backdrop-filter: blur(2px);
 }
+
+/* The phone's own font: no download, and full coverage of Tamil, Chinese,
+   Malay, Arabic and other scripts. */
+:root {
+  --font-card-system: system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans', 'Noto Sans Tamil',
+    'Noto Sans SC', 'Noto Sans Arabic', sans-serif;
+}
+
+/* Visible keyboard focus on every card control, in the card's own colour. */
+.card-focus:focus-visible {
+  outline: 2px solid var(--c-fg);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-root *,
+  .card-root *::before,
+  .card-root *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

@@ -4,7 +4,8 @@ import { cardSchema, type CardDoc, type Widget, type WidgetType } from './schema
 export function newCard(name: string): CardDoc {
   return cardSchema.parse({
     header: { name, quickActions: ['call', 'email', 'share'] },
-    theme: { background: {} },
+    // New cards use the phone's own font: nothing to download on a tap.
+    theme: { background: {}, font: 'system' },
     meta: {},
     widgets: [],
   })

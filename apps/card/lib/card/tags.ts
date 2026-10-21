@@ -6,6 +6,9 @@ const ALPHABET = 'abcdefghjkmnpqrstuvwxyz23456789'
 
 export const TAG_PATTERN = /^[a-z0-9]{8}$/
 
+/** Cache tag for tag → card lookups; expire it whenever a mapping can change. */
+export const TAGS_CACHE_TAG = 'nfc-tags'
+
 export function newTagId(random: (n: number) => Uint8Array = randomBytes): string {
   const bytes = random(8)
   let id = ''

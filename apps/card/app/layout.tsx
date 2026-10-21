@@ -5,14 +5,16 @@ import { Archivo, Fraunces, Geist, IBM_Plex_Mono, Nunito } from 'next/font/googl
 import './globals.css'
 
 /*
-  Chrome fonts match the other apps. The three card fonts are what a card
-  owner can pick in the theme panel; only the sans face is preloaded, since
-  most cards use it.
+  Chrome fonts match the other apps. The card fonts are what a card owner
+  can pick in the theme panel. Nothing is preloaded: a preload hint makes
+  every page fetch the file, and the page an NFC tap opens may use the
+  phone's own font and need none of them. A font downloads only when a
+  page actually uses it.
 */
-const sans = Geist({ subsets: ['latin'], variable: '--font-sans', display: 'swap' })
+const sans = Geist({ subsets: ['latin'], variable: '--font-sans', display: 'swap', preload: false })
 const display = Archivo({ subsets: ['latin'], axes: ['wdth'], variable: '--font-display', display: 'swap', preload: false })
 const mono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '500'], variable: '--font-mono', display: 'swap', preload: false })
-const cardSans = Geist({ subsets: ['latin'], variable: '--font-card-sans', display: 'swap' })
+const cardSans = Geist({ subsets: ['latin'], variable: '--font-card-sans', display: 'swap', preload: false })
 const cardSerif = Fraunces({ subsets: ['latin'], variable: '--font-card-serif', display: 'swap', preload: false })
 const cardRounded = Nunito({ subsets: ['latin'], variable: '--font-card-rounded', display: 'swap', preload: false })
 

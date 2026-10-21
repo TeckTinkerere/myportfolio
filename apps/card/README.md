@@ -49,7 +49,22 @@ page's server action after the invite check.
 by the editor) and a `published` copy (what visitors see).
 
 **Images** must live in the bucket: `saveCard` rejects any other URL, and
-`next.config.mjs` only allows that host.
+`next.config.mjs` only allows that host (plus YouTube thumbnails).
+
+**Design options.** Four layouts (Classic, Cover photo, Side by side,
+Minimal), left or centre alignment, photo shape, gradient/solid/photo
+backgrounds, row and corner styles, a large-text setting, the phone's own
+font (covers Tamil, Chinese, Malay, Arabic), and a per-card language for
+screen readers. The Style tab warns when text or the Save button falls below
+WCAG 4.5:1 contrast ([lib/card/contrast.ts](lib/card/contrast.ts)).
+
+**Save, then WhatsApp.** The Save contact button can offer "Message on
+WhatsApp" once the contact is saved, with a message the owner writes. It is
+two taps because a browser cannot save a contact and open WhatsApp at once.
+
+**Fast taps.** `/t/<tag>` reads from Vercel's data cache, not the database;
+tag changes expire it with `updateTag`. Cards preload no fonts, YouTube and
+Spotify load only when played, and the QR encoder loads on first use.
 
 ## Writing an NFC tag
 

@@ -1,5 +1,14 @@
-import { TAG_PATTERN } from '@/lib/card/tags'
-import { resolveTag } from '@/lib/data'
+import { unstable_cache } from 'next/cache'
+
+import { TAG_PATTERN, TAGS_CACHE_TAG } from '@/lib/card/tags'
+import { resolveTag as resolveFromDb } from '@/lib/data'
+
+/**
+ * Tag lookups come from Vercel's data cache, not the database, so a tap
+ * redirects in tens of milliseconds even when the database is asleep. Every
+ * action that changes where a tag points calls updateTag(TAGS_CACHE_TAG).
+ */
+const resolveTag = unstable_cache(resolveFromDb, ['resolve-tag'], { tags: [TAGS_CACHE_TAG] })
 
 /**
  * What an NFC chip opens: /t/<tagId> → /<handle>.

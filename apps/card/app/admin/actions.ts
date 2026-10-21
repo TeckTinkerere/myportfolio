@@ -1,9 +1,9 @@
 'use server'
 
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, updateTag } from 'next/cache'
 import { z } from 'zod'
 
-import { newTagId, TAG_PATTERN } from '@/lib/card/tags'
+import { newTagId, TAG_PATTERN, TAGS_CACHE_TAG } from '@/lib/card/tags'
 import { addInvite, assignTag, createTag, deleteTag, removeInvite } from '@/lib/data'
 import { requireAdmin } from '@/lib/session'
 
@@ -32,6 +32,7 @@ export async function createTagAction(form: FormData) {
   const profile = String(form.get('profile') ?? '')
   await createTag(newTagId(), label, uuid.safeParse(profile).success ? profile : null)
   revalidatePath('/admin')
+  updateTag(TAGS_CACHE_TAG)
 }
 
 export async function assignTagAction(tagId: string, form: FormData) {
@@ -40,6 +41,7 @@ export async function assignTagAction(tagId: string, form: FormData) {
   const profile = String(form.get('profile') ?? '')
   await assignTag(tagId, uuid.safeParse(profile).success ? profile : null)
   revalidatePath('/admin')
+  updateTag(TAGS_CACHE_TAG)
 }
 
 export async function deleteTagAction(tagId: string) {
@@ -47,4 +49,5 @@ export async function deleteTagAction(tagId: string) {
   if (!TAG_PATTERN.test(tagId)) return
   await deleteTag(tagId)
   revalidatePath('/admin')
+  updateTag(TAGS_CACHE_TAG)
 }

@@ -6,13 +6,15 @@ import { useRef, useState } from 'react'
 
 import { uploadImage } from '@/app/edit/actions'
 
-type Kind = 'photo' | 'banner' | 'logo'
+type Kind = 'photo' | 'banner' | 'logo' | 'background'
 
 /** Target size per image. Photos and banners are cropped to fill; logos fit. */
 const SPECS: Record<Kind, { w: number; h: number; mode: 'cover' | 'contain'; label: string; hint: string }> = {
   photo: { w: 800, h: 800, mode: 'cover', label: 'Profile photo', hint: 'Square crop from the centre.' },
   banner: { w: 1500, h: 500, mode: 'cover', label: 'Banner', hint: 'Wide 3:1, shown on the Classic layout.' },
   logo: { w: 512, h: 512, mode: 'contain', label: 'Logo badge', hint: 'Small badge on the photo. Transparent PNG works best.' },
+  // Phone-shaped and modest: it sits behind text, so detail is wasted bytes.
+  background: { w: 900, h: 1600, mode: 'cover', label: 'Background photo', hint: 'Portrait works best. Kept small so the card still opens fast.' },
 }
 
 /**
@@ -89,7 +91,7 @@ export function ImageField({
       <span className="mb-1.5 block font-medium">{spec.label}</span>
       <div className="flex items-center gap-3">
         <div
-          className={`relative shrink-0 overflow-hidden border border-border-strong bg-surface-raised ${kind === 'banner' ? 'h-12 w-36 rounded-md' : 'h-14 w-14 rounded-full'}`}
+          className={`relative shrink-0 overflow-hidden border border-border-strong bg-surface-raised ${kind === 'banner' ? 'h-12 w-36 rounded-md' : kind === 'background' ? 'h-20 w-12 rounded-md' : 'h-14 w-14 rounded-full'}`}
         >
           {value && <Image src={value} alt="" fill sizes="144px" className={kind === 'logo' ? 'object-contain p-1' : 'object-cover'} />}
         </div>

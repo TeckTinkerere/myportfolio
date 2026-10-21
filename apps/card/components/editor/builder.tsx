@@ -7,20 +7,13 @@ import { useEffect, useMemo, useState, useTransition } from 'react'
 import { deleteCard, publishCard, renameCard, saveCard, unpublishCard } from '@/app/edit/actions'
 import { CardView } from '@/components/card/card-view'
 import { handleProblem, normaliseHandle } from '@/lib/card/handles'
-import {
-  BUTTON_STYLES,
-  cardSchema,
-  firstIssue,
-  FONTS,
-  QUICK_ACTIONS,
-  TEMPLATES,
-  type CardDoc,
-  type QuickAction,
-} from '@/lib/card/schema'
+import { cardSchema, firstIssue, LANGUAGES, QUICK_ACTIONS, type CardDoc, type QuickAction } from '@/lib/card/schema'
 
 import { BlocksPanel } from './blocks-panel'
-import { ColorInput, Field, inputClass, Panel, Segmented, TextInput, Toggle } from './fields'
+import { Field, inputClass, Panel, TextInput, Toggle } from './fields'
 import { ImageField } from './image-field'
+import { SaveButtonPanel } from './save-button-panel'
+import { StylePanel } from './style-panel'
 
 type Tab = 'profile' | 'blocks' | 'style' | 'settings'
 type SaveState = 'saved' | 'saving' | 'pending' | 'invalid' | 'error'
@@ -32,15 +25,12 @@ const TABS: { id: Tab; label: string }[] = [
   { id: 'settings', label: 'Settings' },
 ]
 
-/** Background pairs that read well with the matching text colour. */
-const PRESETS: { name: string; from: string; to: string; text: 'light' | 'dark'; accent: string }[] = [
-  { name: 'Midnight', from: '#0f172a', to: '#1e3a8a', text: 'light', accent: '#3b82f6' },
-  { name: 'Ink', from: '#09090b', to: '#27272a', text: 'light', accent: '#f59e0b' },
-  { name: 'Forest', from: '#052e16', to: '#14532d', text: 'light', accent: '#4ade80' },
-  { name: 'Plum', from: '#2e1065', to: '#701a75', text: 'light', accent: '#f472b6' },
-  { name: 'Paper', from: '#fafaf9', to: '#e7e5e4', text: 'dark', accent: '#0f172a' },
-  { name: 'Sand', from: '#fef3c7', to: '#fde68a', text: 'dark', accent: '#b45309' },
-]
+const LANGUAGE_LABELS: Record<(typeof LANGUAGES)[number], string> = {
+  en: 'English',
+  ms: 'Bahasa Melayu',
+  ta: 'தமிழ் (Tamil)',
+  zh: '中文 (Chinese)',
+}
 
 const QUICK_LABELS: Record<QuickAction, string> = { call: 'Call', email: 'Email', whatsapp: 'WhatsApp', share: 'Share' }
 
@@ -266,6 +256,9 @@ export function Builder({
                   <Field label="Address" hint="Saved to the contact only, not shown.">
                     <TextInput value={h.address} maxLength={200} onChange={(v) => mutate((d) => void (d.header.address = v))} />
                   </Field>
+                  <Field label="WhatsApp number" hint="Only if different from your phone.">
+                    <TextInput value={h.whatsapp} type="tel" maxLength={40} placeholder={h.phone || '+65 9123 4567'} onChange={(v) => mutate((d) => void (d.header.whatsapp = v))} />
+                  </Field>
                 </div>
                 <fieldset>
                   <legend className="mb-1.5 text-sm font-medium">Quick-action buttons</legend>
@@ -288,74 +281,14 @@ export function Builder({
                   </div>
                 </fieldset>
               </Panel>
+
+              <SaveButtonPanel doc={doc} mutate={mutate} />
             </div>
           )}
 
           {tab === 'blocks' && <BlocksPanel widgets={doc.widgets} onChange={(w) => mutate((d) => void (d.widgets = w))} />}
 
-          {tab === 'style' && (
-            <div className="space-y-5">
-              <Panel title="Layout">
-                <Segmented
-                  label="Template"
-                  value={doc.theme.template}
-                  options={TEMPLATES.map((t) => ({ value: t, label: t[0].toUpperCase() + t.slice(1) }))}
-                  onChange={(v) => mutate((d) => void (d.theme.template = v))}
-                />
-                <Segmented
-                  label="Font"
-                  value={doc.theme.font}
-                  options={FONTS.map((f) => ({ value: f, label: f[0].toUpperCase() + f.slice(1) }))}
-                  onChange={(v) => mutate((d) => void (d.theme.font = v))}
-                />
-                <Segmented
-                  label="Buttons"
-                  value={doc.theme.buttons}
-                  options={BUTTON_STYLES.map((b) => ({ value: b, label: b[0].toUpperCase() + b.slice(1) }))}
-                  onChange={(v) => mutate((d) => void (d.theme.buttons = v))}
-                />
-              </Panel>
-
-              <Panel title="Colours">
-                <div>
-                  <p className="mb-1.5 text-sm font-medium">Presets</p>
-                  <div className="flex flex-wrap gap-2">
-                    {PRESETS.map((p) => (
-                      <button
-                        key={p.name}
-                        type="button"
-                        onClick={() =>
-                          mutate((d) => {
-                            d.theme.background = { from: p.from, to: p.to }
-                            d.theme.text = p.text
-                            d.theme.accent = p.accent
-                          })
-                        }
-                        className="flex items-center gap-2 rounded-md border border-border-strong px-2 py-1.5 text-sm hover:bg-surface-raised"
-                      >
-                        <span className="h-5 w-5 rounded-full ring-1 ring-black/10" style={{ background: `linear-gradient(135deg, ${p.from}, ${p.to})` }} />
-                        {p.name}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                <div className="grid gap-4 sm:grid-cols-3">
-                  <ColorInput label="Background top" value={doc.theme.background.from} onChange={(v) => mutate((d) => void (d.theme.background.from = v))} />
-                  <ColorInput label="Background bottom" value={doc.theme.background.to} onChange={(v) => mutate((d) => void (d.theme.background.to = v))} />
-                  <ColorInput label="Accent" value={doc.theme.accent} onChange={(v) => mutate((d) => void (d.theme.accent = v))} />
-                </div>
-                <Segmented
-                  label="Text colour"
-                  value={doc.theme.text}
-                  options={[
-                    { value: 'light', label: 'Light text' },
-                    { value: 'dark', label: 'Dark text' },
-                  ]}
-                  onChange={(v) => mutate((d) => void (d.theme.text = v))}
-                />
-              </Panel>
-            </div>
-          )}
+          {tab === 'style' && <StylePanel cardId={id} doc={doc} mutate={mutate} />}
 
           {tab === 'settings' && (
             <SettingsTab
@@ -451,6 +384,21 @@ function SettingsTab({
           </button>
         </div>
         {(problem || handleMsg) && <p className={`text-xs ${problem ? 'text-danger' : 'text-ink-muted'}`}>{problem ?? handleMsg}</p>}
+      </Panel>
+
+      <Panel title="Language" description="The language your card is written in. Screen readers use it to pronounce your text correctly.">
+        <select
+          value={doc.meta.lang}
+          onChange={(e) => mutate((d) => void (d.meta.lang = e.target.value as CardDoc['meta']['lang']))}
+          className={`${inputClass} max-w-xs`}
+          aria-label="Card language"
+        >
+          {LANGUAGES.map((l) => (
+            <option key={l} value={l}>
+              {LANGUAGE_LABELS[l]}
+            </option>
+          ))}
+        </select>
       </Panel>
 
       <Panel title="Link preview and search" description="How the card looks when its link is shared in chat apps.">

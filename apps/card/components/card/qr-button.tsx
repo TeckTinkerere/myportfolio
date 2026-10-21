@@ -1,21 +1,33 @@
 'use client'
 
 import { QrCode, X } from 'lucide-react'
-import { useMemo, useRef } from 'react'
+import { useRef, useState } from 'react'
 
-import { qrSvg } from './qr-svg'
-
-/** QR code in a native dialog, for sharing with someone who has no NFC. */
+/**
+ * QR code in a native dialog, for sharing with someone who has no NFC. The
+ * QR encoder is loaded on first open, not with the page: most visitors
+ * never press this, and a tap should download as little as possible.
+ */
 export function QrButton({ url, name }: { url: string; name: string }) {
   const dialog = useRef<HTMLDialogElement>(null)
-  const svg = useMemo(() => qrSvg(url), [url])
+  const [svg, setSvg] = useState('')
+
+  async function open() {
+    dialog.current?.showModal()
+    if (!svg) {
+      const { qrSvg } = await import('./qr-svg')
+      setSvg(qrSvg(url))
+    }
+  }
 
   return (
     <>
       <button
         type="button"
-        onClick={() => dialog.current?.showModal()}
-        className="grid h-10 w-10 place-items-center rounded-full bg-black/25 text-white backdrop-blur transition hover:bg-black/40"
+        onClick={open}
+        // Card colours, not fixed black/white, so it stays visible on light
+        // and photo backgrounds alike.
+        className="card-focus grid h-10 w-10 place-items-center rounded-full bg-[color:var(--c-surface)] text-[color:var(--c-fg)] ring-1 ring-[color:var(--c-line)] backdrop-blur transition hover:bg-[color:var(--c-surface-hover)]"
       >
         <QrCode className="h-5 w-5" aria-hidden />
         <span className="sr-only">Show QR code</span>
@@ -36,7 +48,7 @@ export function QrButton({ url, name }: { url: string; name: string }) {
             <span className="sr-only">Close</span>
           </button>
         </div>
-        <div className="mx-auto mt-4 w-full max-w-[16rem]" dangerouslySetInnerHTML={{ __html: svg }} />
+        <div className="mx-auto mt-4 aspect-square w-full max-w-[16rem]" dangerouslySetInnerHTML={{ __html: svg }} />
         <p className="mt-3 break-all text-xs text-neutral-500">{url.replace(/^https?:\/\//, '')}</p>
       </dialog>
     </>
