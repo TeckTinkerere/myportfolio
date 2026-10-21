@@ -7,7 +7,8 @@ import { useEffect, useMemo, useState, useTransition } from 'react'
 import { deleteCard, publishCard, renameCard, saveCard, unpublishCard } from '@/app/edit/actions'
 import { CardView } from '@/components/card/card-view'
 import { handleProblem, normaliseHandle } from '@/lib/card/handles'
-import { cardSchema, firstIssue, LANGUAGES, QUICK_ACTIONS, type CardDoc, type QuickAction } from '@/lib/card/schema'
+import { describeIssue } from '@/lib/card/issues'
+import { cardSchema, LANGUAGES, QUICK_ACTIONS, type CardDoc, type QuickAction } from '@/lib/card/schema'
 
 import { BlocksPanel } from './blocks-panel'
 import { Field, inputClass, Panel, TextInput, Toggle } from './fields'
@@ -66,7 +67,7 @@ export function Builder({
   const json = JSON.stringify(doc)
   const parsed = useMemo(() => cardSchema.safeParse(doc), [doc])
   const dirty = json !== savedJson
-  const invalid = parsed.success ? null : firstIssue(parsed.error)
+  const invalid = parsed.success ? null : describeIssue(parsed.error, doc)
 
   // Derived, not stored: the status is whatever the document and the last
   // save say it is right now.

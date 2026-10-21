@@ -77,19 +77,38 @@ export function NfcPanel({
     setBusy(null)
   }
 
+  /** The selected tag id, creating a new tag link first if "new" is chosen. */
+  async function ensureTag(): Promise<string | null> {
+    if (choice !== 'new') return choice
+    const res = await createCardTag(profileId, label || `Card for /${handle}`)
+    if (!res.ok) {
+      setStatus({ tone: 'error', text: res.error })
+      return null
+    }
+    setChoice(res.id)
+    setLabel('')
+    return res.id
+  }
+
+  /** Create a link without writing it: for iPhones and NFC Tools. */
+  async function createOnly() {
+    const id = await ensureTag()
+    if (!id) return
+    try {
+      await navigator.clipboard?.writeText(tagUrl(id))
+    } catch {
+      // Clipboard can be refused; the link is listed below either way.
+    }
+    setStatus({
+      tone: 'ok',
+      text: `Link created and copied: ${tagUrl(id).replace(/^https?:\/\//, '')}. Write it with the NFC Tools app (Write → Add a record → URL).`,
+    })
+  }
+
   async function write() {
     setRead(null)
-    let id = choice
-    if (choice === 'new') {
-      const res = await createCardTag(profileId, label || `Card for /${handle}`)
-      if (!res.ok) {
-        setStatus({ tone: 'error', text: res.error })
-        return
-      }
-      id = res.id
-      setChoice(id)
-      setLabel('')
-    }
+    const id = await ensureTag()
+    if (!id) return
     const url = tagUrl(id)
     const controller = start('write')
     setStatus({ tone: 'info', text: 'Hold the card flat against the back of your phone…' })
@@ -230,6 +249,16 @@ export function NfcPanel({
             <Nfc className="h-4 w-4" aria-hidden />
             {busy === 'write' ? 'Waiting for tag…' : 'Write to tag'}
           </button>
+          {choice === 'new' && (
+            <button
+              type="button"
+              onClick={createOnly}
+              disabled={busy !== null}
+              className={`h-10 rounded-md px-4 text-sm font-medium disabled:opacity-50 ${supported ? 'border border-border-strong hover:bg-surface-raised' : 'bg-accent font-semibold text-accent-contrast hover:opacity-90'}`}
+            >
+              Create link only
+            </button>
+          )}
           {busy && (
             <button type="button" onClick={stop} className="h-10 rounded-md border border-border-strong px-3 text-sm">
               Cancel

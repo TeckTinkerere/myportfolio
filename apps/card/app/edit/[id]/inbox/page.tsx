@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
 import { Chrome } from '@/components/chrome'
+import { formatSgTime } from '@/lib/card/csv'
 import { getProfile, listLeads } from '@/lib/data'
 import { requireMember } from '@/lib/session'
 
@@ -69,7 +70,7 @@ export default async function Inbox({ params }: { params: Promise<{ id: string }
                   </form>
                 </div>
                 <p className="mt-3 text-xs text-ink-muted">
-                  {new Date(lead.created_at).toLocaleString('en-SG', { dateStyle: 'medium', timeStyle: 'short' })}
+                  {formatSgTime(lead.created_at)}
                   {' · consented'}
                 </p>
               </li>

@@ -218,7 +218,8 @@ export interface LeadRow {
   id: string
   fields: Record<string, string>
   consent_text: string
-  created_at: string
+  // The Neon driver parses timestamptz into a Date.
+  created_at: string | Date
 }
 
 export async function insertLead(

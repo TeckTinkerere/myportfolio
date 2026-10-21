@@ -183,7 +183,9 @@ export const cardSchema = z.object({
       .max(4)
       .default(['call', 'email', 'share'])
       .refine((a) => new Set(a).size === a.length, 'Each quick action can appear once'),
-    saveLabel: text(40).default('Save contact'),
+    // Empty means the built-in "Save contact". Stored empty so the editor
+    // shows it as a placeholder, not as text to delete before typing.
+    saveLabel: text(40).default(''),
     // What the Save contact button offers once the contact is saved.
     afterSave: z.enum(AFTER_SAVE).default('none'),
     whatsappMessage: text(300).default(''),

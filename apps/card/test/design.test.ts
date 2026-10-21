@@ -19,7 +19,8 @@ describe('older cards', () => {
     expect(doc.theme.rows).toBe('soft')
     expect(doc.theme.font).toBe('sans')
     expect(doc.header.afterSave).toBe('none')
-    expect(doc.header.saveLabel).toBe('Save contact')
+    // Empty = the built-in "Save contact" label.
+    expect(doc.header.saveLabel).toBe('')
     expect(doc.meta.lang).toBe('en')
   })
 
