@@ -3,6 +3,7 @@ import 'server-only'
 import { DeleteObjectCommand, PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
 
 import { requireEnv } from './env'
+import { isUrlInBase } from './media-url'
 
 /**
  * Card images in Neon Object Storage (S3-compatible, public-read bucket).
@@ -33,7 +34,7 @@ export function mediaBaseUrl(): string {
 
 /** True when a URL points into this app's bucket. Cards may show nothing else. */
 export function isMediaUrl(url: string): boolean {
-  return url.startsWith(mediaBaseUrl())
+  return isUrlInBase(url, mediaBaseUrl())
 }
 
 export const IMAGE_TYPES = {

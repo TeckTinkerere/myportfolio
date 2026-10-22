@@ -24,7 +24,8 @@ export async function GET(_req: Request, { params }: { params: Promise<{ handle:
 async function loadPhoto(url: string): Promise<VCardPhoto | undefined> {
   if (!url || !isMediaUrl(url)) return undefined
   try {
-    const res = await fetch(url)
+    // No redirects: the URL was checked, wherever it might bounce to was not.
+    const res = await fetch(url, { redirect: 'error', signal: AbortSignal.timeout(5000) })
     if (!res.ok) return undefined
     const type = res.headers.get('content-type') ?? ''
     const kind = type.includes('png') ? 'PNG' : type.includes('webp') ? 'WEBP' : type.includes('jpeg') ? 'JPEG' : null

@@ -2,12 +2,12 @@
 
 import { createHash } from 'node:crypto'
 
-import { headers } from 'next/headers'
 import { z } from 'zod'
 
 import { getOwnerEmail, getPublishedCard, insertLead, recentLeadCounts } from '@/lib/data'
 import { emailConfigured, sendEmail } from '@/lib/email'
 import { requireEnv, siteUrl } from '@/lib/env'
+import { clientIp } from '@/lib/throttle'
 
 export type LeadState =
   | { status: 'idle' }
@@ -64,11 +64,11 @@ export async function submitLead(_prev: LeadState, form: FormData): Promise<Lead
     return { status: 'error', message: parsed.error.issues[0]?.message ?? 'Please check the form.' }
   }
 
-  const h = await headers()
-  const ip = h.get('x-forwarded-for')?.split(',')[0]?.trim() ?? h.get('x-real-ip') ?? 'unknown'
+  // IP only: including the User-Agent let a sender reset their limit by
+  // changing it on each request.
   const day = new Date().toISOString().slice(0, 10)
   const senderHash = createHash('sha256')
-    .update(`${requireEnv('LEAD_HASH_SALT')}:${day}:${ip}:${h.get('user-agent') ?? ''}`)
+    .update(`${requireEnv('LEAD_HASH_SALT')}:${day}:${await clientIp()}`)
     .digest('hex')
 
   const counts = await recentLeadCounts(card.id, senderHash)
@@ -84,11 +84,21 @@ export async function submitLead(_prev: LeadState, form: FormData): Promise<Lead
   const consentText = `I agree to share these details with ${card.doc.header.name} so they can contact me.`
   await insertLead(card.id, fields, consentText, senderHash)
 
-  await notifyOwner(card.id, card.doc.header.name, fields).catch((err) =>
-    console.error('Lead notification failed', err),
+  await notifyOwner(card.id, card.doc.header.name, fields).catch((err: unknown) =>
+    console.error('Lead notification failed', err instanceof Error ? err.message : 'unknown error'),
   )
 
   return { status: 'sent' }
+}
+
+/** Visitor text in a header field: no control characters, one short line. */
+function singleLine(value: string): string {
+  const isControl = (n: number) => n < 0x20 || (n >= 0x7f && n <= 0x9f) || n === 0x2028 || n === 0x2029
+  return Array.from(value, (c) => (isControl(c.codePointAt(0) ?? 0) ? ' ' : c))
+    .join('')
+    .replace(/ {2,}/g, ' ')
+    .trim()
+    .slice(0, 80)
 }
 
 /** Email the card owner through Brevo. Skipped when email is not configured. */
@@ -101,7 +111,7 @@ async function notifyOwner(profileId: string, cardName: string, fields: Record<s
   await sendEmail({
     to,
     replyTo: fields.email,
-    subject: `New contact from your card: ${fields.name}`,
+    subject: `New contact from your card: ${singleLine(fields.name ?? '')}`,
     text: [
       `Someone sent their details through ${cardName}'s card.`,
       '',

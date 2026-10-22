@@ -18,6 +18,12 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev", "--workspace", "@mohdaslam/card"],
       "port": 3002
+    },
+    {
+      "name": "card-prod",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["exec", "--workspace", "@mohdaslam/card", "--", "next", "start", "--port", "3003"],
+      "port": 3003
     }
   ]
 }
