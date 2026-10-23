@@ -5,8 +5,13 @@ import { useActionState, useState } from 'react'
 
 import { signIn, signUp, type AuthState } from './actions'
 
-export function LoginForm() {
-  const [mode, setMode] = useState<'in' | 'up'>('in')
+/**
+ * Sign in for everyone; Create account only when opened from an invite
+ * link. The link's token rides along in a hidden field either way, so an
+ * existing account can also redeem it by signing in.
+ */
+export function LoginForm({ invite }: { invite: string | null }) {
+  const [mode, setMode] = useState<'in' | 'up'>(invite ? 'up' : 'in')
   const [inState, inAction, inPending] = useActionState<AuthState, FormData>(signIn, null)
   const [upState, upAction, upPending] = useActionState<AuthState, FormData>(signUp, null)
   const state = mode === 'in' ? inState : upState
@@ -17,22 +22,25 @@ export function LoginForm() {
 
   return (
     <div>
-      <div role="tablist" className="grid grid-cols-2 rounded-md border border-border-strong p-1 text-sm">
-        {(['in', 'up'] as const).map((m) => (
-          <button
-            key={m}
-            type="button"
-            role="tab"
-            aria-selected={mode === m}
-            onClick={() => setMode(m)}
-            className={`rounded px-3 py-2 font-medium transition ${mode === m ? 'bg-accent text-accent-contrast' : 'text-ink-muted hover:text-ink'}`}
-          >
-            {m === 'in' ? 'Sign in' : 'Create account'}
-          </button>
-        ))}
-      </div>
+      {invite ? (
+        <div role="tablist" className="grid grid-cols-2 rounded-md border border-border-strong p-1 text-sm">
+          {(['up', 'in'] as const).map((m) => (
+            <button
+              key={m}
+              type="button"
+              role="tab"
+              aria-selected={mode === m}
+              onClick={() => setMode(m)}
+              className={`rounded px-3 py-2 font-medium transition ${mode === m ? 'bg-accent text-accent-contrast' : 'text-ink-muted hover:text-ink'}`}
+            >
+              {m === 'in' ? 'I have an account' : 'Create account'}
+            </button>
+          ))}
+        </div>
+      ) : null}
 
       <form action={mode === 'in' ? inAction : upAction} className="mt-6 flex flex-col gap-4 text-sm">
+        {invite && <input type="hidden" name="invite" value={invite} />}
         {mode === 'up' && (
           <label className="font-medium">
             Your name
@@ -74,9 +82,11 @@ export function LoginForm() {
         >
           {pending ? 'One moment…' : mode === 'in' ? 'Sign in' : 'Create account'}
         </button>
-        {mode === 'up' && (
-          <p className="text-xs text-ink-muted">Accounts are invite-only. Use the email your invite was sent to.</p>
-        )}
+        <p className="text-xs text-ink-muted">
+          {invite
+            ? 'Use the email this invite was made for.'
+            : 'Accounts are invite-only. To join, open the invite link you were sent.'}
+        </p>
       </form>
     </div>
   )
