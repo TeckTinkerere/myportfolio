@@ -1,0 +1,48 @@
+{
+  "title": "Liv&Now",
+  "proofVerb": "BUILT",
+  "oneLiner": "A streetwear storefront for a premium Indian oversized-fit brand.",
+  "shortSummary": "An e-commerce storefront for Liv&Now, a streetwear brand manufactured in Tiruppur — a browsable product catalogue with collections, pricing and a custom-order path.",
+  "lenses": [
+    "websites"
+  ],
+  "status": "live",
+  "visibility": "public",
+  "permissionStatus": "not-required",
+  "role": "Developer",
+  "timeframeLabel": "Personal project",
+  "responsibilities": [
+    "Built the product catalogue and collection browsing.",
+    "Built the storefront pages and site search."
+  ],
+  "constraints": [
+    "A brand storefront has to read as a real retail experience, not a template."
+  ],
+  "outcomes": [
+    "Live storefront with a working, browsable product catalogue."
+  ],
+  "technologies": [
+    "Next.js",
+    "TypeScript",
+    "Tailwind CSS"
+  ],
+  "evidence": [
+    {
+      "label": "Liv&Now live site",
+      "type": "live-site",
+      "href": "https://livnow.mohdaslam.dev",
+      "public": true
+    }
+  ],
+  "lastVerifiedAt": "2026-07",
+  "tier": "2",
+  "coverImage": {
+    "discriminant": true,
+    "value": {
+      "src": "/images/projects/livnow-live.png",
+      "alt": "Liv&Now homepage hero: \"Streetwear Engineered\", Spring Summer 2026",
+      "permissionStatus": "not-required"
+    }
+  },
+  "sortOrder": 17
+}

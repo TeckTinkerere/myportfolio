@@ -1,0 +1,25 @@
+{
+  "name": "Build and Deploy a Deep Research AI Agent",
+  "organiser": "AI Builders",
+  "date": "2026-01-15",
+  "role": "facilitator-teaching-assistant",
+  "secondaryRoles": [
+    "event-operations-support"
+  ],
+  "roleLabel": "Facilitator / Teaching Assistant, Event Operations Support",
+  "summary": "Coordinated participant logistics end to end and supported the technical instructor on the day.",
+  "responsibilities": [
+    "Wrote the Luma event listing and created the WhatsApp group for participants.",
+    "Coordinated participants travelling to the venue.",
+    "Helped participants who could not keep up with the instructor.",
+    "Handled registration.",
+    "Assisted with food distribution."
+  ],
+  "visibility": "public",
+  "permissionStatus": "not-required",
+  "hasDetailPage": false,
+  "testimonial": {
+    "discriminant": false,
+    "value": null
+  }
+}

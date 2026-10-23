@@ -1,0 +1,51 @@
+{
+  "title": "Recenter",
+  "proofVerb": "BUILT",
+  "oneLiner": "A wellness app for a two-minute reset: guided breathing, reflection, or creative flow.",
+  "shortSummary": "A Next.js app offering three short wellness modes — guided breathing, reflective journaling, and creative expression — with ambient audio, running entirely in the browser.",
+  "lenses": [
+    "software",
+    "websites"
+  ],
+  "status": "live",
+  "visibility": "public",
+  "permissionStatus": "not-required",
+  "role": "Frontend developer",
+  "timeframeLabel": "Personal project",
+  "responsibilities": [
+    "Built the guided breathing, reflection and creative-flow modes.",
+    "Built the ambient audio handling.",
+    "Implemented journaling against the Local Storage API so entries never leave the device.",
+    "Built the responsive interface."
+  ],
+  "constraints": [
+    "No backend, so anything persistent had to survive in the browser alone."
+  ],
+  "outcomes": [
+    "Rebuilt on Next.js and moved to a production domain (recenter.mohdaslam.dev).",
+    "Grew from a single timer-and-journal tool into three distinct wellness modes."
+  ],
+  "technologies": [
+    "Next.js",
+    "TypeScript",
+    "Tailwind CSS"
+  ],
+  "evidence": [
+    {
+      "label": "Recenter live site",
+      "type": "live-site",
+      "href": "https://recenter.mohdaslam.dev",
+      "public": true
+    }
+  ],
+  "tier": "2",
+  "coverImage": {
+    "discriminant": true,
+    "value": {
+      "src": "/images/projects/Recenter.png",
+      "alt": "Recenter landing screen offering three modes: Breathe, Reflect, and Create",
+      "permissionStatus": "not-required"
+    }
+  },
+  "sortOrder": 5
+}

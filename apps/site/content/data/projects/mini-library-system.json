@@ -1,0 +1,36 @@
+{
+  "title": "Mini Library System",
+  "proofVerb": "BUILT",
+  "oneLiner": "A Java library management system built for coursework.",
+  "shortSummary": "An object-oriented library management system in Java with file-based persistence, built for a Singapore Polytechnic module.",
+  "lenses": [
+    "software"
+  ],
+  "status": "archived",
+  "visibility": "public",
+  "permissionStatus": "not-required",
+  "role": "Backend developer",
+  "organisation": "Singapore Polytechnic",
+  "timeframeLabel": "Singapore Polytechnic coursework",
+  "responsibilities": [
+    "Designed the class model and implemented the borrowing and returning logic.",
+    "Implemented file-based persistence."
+  ],
+  "constraints": [
+    "Restricted to the language and libraries the module allowed."
+  ],
+  "outcomes": [
+    "Completed and submitted as coursework."
+  ],
+  "technologies": [
+    "Java",
+    "Object-oriented programming",
+    "File I/O"
+  ],
+  "tier": "2",
+  "coverImage": {
+    "discriminant": false,
+    "value": null
+  },
+  "sortOrder": 13
+}

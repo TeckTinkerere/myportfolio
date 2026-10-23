@@ -1,0 +1,35 @@
+{
+  "title": "Online Shopping System",
+  "proofVerb": "BUILT",
+  "oneLiner": "A coursework database system built on stored procedures rather than application-side queries.",
+  "shortSummary": "A PostgreSQL-backed shopping system where the CRUD paths run through stored procedures, built for a Singapore Polytechnic module.",
+  "lenses": [
+    "software"
+  ],
+  "status": "archived",
+  "visibility": "public",
+  "permissionStatus": "not-required",
+  "role": "Developer",
+  "organisation": "Singapore Polytechnic",
+  "timeframeLabel": "Singapore Polytechnic coursework",
+  "responsibilities": [
+    "Designed the schema and wrote the stored procedures behind each operation."
+  ],
+  "constraints": [
+    "Module required the logic to sit in the database layer."
+  ],
+  "outcomes": [
+    "Completed and submitted as coursework."
+  ],
+  "technologies": [
+    "PostgreSQL",
+    "SQL",
+    "Stored procedures"
+  ],
+  "tier": "2",
+  "coverImage": {
+    "discriminant": false,
+    "value": null
+  },
+  "sortOrder": 14
+}

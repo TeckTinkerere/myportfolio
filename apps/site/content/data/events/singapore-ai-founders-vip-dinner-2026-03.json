@@ -1,0 +1,20 @@
+{
+  "name": "Singapore AI Founders VIP Dinner",
+  "organiser": "Singapore AI Founders",
+  "date": "2026-03-30",
+  "role": "event-operations-support",
+  "roleLabel": "Event Operations Support",
+  "summary": "Supported operations for a founder networking dinner, start to close.",
+  "responsibilities": [
+    "Supported photography and buffet setup.",
+    "Handled banners and background music for networking.",
+    "Helped close and clear the venue."
+  ],
+  "visibility": "public",
+  "permissionStatus": "not-required",
+  "hasDetailPage": false,
+  "testimonial": {
+    "discriminant": false,
+    "value": null
+  }
+}

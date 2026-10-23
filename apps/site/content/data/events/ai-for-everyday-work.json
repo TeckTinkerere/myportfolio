@@ -1,0 +1,21 @@
+{
+  "name": "AI For Everyday Work",
+  "organiser": "AI Builders",
+  "date": "2026-07-21",
+  "role": "event-operations-support",
+  "roleLabel": "Event Operations Support",
+  "summary": "Owned registration and floor support for a public AI-in-the-workplace session.",
+  "responsibilities": [
+    "Managed registration and access checks.",
+    "Supported the panel setup.",
+    "Distributed goodies to audience members asking questions.",
+    "Made the final venue-closure announcement."
+  ],
+  "visibility": "public",
+  "permissionStatus": "not-required",
+  "hasDetailPage": false,
+  "testimonial": {
+    "discriminant": false,
+    "value": null
+  }
+}

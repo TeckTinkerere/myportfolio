@@ -1,0 +1,18 @@
+{
+  "name": "agentfield Day: Autonomous Backend AI Hackathon",
+  "organiser": "AI Builders",
+  "date": "2026-02-07",
+  "role": "facilitator-teaching-assistant",
+  "roleLabel": "Facilitator / Teaching Assistant",
+  "summary": "Supported participants through a backend-focused autonomous-agent hackathon.",
+  "responsibilities": [
+    "Supported participants during the technical hackathon."
+  ],
+  "visibility": "public",
+  "permissionStatus": "not-required",
+  "hasDetailPage": false,
+  "testimonial": {
+    "discriminant": false,
+    "value": null
+  }
+}

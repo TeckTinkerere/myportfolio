@@ -1,0 +1,33 @@
+{
+  "title": "DevOmegle",
+  "proofVerb": "BUILT",
+  "oneLiner": "Peer-to-peer video pairing for developers.",
+  "shortSummary": "A concept for random peer-to-peer technical conversations between developers over WebRTC. Paused before completion.",
+  "lenses": [
+    "software"
+  ],
+  "status": "concept",
+  "visibility": "public",
+  "permissionStatus": "not-required",
+  "role": "Developer",
+  "timeframeLabel": "Personal project",
+  "responsibilities": [
+    "Prototyped the peer connection flow."
+  ],
+  "constraints": [
+    "Paused before a working end-to-end version existed."
+  ],
+  "outcomes": [
+    "Not completed. Listed as a concept rather than a build."
+  ],
+  "technologies": [
+    "Node.js",
+    "WebRTC"
+  ],
+  "tier": "2",
+  "coverImage": {
+    "discriminant": false,
+    "value": null
+  },
+  "sortOrder": 11
+}

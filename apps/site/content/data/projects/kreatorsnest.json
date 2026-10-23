@@ -1,0 +1,48 @@
+{
+  "title": "KreatorsNest",
+  "proofVerb": "BUILT",
+  "oneLiner": "A curated resource hub for freelancers and creators.",
+  "shortSummary": "A static resource hub collecting learning material for freelancers and creators, built without a framework and deployed on Netlify.",
+  "lenses": [
+    "websites"
+  ],
+  "status": "archived",
+  "visibility": "public",
+  "permissionStatus": "not-required",
+  "role": "Frontend developer",
+  "timeframeLabel": "Personal project",
+  "responsibilities": [
+    "Structured the resource categories and site navigation.",
+    "Built the site in plain HTML, CSS and JavaScript."
+  ],
+  "constraints": [
+    "Static hosting only — no server-side logic available."
+  ],
+  "outcomes": [
+    "Deployed and publicly reachable."
+  ],
+  "technologies": [
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "Netlify"
+  ],
+  "evidence": [
+    {
+      "label": "KreatorsNest live site",
+      "type": "live-site",
+      "href": "https://kreatorsnest.netlify.app/",
+      "public": true
+    }
+  ],
+  "tier": "2",
+  "coverImage": {
+    "discriminant": true,
+    "value": {
+      "src": "/images/projects/kreatorsnest-live.png",
+      "alt": "KreatorsNest landing page: \"Crafting tools & knowledge for the modern creative\", with a sidebar and a guided-or-explore browsing choice",
+      "permissionStatus": "not-required"
+    }
+  },
+  "sortOrder": 6
+}

@@ -1,0 +1,20 @@
+{
+  "name": "Agent Forge: Build Production AI Systems",
+  "organiser": "AI Builders",
+  "date": "2026-06-13",
+  "role": "host-emcee",
+  "roleLabel": "Host / Emcee",
+  "summary": "Hosted the programme in front of the largest confirmed live audience to date.",
+  "responsibilities": [
+    "Hosted the programme in front of approximately 150 physical attendees."
+  ],
+  "verifiedAudienceSize": "~150",
+  "visibility": "public",
+  "permissionStatus": "not-required",
+  "featuredRank": 1,
+  "hasDetailPage": false,
+  "testimonial": {
+    "discriminant": false,
+    "value": null
+  }
+}

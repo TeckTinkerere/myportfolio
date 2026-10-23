@@ -1,0 +1,18 @@
+{
+  "name": "MeDo Singapore Vibe Coding Hackathon",
+  "organiser": "MeDo Singapore",
+  "date": "2026-04-18",
+  "role": "event-operations-support",
+  "roleLabel": "Event Operations Support",
+  "summary": "Supported the delivery of a vibe-coding hackathon.",
+  "responsibilities": [
+    "Supported the delivery of the hackathon."
+  ],
+  "visibility": "public",
+  "permissionStatus": "not-required",
+  "hasDetailPage": false,
+  "testimonial": {
+    "discriminant": false,
+    "value": null
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "title": "CyDists CCA Website",
+  "proofVerb": "BUILT",
+  "oneLiner": "The website for my polytechnic cybersecurity CCA.",
+  "shortSummary": "A website built for the CyDists co-curricular group at Singapore Polytechnic.",
+  "lenses": [
+    "websites",
+    "community"
+  ],
+  "status": "archived",
+  "visibility": "public",
+  "permissionStatus": "not-required",
+  "role": "Developer",
+  "organisation": "Singapore Polytechnic",
+  "timeframeLabel": "Co-curricular activity",
+  "responsibilities": [
+    "Built and maintained the CCA website."
+  ],
+  "constraints": [
+    "Built alongside coursework, for an audience of members."
+  ],
+  "outcomes": [
+    "Delivered for the CCA."
+  ],
+  "technologies": [
+    "HTML",
+    "CSS",
+    "JavaScript"
+  ],
+  "tier": "2",
+  "coverImage": {
+    "discriminant": false,
+    "value": null
+  },
+  "sortOrder": 12
+}

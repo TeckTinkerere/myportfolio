@@ -1,0 +1,28 @@
+{
+  "name": "Agent Forge: Build OpenClaw AI Assistant",
+  "organiser": "AI Builders",
+  "date": "2026-03-28",
+  "role": "host-emcee",
+  "secondaryRoles": [
+    "co-host-organiser",
+    "facilitator-teaching-assistant",
+    "event-operations-support"
+  ],
+  "roleLabel": "Host / Emcee, Co-host / Organiser, Facilitator / Teaching Assistant, Event Operations Support",
+  "summary": "Emceed and co-organised the session — from venue setup and materials through to hosting and technical support on the day.",
+  "responsibilities": [
+    "Emceed the event and managed participant communications and the event chat.",
+    "Helped prepare technical setup material.",
+    "Set up the venue.",
+    "Bought and transported the event banners.",
+    "Arranged the buffet.",
+    "Organised participants and provided technical assistance."
+  ],
+  "visibility": "public",
+  "permissionStatus": "not-required",
+  "hasDetailPage": false,
+  "testimonial": {
+    "discriminant": false,
+    "value": null
+  }
+}

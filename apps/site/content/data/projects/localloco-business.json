@@ -1,0 +1,48 @@
+{
+  "title": "LocalLoco for Business",
+  "proofVerb": "BUILT",
+  "oneLiner": "The merchant-facing side of LocalLoco: why to join, and how.",
+  "shortSummary": "A marketing and merchant-onboarding site for LocalLoco, pitching local businesses on joining the platform, separate from the consumer app itself.",
+  "lenses": [
+    "websites"
+  ],
+  "status": "live",
+  "visibility": "public",
+  "permissionStatus": "not-required",
+  "role": "Full-stack developer and co-founder",
+  "timeframeLabel": "Personal project",
+  "responsibilities": [
+    "Built the merchant-facing landing page and value proposition.",
+    "Built the business sign-up and pricing pathway."
+  ],
+  "constraints": [
+    "Has to make the case to a business owner who has never heard of LocalLoco, separately from the consumer app."
+  ],
+  "outcomes": [
+    "Deployed and publicly reachable at a dedicated domain."
+  ],
+  "technologies": [
+    "Next.js",
+    "TypeScript",
+    "Tailwind CSS"
+  ],
+  "evidence": [
+    {
+      "label": "LocalLoco for Business",
+      "type": "live-site",
+      "href": "https://info.localloco.sg",
+      "public": true
+    }
+  ],
+  "lastVerifiedAt": "2026-07",
+  "tier": "2",
+  "coverImage": {
+    "discriminant": true,
+    "value": {
+      "src": "/images/projects/localloco-business-live.png",
+      "alt": "LocalLoco for Business landing page: \"Bringing Local Businesses & Communities Together — One Deal at a Time\"",
+      "permissionStatus": "not-required"
+    }
+  },
+  "sortOrder": 16
+}

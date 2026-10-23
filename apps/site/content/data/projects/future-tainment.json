@@ -1,0 +1,50 @@
+{
+  "title": "Future-tainment",
+  "proofVerb": "BUILT",
+  "oneLiner": "An AI content-creation tool for scripts, voice, and video.",
+  "shortSummary": "An AI-powered content creation platform — script writing, environment design, voice generation and video creation — built around a credit-based usage system.",
+  "lenses": [
+    "software",
+    "websites"
+  ],
+  "status": "prototype",
+  "visibility": "public",
+  "permissionStatus": "not-required",
+  "role": "Developer",
+  "timeframeLabel": "Personal project",
+  "responsibilities": [
+    "Built the script generation tool and its credit-based usage system.",
+    "Built the demo-mode fallback for exploring the product without live authentication."
+  ],
+  "constraints": [
+    "Production authentication (Firebase) is not yet configured."
+  ],
+  "outcomes": [
+    "Full UI and demo-mode flow deployed and explorable without an account."
+  ],
+  "technologies": [
+    "Next.js",
+    "TypeScript",
+    "Tailwind CSS",
+    "Firebase"
+  ],
+  "evidence": [
+    {
+      "label": "Future-tainment live site",
+      "type": "live-site",
+      "href": "https://future-tainment.mohdaslam.dev",
+      "public": true
+    }
+  ],
+  "lastVerifiedAt": "2026-07",
+  "tier": "2",
+  "coverImage": {
+    "discriminant": true,
+    "value": {
+      "src": "/images/projects/future-tainment-live.png",
+      "alt": "Future-tainment script generator interface with a script type selector and generated-script panel",
+      "permissionStatus": "not-required"
+    }
+  },
+  "sortOrder": 18
+}

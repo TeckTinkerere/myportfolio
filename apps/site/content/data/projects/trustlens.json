@@ -1,0 +1,33 @@
+{
+  "title": "TrustLens",
+  "proofVerb": "BUILT",
+  "oneLiner": "A browser extension that flags questionable content while you read.",
+  "shortSummary": "A partially implemented Chrome extension analysing page content in real time to surface likely misinformation.",
+  "lenses": [
+    "software"
+  ],
+  "status": "archived",
+  "visibility": "public",
+  "permissionStatus": "not-required",
+  "role": "Developer",
+  "timeframeLabel": "Personal project",
+  "responsibilities": [
+    "Built the content-analysis pass against the Chrome extension APIs."
+  ],
+  "constraints": [
+    "Judging credibility automatically is a hard problem, and the accuracy needed to be useful was beyond what the approach could reach."
+  ],
+  "outcomes": [
+    "Partially implemented and stopped — the classification quality was not good enough to be trustworthy, which is the one thing this kind of tool cannot get wrong."
+  ],
+  "technologies": [
+    "JavaScript",
+    "Chrome Extension APIs"
+  ],
+  "tier": "2",
+  "coverImage": {
+    "discriminant": false,
+    "value": null
+  },
+  "sortOrder": 9
+}

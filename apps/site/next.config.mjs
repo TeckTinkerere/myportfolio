@@ -11,6 +11,11 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: false,
   },
+  // Content is read from JSON at runtime by lib/content/data-files.ts, so the
+  // files must ship with any server function that renders on demand.
+  outputFileTracingIncludes: {
+    '/**': ['./content/data/**/*.json'],
+  },
   images: {
     formats: ['image/avif', 'image/webp'],
   },

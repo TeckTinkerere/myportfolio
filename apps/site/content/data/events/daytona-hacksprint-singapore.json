@@ -1,0 +1,31 @@
+{
+  "name": "Daytona HackSprint Singapore",
+  "organiser": "NUS StartIT",
+  "date": "2026-07-18",
+  "role": "host-emcee",
+  "secondaryRoles": [
+    "co-host-organiser",
+    "facilitator-teaching-assistant",
+    "event-operations-support"
+  ],
+  "roleLabel": "Host / Emcee, Co-host / Organiser, Facilitator / Teaching Assistant, Event Operations Support",
+  "summary": "Represented AI Builders at a hackathon run with NUS StartIT, leading the programme from teaching through to the results segment.",
+  "responsibilities": [
+    "Represented AI Builders and coordinated directly with NUS StartIT.",
+    "Led the programme end to end.",
+    "Taught participants to use Daytona, Oxylabs and Nosana.",
+    "Prepared the main and winner presentation slides.",
+    "Transported four event banners.",
+    "Organised lunch for participants.",
+    "Coordinated submissions and finalist sequencing.",
+    "Handled participant setup issues.",
+    "Improvised an elevator-pitch segment while results were being prepared."
+  ],
+  "visibility": "public",
+  "permissionStatus": "not-required",
+  "hasDetailPage": false,
+  "testimonial": {
+    "discriminant": false,
+    "value": null
+  }
+}

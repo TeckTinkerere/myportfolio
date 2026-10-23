@@ -1,0 +1,34 @@
+{
+  "title": "EventureSG",
+  "proofVerb": "BUILT",
+  "oneLiner": "A Telegram bot for finding local events.",
+  "shortSummary": "A Python Telegram bot for event discovery and notifications, completed locally but never deployed.",
+  "lenses": [
+    "software",
+    "events"
+  ],
+  "status": "archived",
+  "visibility": "public",
+  "permissionStatus": "not-required",
+  "role": "Developer",
+  "timeframeLabel": "Personal project",
+  "responsibilities": [
+    "Built the bot and its notification handling."
+  ],
+  "constraints": [
+    "Never deployed beyond local development."
+  ],
+  "outcomes": [
+    "Working locally; not deployed."
+  ],
+  "technologies": [
+    "Python",
+    "Telegram Bot API"
+  ],
+  "tier": "2",
+  "coverImage": {
+    "discriminant": false,
+    "value": null
+  },
+  "sortOrder": 10
+}

@@ -1,0 +1,425 @@
+{
+  "bioOpener": "I take unclear problems, give them a structure, and get them in front of people.",
+  "bioPoints": [
+    "Software, automation, web products, community initiatives, technology events — one skill, different rooms.",
+    "Most of it starts as a badly described problem: a shop nobody can find, students and founders who never meet, a community with no process.",
+    "Most useful where a project needs both the technical decisions and the follow-through."
+  ],
+  "principles": [
+    {
+      "title": "Make the problem concrete",
+      "body": "Most stuck projects are stuck because nobody wrote down precisely what is wrong."
+    },
+    {
+      "title": "Build the smallest credible version",
+      "body": "Small enough to finish, real enough that using it tells you something true."
+    },
+    {
+      "title": "Improve from reality",
+      "body": "First contact with real people is the only honest feedback. Plan for it."
+    }
+  ],
+  "education": {
+    "qualification": "Diploma in Information Technology",
+    "institution": "Singapore Polytechnic",
+    "timeframe": "2023 – present",
+    "start": "2023-04",
+    "end": "",
+    "coursework": [
+      "Object-oriented programming (Java)",
+      "Web development",
+      "Database systems (PostgreSQL, MySQL)",
+      "Secure coding practices",
+      "System analysis and design",
+      "Software testing and quality assurance"
+    ]
+  },
+  "experience": [
+    {
+      "role": "Automation & Tooling Intern",
+      "organisation": "OCBC (via e2 Power)",
+      "timeframe": "Apr 2026 – present",
+      "start": "2026-04",
+      "end": "",
+      "summary": "Python automation, browser automation and observability for an enterprise technology team, inside a restricted corporate environment.",
+      "kind": "build",
+      "highlights": [
+        "Migrated legacy coordinate- and image-based UI automations to Playwright browser automation, and standardised the Playwright setup across the team’s automation machines, removing a recurring source of breakage whenever an interface changed.",
+        "Designed and built a shared Python logging module (consistent format, levels and per-job log files) and am rolling it out across the team’s automation scripts in place of ad-hoc console output.",
+        "Designed and built an automation-health dashboard that discovers job logs, classifies each run as succeeded, failed or stalled from its most recent output, and summarises failures, so problems surface without anyone reading raw logs.",
+        "Maintain Python/pandas automations over large Excel datasets (100K+ rows), adding input validation so malformed or incomplete inputs fail loudly instead of producing wrong reports.",
+        "Diagnosed scheduling faults in production automations (unintended repeat runs, jobs that silently stopped running) and restored reliable scheduled execution.",
+        "Moved the team’s automation code into source control, inventoried and risk-classified existing scripts to prioritise hardening work, and ran a knowledge-sharing session on the new workflow."
+      ]
+    },
+    {
+      "role": "Founder, full-stack developer",
+      "organisation": "StartupLink",
+      "timeframe": "Apr 2025 – present",
+      "start": "2025-04",
+      "end": "",
+      "summary": "Closed student–founder network. Verified onboarding, role-based access.",
+      "kind": "build",
+      "highlights": []
+    },
+    {
+      "role": "Co-founder, full-stack developer",
+      "organisation": "LocalLoco",
+      "timeframe": "Sep 2024 – present",
+      "start": "2024-09",
+      "end": "",
+      "summary": "Hyperlocal discovery. Community submission, volunteer moderation, QR redemption.",
+      "kind": "build",
+      "highlights": []
+    }
+  ],
+  "leadership": [
+    {
+      "role": "Organising committee",
+      "organisation": "LEAP 2026, School of Computing",
+      "timeframe": "2025 – present"
+    },
+    {
+      "role": "Assistant Quartermaster",
+      "organisation": "SPCyclists main committee",
+      "timeframe": "2025 – present"
+    },
+    {
+      "role": "ExCo (Events)",
+      "organisation": "Freelance Academy, Media Arts and Design",
+      "timeframe": "2024 – present"
+    }
+  ],
+  "capabilities": [
+    {
+      "group": "Building for the web",
+      "items": [
+        "Next.js",
+        "React",
+        "TypeScript",
+        "JavaScript",
+        "Tailwind CSS",
+        "HTML",
+        "CSS"
+      ]
+    },
+    {
+      "group": "Services and data",
+      "items": [
+        "FastAPI",
+        "Node.js",
+        "PostgreSQL",
+        "PostGIS",
+        "Supabase",
+        "Firebase",
+        "SQL",
+        "Java",
+        "Python"
+      ]
+    },
+    {
+      "group": "Practice",
+      "items": [
+        "Git and GitHub",
+        "Secure coding (OWASP Top 10)",
+        "Software testing",
+        "System analysis and design",
+        "Vercel and Netlify deployment"
+      ]
+    },
+    {
+      "group": "Operating and communicating",
+      "items": [
+        "Event facilitation",
+        "Volunteer coordination",
+        "Workshop support",
+        "Product scoping",
+        "Written and spoken communication"
+      ]
+    }
+  ],
+  "resumePdf": {
+    "discriminant": false,
+    "value": null
+  },
+  "resumeLastUpdated": "2026-07",
+  "headline": "Software engineering student building automation, developer tooling and full-stack products",
+  "summary": "Diploma in IT student at Singapore Polytechnic on a year-long engineering internship at OCBC, working on automation reliability and observability. Outside work I design and ship my own systems: an open-source routing layer for AI coding agents, an offline-first Android alarm app with a Kotlin reliability core, and full-stack web products with server-enforced access control.",
+  "experienceNote": "Internship work is described at the level of engineering approach; system names and implementation details are omitted for confidentiality.",
+  "otherExperience": [
+    "Event Assistant, Adecco — polling station operations, Singapore General Election 2025 (Apr – May 2025)",
+    "Freelance video editor (Sep 2024 – present)"
+  ],
+  "featuredProjects": [
+    {
+      "name": "ROUTR",
+      "kind": "Open-source developer tooling",
+      "description": "A routing layer for AI coding agents: small “router” skills that match a request to the right workflow and tell the agent what to read, in what order, and what to skip.",
+      "stack": [
+        "Python",
+        "PowerShell",
+        "Shell",
+        "GitHub Actions"
+      ],
+      "role": "Author and maintainer",
+      "challenge": "Agents with dozens of installed skills pick the wrong one and burn their context window reading whole files.",
+      "built": [
+        "28 router skills with explicit “use when / not for” boundaries, and multi-step route plans capped at three steps with one router active at a time",
+        "A skill validator that runs in CI on every change, and an eval set of 153 prompts for measuring routing accuracy"
+      ],
+      "decision": "Routing is decided from short skill descriptions alone, so the agent loads only the one full playbook it needs.",
+      "outcome": "MIT-licensed and installable with one command. The README reports 97–99% routing accuracy in blind model runs against the eval set, with the method published so it can be reproduced.",
+      "links": [
+        {
+          "label": "GitHub",
+          "href": "https://github.com/TeckTinkerere/ROUTR"
+        },
+        {
+          "label": "Case study",
+          "href": "/work/routr"
+        }
+      ]
+    },
+    {
+      "name": "Nudgio",
+      "kind": "Mobile · offline-first",
+      "description": "An Android alarm and reminder app that plays the user’s own media, designed to work with no backend and no Internet permission.",
+      "stack": [
+        "React Native",
+        "TypeScript",
+        "Kotlin",
+        "Android AlarmManager",
+        "Room",
+        "Jest"
+      ],
+      "role": "Sole developer",
+      "challenge": "An alarm has to fire on time even when the OS kills the app or the device restarts, and it has to fail gracefully when the chosen media file has been moved or deleted.",
+      "built": [
+        "A Kotlin native core for scheduling, notifications and backup, exposed to a React Native UI through a typed native-module bridge",
+        "A layered TypeScript codebase with a mock bridge, so UI and service logic are testable without a device"
+      ],
+      "decision": "Register only the single earliest alarm with the OS rather than one per reminder. Recorded with the project’s other design choices in 21 architecture decision records.",
+      "outcome": "In active development, built against a 23-document spec with a requirements traceability catalogue. Not yet released.",
+      "links": [
+        {
+          "label": "GitHub",
+          "href": "https://github.com/TeckTinkerere/Nudgio"
+        },
+        {
+          "label": "Case study",
+          "href": "/work/nudgio"
+        }
+      ]
+    },
+    {
+      "name": "StartupLink",
+      "kind": "Full-stack web",
+      "description": "A closed network where students and verified student founders find each other.",
+      "stack": [
+        "Next.js",
+        "TypeScript",
+        "Firebase Auth",
+        "Cloud Firestore",
+        "Cloud Functions",
+        "Tailwind CSS"
+      ],
+      "role": "Founder and sole developer",
+      "challenge": "Trust is the product: founder status has to be verified, and each role may only see its own data.",
+      "built": [
+        "Server-side founder verification in a Cloud Function, so it cannot be bypassed from the client",
+        "Role-based access enforced in Firestore security rules rather than in UI components",
+        "Multi-step onboarding that keeps partial progress across sessions"
+      ],
+      "decision": "Authorisation lives in database rules, not the interface, so a modified client still cannot read another role’s data.",
+      "outcome": "Working MVP deployed publicly. No user numbers yet.",
+      "links": [
+        {
+          "label": "Live MVP",
+          "href": "https://startuplink.mohdaslam.dev"
+        },
+        {
+          "label": "Case study",
+          "href": "/work/startuplink"
+        }
+      ]
+    },
+    {
+      "name": "LocalLoco",
+      "kind": "Full-stack web · geospatial",
+      "description": "Neighbourhood deal discovery: residents submit offers, volunteers moderate them, and QR redemption tells a business which promotions actually got used.",
+      "stack": [
+        "Next.js",
+        "TypeScript",
+        "FastAPI",
+        "PostgreSQL",
+        "PostGIS",
+        "Supabase"
+      ],
+      "role": "Co-founder and full-stack developer",
+      "challenge": "Location queries that stay fast as data grows, and a moderation queue small enough for a few volunteers to clear.",
+      "built": [
+        "A Next.js front end and a separate FastAPI service so each deploys independently",
+        "Location queries in PostGIS instead of application-side filtering",
+        "Separate submission and moderation stages so unreviewed content is never public, plus QR redemption tracking"
+      ],
+      "decision": "Chose PostGIS early, which avoided a rewrite once real data existed.",
+      "outcome": "Running on its production domain with authentication in place.",
+      "links": [
+        {
+          "label": "Live site",
+          "href": "https://www.localloco.sg"
+        },
+        {
+          "label": "Case study",
+          "href": "/work/localloco-app"
+        }
+      ]
+    },
+    {
+      "name": "DoorLens",
+      "kind": "Hackathon · data and ML",
+      "description": "Nebula X 2026 submission that classifies recorded train-door movements from sensor telemetry, with a tool for testing whether recording assumptions change a result.",
+      "stack": [
+        "Python",
+        "NumPy",
+        "pandas",
+        "FastAPI",
+        "Next.js",
+        "pytest",
+        "Docker"
+      ],
+      "role": "Developer",
+      "challenge": "A small labelled dataset (110 training cycles) and no ground truth for the test set, so any claim about accuracy had to be honest.",
+      "built": [
+        "A pipeline that validates uploaded CSVs, segments door cycles and runs a frozen classifier",
+        "A sensitivity probe that rescales or resamples a cycle and re-runs the same model to show whether the label holds"
+      ],
+      "decision": "Models are frozen, hashed artefacts: uploads never retrain them, and every result carries the identity of the model that produced it.",
+      "outcome": "Submitted with a written limitations document and verification notes.",
+      "links": [
+        {
+          "label": "GitHub",
+          "href": "https://github.com/TeckTinkerere/DoorSense"
+        },
+        {
+          "label": "Case study",
+          "href": "/work/doorlens"
+        }
+      ]
+    }
+  ],
+  "technicalSkills": [
+    {
+      "group": "Languages",
+      "strong": [
+        "TypeScript",
+        "JavaScript",
+        "Python",
+        "SQL"
+      ],
+      "practical": [
+        "Java",
+        "Kotlin",
+        "PowerShell",
+        "HTML",
+        "CSS"
+      ],
+      "exposure": []
+    },
+    {
+      "group": "Frameworks",
+      "strong": [
+        "Next.js",
+        "React",
+        "Tailwind CSS"
+      ],
+      "practical": [
+        "React Native",
+        "FastAPI",
+        "pandas",
+        "Zod"
+      ],
+      "exposure": [
+        "NumPy"
+      ]
+    },
+    {
+      "group": "Automation",
+      "strong": [
+        "Playwright",
+        "Python scripting",
+        "Windows Task Scheduler"
+      ],
+      "practical": [
+        "Excel automation (openpyxl)"
+      ],
+      "exposure": []
+    },
+    {
+      "group": "Data and backend",
+      "strong": [
+        "PostgreSQL",
+        "Firebase (Auth, Firestore, Cloud Functions)"
+      ],
+      "practical": [
+        "Supabase",
+        "PostGIS",
+        "MySQL",
+        "Firestore security rules"
+      ],
+      "exposure": [
+        "Room (Android)"
+      ]
+    },
+    {
+      "group": "AI and LLM tooling",
+      "strong": [
+        "AI coding agents (Claude Code, Codex)",
+        "Agent skill and workflow design"
+      ],
+      "practical": [
+        "Eval set design"
+      ],
+      "exposure": []
+    },
+    {
+      "group": "Testing, observability and delivery",
+      "strong": [
+        "Git and GitHub",
+        "Structured logging",
+        "Vercel"
+      ],
+      "practical": [
+        "Jest",
+        "pytest",
+        "GitHub Actions",
+        "Docker"
+      ],
+      "exposure": []
+    }
+  ],
+  "communication": [
+    "Ran a knowledge-sharing session for my internship team on moving automation code into source control, and keep README documentation next to the scripts it describes.",
+    "Facilitator and teaching assistant at hands-on AI build workshops and hackathons run by AI Builders (2026), helping participants who fell behind the instructor debug and finish their builds.",
+    "Taught a technical workshop for the Nosana Builders Challenge Singapore (2026).",
+    "Student facilitator in AI Singapore’s AI for Good (Youth) programme; placed 3rd for leadership and facilitation (2025).",
+    "Write architecture decision records, specs and READMEs for my own projects: 21 ADRs for Nudgio; an API contract, limitations and verification notes for DoorLens."
+  ],
+  "evidence": [
+    {
+      "label": "Internship",
+      "text": "Enterprise automation and observability, OCBC",
+      "href": "#experience"
+    },
+    {
+      "label": "Open source",
+      "text": "ROUTR: CI-validated, 153-prompt eval set",
+      "href": "https://github.com/TeckTinkerere/ROUTR"
+    },
+    {
+      "label": "Shipped",
+      "text": "StartupLink and LocalLoco, both publicly deployed",
+      "href": "#projects"
+    }
+  ]
+}

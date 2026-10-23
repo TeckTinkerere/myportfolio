@@ -1,0 +1,37 @@
+{
+  "title": "DevMegle",
+  "proofVerb": "BUILT",
+  "oneLiner": "A developer networking site built end to end in 24 hours.",
+  "shortSummary": "A hackathon build: a site pairing developers for short technical conversations, designed and shipped inside a 24-hour window.",
+  "lenses": [
+    "software",
+    "events"
+  ],
+  "status": "archived",
+  "visibility": "public",
+  "permissionStatus": "not-required",
+  "role": "Developer",
+  "organisation": "Cursor Hackathon",
+  "timeframeLabel": "24-hour hackathon build",
+  "responsibilities": [
+    "Scoped what could realistically ship in 24 hours and cut the rest.",
+    "Built the site front to back within the window."
+  ],
+  "constraints": [
+    "A hard 24-hour deadline, which set the scope more than anything else did."
+  ],
+  "outcomes": [
+    "Completed and demonstrated within the hackathon window."
+  ],
+  "technologies": [
+    "HTML",
+    "CSS",
+    "JavaScript"
+  ],
+  "tier": "2",
+  "coverImage": {
+    "discriminant": false,
+    "value": null
+  },
+  "sortOrder": 8
+}

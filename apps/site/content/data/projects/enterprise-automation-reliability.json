@@ -1,0 +1,29 @@
+{
+  "title": "Automation Reliability in a Restricted Enterprise Environment",
+  "proofVerb": "AUTOMATED",
+  "oneLiner": "Making a repetitive operational process more reliable and easier to observe when it failed.",
+  "shortSummary": "A sanitised account of automation work carried out inside a restricted enterprise environment, covering the class of problem, my role and the engineering approach only.",
+  "longSummary": "PENDING VERIFICATION — this case study has not been written. It must not be published until the work, the role and the employer permission have all been confirmed.",
+  "lenses": [
+    "general",
+    "software"
+  ],
+  "status": "confidential",
+  "visibility": "sanitised",
+  "permissionStatus": "pending",
+  "role": "PENDING VERIFICATION",
+  "timeframeLabel": "PENDING VERIFICATION",
+  "responsibilities": [],
+  "constraints": [
+    "Restricted technical environment.",
+    "Employer confidentiality."
+  ],
+  "outcomes": [],
+  "confidentialityNote": "Certain names, interfaces, datasets, metrics, and implementation details have been omitted or generalised to respect employer or client confidentiality. This case study focuses only on my role, engineering approach, and permitted lessons.",
+  "tier": "1",
+  "coverImage": {
+    "discriminant": false,
+    "value": null
+  },
+  "sortOrder": 4
+}

@@ -1,0 +1,42 @@
+{
+  "title": "EcoRamadan",
+  "sortOrder": 3,
+  "proofVerb": "LAUNCHED",
+  "oneLiner": "A community recycling initiative built around volunteer coordination and collection logistics.",
+  "shortSummary": "A community-driven recycling initiative I started, coordinating volunteers and collection logistics during Ramadan.",
+  "lenses": [
+    "general",
+    "community"
+  ],
+  "status": "pilot-completed",
+  "visibility": "public",
+  "permissionStatus": "not-required",
+  "tier": "2",
+  "role": "Founder and coordinator",
+  "timeframeLabel": "Dates to be confirmed",
+  "location": "Singapore",
+  "responsibilities": [
+    "Started the initiative and defined how collection would actually work on the ground.",
+    "Coordinated volunteers and collection logistics."
+  ],
+  "constraints": [
+    "Entirely volunteer-run, with no funded staff.",
+    "Collection had to fit around Ramadan timings and the routines of the community it served."
+  ],
+  "outcomes": [
+    "The initiative ran as a community pilot with volunteer coordination and a working collection process."
+  ],
+  "learnings": [],
+  "technologies": [],
+  "metrics": [],
+  "evidence": [],
+  "coverImage": {
+    "discriminant": false
+  },
+  "gallery": [],
+  "featuredRank": {
+    "general": 4,
+    "community": 1
+  },
+  "seoDescription": "EcoRamadan: a volunteer-run community recycling initiative founded by Mohamed Aslam in Singapore."
+}

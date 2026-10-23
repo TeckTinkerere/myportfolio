@@ -1,0 +1,53 @@
+{
+  "title": "ConnectSphere",
+  "proofVerb": "BUILT",
+  "oneLiner": "Event networking with a sponsor-facing ROI report, not just a chat room.",
+  "shortSummary": "A QR-accessible networking room for event attendees, with connection tracking and an exportable sponsor report — built for organizers who need to show sponsors more than a headcount.",
+  "lenses": [
+    "software",
+    "events",
+    "websites"
+  ],
+  "status": "live",
+  "visibility": "public",
+  "permissionStatus": "not-required",
+  "role": "Developer",
+  "timeframeLabel": "Personal project",
+  "responsibilities": [
+    "Built the QR-accessible event room and attendee discovery flow.",
+    "Built one-tap connection tracking and the sponsor ROI export.",
+    "Built role-based onboarding for attendees versus organizers.",
+    "Built the tiered pricing and account system."
+  ],
+  "constraints": [
+    "Sponsor-facing reporting only has something to show once organizers actually get attendees into a room, so early adoption matters more than the reporting features themselves."
+  ],
+  "outcomes": [
+    "Live product with working account creation, attendee/organizer role selection, and tiered pricing (free, $149 per event Pro, custom Enterprise)."
+  ],
+  "technologies": [
+    "Next.js",
+    "TypeScript",
+    "Tailwind CSS",
+    "Supabase"
+  ],
+  "evidence": [
+    {
+      "label": "ConnectSphere live site",
+      "type": "live-site",
+      "href": "https://connectsp.mohdaslam.dev",
+      "public": true
+    }
+  ],
+  "lastVerifiedAt": "2026-07",
+  "tier": "2",
+  "coverImage": {
+    "discriminant": true,
+    "value": {
+      "src": "/images/projects/connectsphere-live.png",
+      "alt": "ConnectSphere landing page hero: \"Prove Your Event Created Real Connections\"",
+      "permissionStatus": "not-required"
+    }
+  },
+  "sortOrder": 7
+}

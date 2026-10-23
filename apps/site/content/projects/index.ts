@@ -1,12 +1,12 @@
-import { archiveProjects } from '@/content/projects/archive'
-import { ecoramadan } from '@/content/projects/ecoramadan'
-import { enterpriseAutomation } from '@/content/projects/enterprise-automation'
-import { locallocoApp } from '@/content/projects/localloco-app'
-import { startuplink } from '@/content/projects/startuplink'
+import { readCollection } from '@/lib/content/data-files'
 import { parseProjects } from '@/lib/content/schema'
 
 /**
  * Every project, validated at module scope.
+ *
+ * Entries live as JSON in content/data/projects/ and are edited through
+ * Keystatic (/keystatic). The filename is the slug; `sortOrder` breaks ties
+ * where the query layer's lens ranking leaves two items equal.
  *
  * parseProjects throws on any schema violation. Because this module is
  * imported by the route pages, that throw happens during static generation
@@ -14,14 +14,12 @@ import { parseProjects } from '@/lib/content/schema'
  * the mechanism behind PRD s14.2 — and unlike a type error, no config flag
  * can suppress it.
  *
- * Note that enterpriseAutomation is included here but has a pending
- * permission status, so getPublicProjects() filters it out. Content is
- * authored once; the publication decision lives in the query layer.
+ * Items with a pending permission status are still loaded here;
+ * getPublicProjects() filters them out. Content is authored once; the
+ * publication decision lives in the query layer.
  */
-export const projects = parseProjects([
-  startuplink,
-  locallocoApp,
-  ecoramadan,
-  enterpriseAutomation,
-  ...archiveProjects,
-])
+export const projects = parseProjects(
+  readCollection('projects')
+    .sort((a, b) => Number(a.sortOrder ?? 100) - Number(b.sortOrder ?? 100))
+    .map(({ tier, ...rest }) => ({ ...rest, ...(tier ? { tier: Number(tier) } : {}) })),
+)

@@ -1,0 +1,64 @@
+{
+  "title": "Nudgio",
+  "proofVerb": "BUILT",
+  "oneLiner": "An offline-first Android alarm that plays the user’s own media, with no backend and no Internet permission.",
+  "shortSummary": "Android alarm and reminder app. A Kotlin reliability core handles scheduling, notifications and backup; a React Native UI sits on top through a typed native-module bridge.",
+  "longSummary": "An alarm is only useful if it fires on time — including after the OS has killed the app or the device has restarted — and if it fails gracefully when the chosen media file has been moved or deleted. Nudgio keeps that reliability work in native Kotlin and leaves the interface to React Native. Everything runs from local storage: no backend, no accounts, no analytics and no Internet permission. The build follows a 23-document specification, with binding decisions recorded as architecture decision records.",
+  "lenses": [
+    "general",
+    "software"
+  ],
+  "status": "in-development",
+  "visibility": "public",
+  "permissionStatus": "not-required",
+  "role": "Sole developer",
+  "timeframeLabel": "August 2026 – present",
+  "startDate": "2026-08",
+  "teamSize": 1,
+  "responsibilities": [
+    "Wrote the specification pack, including a requirements traceability and acceptance catalogue",
+    "Recorded the binding design choices as 21 architecture decision records",
+    "Built the Kotlin native core for alarms, notifications and backup",
+    "Built the typed TurboModule bridge and a mock of it for tests and Metro-only development",
+    "Structured the TypeScript side into core, native-client, design-system and feature layers"
+  ],
+  "constraints": [
+    "The alarm must still fire after process death or a device restart",
+    "No backend and no Internet permission — storage, backup and migration are all local",
+    "No overlay and no persistent idle service, so the design has to rely on the OS alarm mechanism"
+  ],
+  "outcomes": [
+    "Only the single globally earliest alarm is registered with AlarmManager, rather than one per reminder",
+    "UI and service logic are testable without a device through the mock bridge",
+    "Backup and migration designed as a checksummed ZIP",
+    "Not yet released; known issues and remaining release steps are tracked in the repository"
+  ],
+  "learnings": [
+    "Writing the spec and ADRs first made it clear which decisions were binding and which were implementation detail",
+    "Keeping reliability-critical code native and the UI in React Native kept each side simpler to reason about"
+  ],
+  "technologies": [
+    "React Native",
+    "TypeScript",
+    "Kotlin",
+    "Android AlarmManager",
+    "Room",
+    "Jest"
+  ],
+  "evidence": [
+    {
+      "label": "Nudgio source on GitHub",
+      "type": "repository",
+      "href": "https://github.com/TeckTinkerere/Nudgio",
+      "public": true
+    }
+  ],
+  "seoDescription": "Nudgio: an offline-first Android media alarm with a Kotlin reliability core and a React Native UI, built by Mohamed Aslam.",
+  "lastVerifiedAt": "2026-10",
+  "tier": "1",
+  "coverImage": {
+    "discriminant": false,
+    "value": null
+  },
+  "sortOrder": 20
+}

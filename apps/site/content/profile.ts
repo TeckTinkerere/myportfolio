@@ -1,55 +1,18 @@
+import { readJson } from '@/lib/content/data-files'
+
 /**
  * Personal narrative, principles, timeline and résumé source data.
  *
- * Written as points rather than prose: the substance is unchanged, the word
- * count is roughly half. Each page keeps one human sentence at the top —
- * a fully bulleted biography reads like a spec sheet.
+ * Stored in content/data/profile.json and edited through Keystatic
+ * (/keystatic → Profile & résumé). This module only gives it types.
+ *
+ * Written as points rather than prose. Each page keeps one human sentence at
+ * the top — a fully bulleted biography reads like a spec sheet.
  *
  * Experience entries carry real `start`/`end` dates, not just display
  * strings, because the /about timeline positions bars from them. `end: null`
- * means ongoing.
+ * means ongoing (an empty field in the editor).
  */
-
-export const principles = [
-  {
-    title: 'Make the problem concrete',
-    body: 'Most stuck projects are stuck because nobody wrote down precisely what is wrong.',
-  },
-  {
-    title: 'Build the smallest credible version',
-    body: 'Small enough to finish, real enough that using it tells you something true.',
-  },
-  {
-    title: 'Improve from reality',
-    body: 'First contact with real people is the only honest feedback. Plan for it.',
-  },
-] as const
-
-/** One human opener, then the facts. */
-export const bioOpener =
-  'I take unclear problems, give them a structure, and get them in front of people.'
-
-export const bioPoints = [
-  'Software, automation, web products, community initiatives, technology events — one skill, different rooms.',
-  'Most of it starts as a badly described problem: a shop nobody can find, students and founders who never meet, a community with no process.',
-  'Most useful where a project needs both the technical decisions and the follow-through.',
-] as const
-
-export const education = {
-  qualification: 'Diploma in Information Technology',
-  institution: 'Singapore Polytechnic',
-  timeframe: '2023 – present',
-  start: '2023-04',
-  end: null,
-  coursework: [
-    'Object-oriented programming (Java)',
-    'Web development',
-    'Database systems (PostgreSQL, MySQL)',
-    'Secure coding practices',
-    'System analysis and design',
-    'Software testing and quality assurance',
-  ],
-} as const
 
 export type ExperienceEntry = {
   role: string
@@ -61,106 +24,100 @@ export type ExperienceEntry = {
   end: string | null
   summary: string
   kind: 'build' | 'operate'
+  /** Impact bullets for the résumé. Empty for roles summarised in one line. */
+  highlights: string[]
 }
 
-/** Reverse chronological. Only roles with a recorded timeframe appear. */
-export const experience: ExperienceEntry[] = [
-  {
-    role: 'Founder, full-stack developer',
-    organisation: 'StartupLink',
-    timeframe: 'Apr 2025 – present',
-    start: '2025-04',
-    end: null,
-    summary: 'Closed student–founder network. Verified onboarding, role-based access.',
-    kind: 'build',
-  },
-  {
-    role: 'Co-founder, full-stack developer',
-    organisation: 'LocalLoco',
-    timeframe: 'Sep 2024 – present',
-    start: '2024-09',
-    end: null,
-    summary: 'Hyperlocal discovery. Community submission, volunteer moderation, QR redemption.',
-    kind: 'build',
-  },
-  {
-    role: 'Event Assistant',
-    organisation: 'Adecco',
-    timeframe: 'Apr – May 2025',
-    start: '2025-04',
-    end: '2025-05',
-    summary: 'Singapore General Election 2025: polling setup, overnight watch, wheelchair access.',
-    kind: 'operate',
-  },
-  {
-    role: 'Freelance video editor',
-    organisation: 'Independent',
-    timeframe: 'Sep 2024 – present',
-    start: '2024-09',
-    end: null,
-    summary: 'Class montages, exchange farewell film, leadership camp recap.',
-    kind: 'operate',
-  },
-]
+export type FeaturedProject = {
+  name: string
+  kind: string
+  description: string
+  stack: string[]
+  role: string
+  challenge: string
+  built: string[]
+  decision: string
+  outcome: string
+  /** Absolute URLs open externally; paths starting with / stay on this site. */
+  links: { label: string; href: string }[]
+}
 
-export const leadership = [
-  {
-    role: 'Organising committee',
-    organisation: 'LEAP 2026, School of Computing',
-    timeframe: '2025 – present',
-  },
-  {
-    role: 'Assistant Quartermaster',
-    organisation: 'SPCyclists main committee',
-    timeframe: '2025 – present',
-  },
-  {
-    role: 'ExCo (Events)',
-    organisation: 'Freelance Academy, Media Arts and Design',
-    timeframe: '2024 – present',
-  },
-] as const
+export type SkillGroup = {
+  group: string
+  strong: string[]
+  practical: string[]
+  exposure: string[]
+}
+
+type ProfileFile = {
+  headline: string
+  summary: string
+  experienceNote: string
+  otherExperience: string[]
+  featuredProjects: FeaturedProject[]
+  technicalSkills: SkillGroup[]
+  communication: string[]
+  evidence: { label: string; text: string; href: string }[]
+  bioOpener: string
+  bioPoints: string[]
+  principles: { title: string; body: string }[]
+  education: {
+    qualification: string
+    institution: string
+    timeframe: string
+    start: string
+    end: string
+    coursework: string[]
+  }
+  experience: (Omit<ExperienceEntry, 'end'> & { end: string })[]
+  leadership: { role: string; organisation: string; timeframe: string }[]
+  capabilities: { group: string; items: string[] }[]
+  resumePdf: { discriminant: boolean; value: { href: string; updated: string } | null }
+  resumeLastUpdated: string
+}
+
+const data = readJson('profile.json') as ProfileFile
+
+export const principles: readonly { title: string; body: string }[] = data.principles
+
+/** One human opener, then the facts. */
+export const bioOpener = data.bioOpener
+
+export const bioPoints: readonly string[] = data.bioPoints
+
+export const education = { ...data.education, end: data.education.end || null }
+
+/** Reverse chronological. Only roles with a recorded timeframe appear. */
+export const experience: ExperienceEntry[] = data.experience.map((entry) => ({
+  ...entry,
+  end: entry.end || null,
+}))
+
+export const leadership: readonly { role: string; organisation: string; timeframe: string }[] =
+  data.leadership
 
 /**
  * Capability groupings. Deliberately unranked — no percentages, no
  * self-awarded mastery levels. Evidence lives in the projects that used them.
  */
-export const capabilities = [
-  {
-    group: 'Building for the web',
-    items: ['Next.js', 'React', 'TypeScript', 'JavaScript', 'Tailwind CSS', 'HTML', 'CSS'],
-  },
-  {
-    group: 'Services and data',
-    items: ['FastAPI', 'Node.js', 'PostgreSQL', 'PostGIS', 'Supabase', 'Firebase', 'SQL', 'Java', 'Python'],
-  },
-  {
-    group: 'Practice',
-    items: [
-      'Git and GitHub',
-      'Secure coding (OWASP Top 10)',
-      'Software testing',
-      'System analysis and design',
-      'Vercel and Netlify deployment',
-    ],
-  },
-  {
-    group: 'Operating and communicating',
-    items: [
-      'Event facilitation',
-      'Volunteer coordination',
-      'Workshop support',
-      'Product scoping',
-      'Written and spoken communication',
-    ],
-  },
-] as const
+export const capabilities: readonly { group: string; items: readonly string[] }[] =
+  data.capabilities
 
 /**
- * Résumé PDF. No file exists yet, so /resume renders a print-styled page and
- * the download control stays hidden rather than pointing at a 404. Set this
- * once a PDF is added to public/resume/.
+ * Résumé PDF. While unset, /resume renders a print-styled page and the
+ * download control stays hidden rather than pointing at a 404.
  */
-export const resumePdf: { href: string; updated: string } | null = null
+export const resumePdf: { href: string; updated: string } | null =
+  data.resumePdf.discriminant ? data.resumePdf.value : null
 
-export const resumeLastUpdated = '2026-07'
+export const resumeLastUpdated = data.resumeLastUpdated
+
+/** Résumé-only content. Engineering positioning, written for recruiters. */
+export const resumeHeadline = data.headline
+export const resumeSummary = data.summary
+export const experienceNote = data.experienceNote
+export const otherExperience: readonly string[] = data.otherExperience
+export const featuredProjects: readonly FeaturedProject[] = data.featuredProjects
+export const technicalSkills: readonly SkillGroup[] = data.technicalSkills
+export const communicationEvidence: readonly string[] = data.communication
+export const resumeEvidence: readonly { label: string; text: string; href: string }[] = data.evidence

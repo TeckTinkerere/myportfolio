@@ -1,0 +1,18 @@
+{
+  "name": "Agent Forge: Build Agentic AI Apps with Momen",
+  "organiser": "AI Builders",
+  "date": "2026-01-11",
+  "role": "facilitator-teaching-assistant",
+  "roleLabel": "Facilitator / Teaching Assistant",
+  "summary": "Supported participants during a hands-on agentic AI build session.",
+  "responsibilities": [
+    "Assisted participants during the hackathon and its technical activities."
+  ],
+  "visibility": "public",
+  "permissionStatus": "not-required",
+  "hasDetailPage": false,
+  "testimonial": {
+    "discriminant": false,
+    "value": null
+  }
+}

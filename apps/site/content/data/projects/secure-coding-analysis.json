@@ -1,0 +1,36 @@
+{
+  "title": "Secure Coding Vulnerability Analysis",
+  "proofVerb": "IMPROVED",
+  "oneLiner": "Finding and writing up real vulnerabilities in a codebase.",
+  "shortSummary": "A vulnerability assessment exercise against the OWASP Top 10, covering identification, exploitation and remediation write-up.",
+  "lenses": [
+    "software"
+  ],
+  "status": "archived",
+  "visibility": "public",
+  "permissionStatus": "not-required",
+  "role": "Security analyst",
+  "organisation": "Singapore Polytechnic",
+  "timeframeLabel": "Singapore Polytechnic coursework",
+  "responsibilities": [
+    "Assessed a codebase against the OWASP Top 10.",
+    "Documented each finding with its impact and a proposed remediation."
+  ],
+  "constraints": [
+    "Scoped to the module brief."
+  ],
+  "outcomes": [
+    "Completed and submitted as coursework."
+  ],
+  "technologies": [
+    "OWASP Top 10",
+    "Web security",
+    "Vulnerability assessment"
+  ],
+  "tier": "2",
+  "coverImage": {
+    "discriminant": false,
+    "value": null
+  },
+  "sortOrder": 15
+}

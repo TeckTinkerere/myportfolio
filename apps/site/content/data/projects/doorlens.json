@@ -1,0 +1,54 @@
+{
+  "title": "DoorLens",
+  "proofVerb": "BUILT",
+  "oneLiner": "A local tool that classifies recorded train-door movements and tests whether a result holds up.",
+  "shortSummary": "Nebula X 2026 hackathon submission (PS3). Classifies recorded door movements with a frozen model, re-runs a cycle under explicit synthetic recording changes, and ranks a train’s air-conditioning units by refrigerant-leak likelihood.",
+  "lenses": [
+    "software",
+    "events"
+  ],
+  "status": "prototype",
+  "visibility": "public",
+  "permissionStatus": "not-required",
+  "role": "Developer",
+  "organisation": "Nebula X 2026 hackathon",
+  "timeframeLabel": "September 2026 · hackathon build",
+  "startDate": "2026-09",
+  "responsibilities": [
+    "Built the FastAPI backend that validates uploads, segments cycles and runs frozen-model inference",
+    "Built the Next.js and Plotly front end, served as a static export by the same API",
+    "Added “challenge this result” probes that copy and rescale a cycle and re-run the same model",
+    "Wrote model-parity, API and browser verification scripts"
+  ],
+  "constraints": [
+    "The test data had no ground truth, so it was used only for format checks and inference, never for fitting",
+    "Runs entirely locally: no database, cloud service, authentication or external AI API"
+  ],
+  "outcomes": [
+    "32 Python tests passed and frozen-model parity reproduced across 2,091 comparisons",
+    "Sensitivity probes never alter the original prediction exports"
+  ],
+  "technologies": [
+    "Python",
+    "FastAPI",
+    "NumPy",
+    "pandas",
+    "Next.js",
+    "Plotly",
+    "Playwright"
+  ],
+  "evidence": [
+    {
+      "label": "DoorLens source on GitHub",
+      "type": "repository",
+      "href": "https://github.com/TeckTinkerere/DoorSense",
+      "public": true
+    }
+  ],
+  "tier": "2",
+  "coverImage": {
+    "discriminant": false,
+    "value": null
+  },
+  "sortOrder": 21
+}

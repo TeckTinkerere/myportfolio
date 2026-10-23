@@ -1,0 +1,26 @@
+{
+  "name": "Builders Challenge Singapore Workshop",
+  "organiser": "Nosana",
+  "date": "2026-04-02",
+  "role": "workshop-instructor",
+  "secondaryRoles": [
+    "event-operations-support"
+  ],
+  "roleLabel": "Workshop Instructor, Event Operations Support",
+  "summary": "Sole instructor for a two-hour session on the Nosana Builders Challenge, including a live AI-assisted agent build.",
+  "responsibilities": [
+    "Served as the sole instructor for approximately two hours.",
+    "Adapted the teaching slides.",
+    "Performed a live AI-assisted agent build.",
+    "Guided participants through Nosana GPU servers.",
+    "Explained the Nosana Builders Challenge.",
+    "Managed the overall workshop session."
+  ],
+  "visibility": "public",
+  "permissionStatus": "not-required",
+  "hasDetailPage": false,
+  "testimonial": {
+    "discriminant": false,
+    "value": null
+  }
+}

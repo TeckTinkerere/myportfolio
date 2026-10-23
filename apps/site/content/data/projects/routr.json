@@ -1,0 +1,65 @@
+{
+  "title": "ROUTR",
+  "proofVerb": "BUILT",
+  "oneLiner": "Small router skills that send an AI coding agent to the right workflow before it reads anything.",
+  "shortSummary": "Open-source routing layer for AI coding agents. Each router matches a situation from its description alone and tells the agent which skills to read, in what order, and what to skip.",
+  "longSummary": "An agent with dozens of installed skills tends to pick the wrong one and read whole files to find out, burning its context window. ROUTR puts a thin layer in front: 28 routr-* router skills with explicit “use when / not for” descriptions, so routing is decided from the slash-menu text and only the one full playbook needed gets loaded. Requests that span several workflows get a route plan of at most three steps, with one router active at a time.",
+  "lenses": [
+    "general",
+    "software"
+  ],
+  "status": "live",
+  "visibility": "public",
+  "permissionStatus": "not-required",
+  "role": "Author and maintainer",
+  "timeframeLabel": "July 2026 – present",
+  "startDate": "2026-07",
+  "teamSize": 1,
+  "responsibilities": [
+    "Designed the router format: a tight “Use when / Not for” description, an exit condition and a handoff",
+    "Wrote the 28 router skills and the routes.json file that defines handoffs, companions and chains",
+    "Built the skill validator that runs in CI on every change",
+    "Wrote the 153-prompt single-router eval set plus multi-route and held-out chain prompts, and ran the blind evaluations"
+  ],
+  "constraints": [
+    "Routing has to work from short descriptions alone — the agent should not load a playbook to decide whether it needs it",
+    "Real requests span several workflows, but two routers active at once would contradict each other",
+    "Child skills may not be installed, so every router needs a fallback"
+  ],
+  "outcomes": [
+    "MIT-licensed and installable with one command",
+    "Blind runs with a model that saw only the prompt file and menu reached 99.3% and 97.4% router accuracy on the 153-prompt set, as reported in the README; the method is published so the numbers can be reproduced",
+    "Route plans capped at three steps, with one active router and at most one companion checklist per step",
+    "Missing child skills fall back to built-in routr-depth-* skills instead of failing"
+  ],
+  "learnings": [
+    "Description text is the routing interface — the “not for” boundaries matter as much as the “use when” ones",
+    "Chain prompts written before the composition rules, and never used for tuning, give a more honest measure than a tuned set"
+  ],
+  "technologies": [
+    "Python",
+    "PowerShell",
+    "Shell",
+    "GitHub Actions"
+  ],
+  "evidence": [
+    {
+      "label": "ROUTR source on GitHub",
+      "type": "repository",
+      "href": "https://github.com/TeckTinkerere/ROUTR",
+      "public": true
+    }
+  ],
+  "seoDescription": "ROUTR: open-source router skills that match an AI coding agent’s request to the right workflow, with a CI validator and a published routing eval. Built by Mohamed Aslam.",
+  "lastVerifiedAt": "2026-10",
+  "tier": "1",
+  "coverImage": {
+    "discriminant": false,
+    "value": null
+  },
+  "featuredRank": {
+    "general": 2,
+    "software": 2
+  },
+  "sortOrder": 19
+}

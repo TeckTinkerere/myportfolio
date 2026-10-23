@@ -301,3 +301,18 @@ serves — see the note in `content/site-config.ts`.
 Run through [`docs/release-checklist.md`](./docs/release-checklist.md) before
 promoting to production — in particular the content-safety grep, which
 confirms no unpublished item reached a client bundle.
+
+## Editing content (Keystatic)
+
+Projects, events and the profile/résumé live as JSON in `content/data/` and are
+edited at `/keystatic`. No database.
+
+- **Local:** `npm run dev`, open http://localhost:3000/keystatic. Saves write to disk; commit as usual.
+- **Production:** set `NEXT_PUBLIC_KEYSTATIC_GITHUB_REPO=owner/repo` in Vercel, open
+  `/keystatic` on the live site and follow the prompt to create the GitHub app. It adds
+  `KEYSTATIC_GITHUB_CLIENT_ID`, `KEYSTATIC_GITHUB_CLIENT_SECRET`, `KEYSTATIC_SECRET`
+  and `NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG` — copy those into Vercel env vars.
+  Each save then becomes a commit, and Vercel redeploys.
+
+The Zod schema in `lib/content/schema.ts` still validates everything at build time,
+so an invalid edit fails the deploy instead of shipping.
