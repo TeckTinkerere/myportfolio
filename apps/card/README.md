@@ -39,10 +39,23 @@ npm run dev:card                         # http://localhost:3002
 | `/admin` | Invites and NFC tags (admins only). |
 
 **Access control.** All queries run server-side. Every editor action calls
-`requireMember()` (session plus an entry in `invites`) and passes the
-member's id into the query, so ownership is part of the `WHERE` clause.
-The public sign-up endpoint is blocked; accounts are created by the login
-page's server action after the invite check.
+`requireMember()` and passes the member's id into the query, so ownership
+is part of the `WHERE` clause.
+
+- *Invites are one-time links.* Admin → Invite shows
+  `/login?invite=<token>` once (only its SHA-256 is stored; 7-day expiry).
+  Creating an account, or signing in, with that link binds the invite to
+  the account's id ([db/migrations/0003_invite_links.sql](db/migrations/0003_invite_links.sql)).
+  Membership is that binding, not the email: Neon Auth does not verify
+  emails, so anyone can register any address directly against it.
+- */api/auth* is an allowlist (session read, sign-out, emailed reset and
+  verify links). Sign-in, sign-up and resets run in server actions.
+- *Rate limits* on sign-in (10 failures per email, 30 per IP, per 15 min),
+  sign-up, and reset emails (3 per address an hour), kept as salted hashes
+  in `auth_attempts` ([0004](db/migrations/0004_auth_attempts.sql)).
+- *Headers:* a Content-Security-Policy (see `next.config.mjs`), HSTS,
+  COOP, no framing. Image URLs must be keys inside the bucket
+  ([lib/media-url.ts](lib/media-url.ts)); malformed ids match nothing.
 
 **Card documents.** A card is one JSON document validated by
 [lib/card/schema.ts](lib/card/schema.ts). Profiles keep a `draft` (autosaved

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
 import { getAuth } from '@/lib/auth/server'
+import { isInviteTokenShape } from '@/lib/invite-token'
 import { getMember } from '@/lib/session'
 
 import { signOut } from './actions'
@@ -10,11 +11,16 @@ import { LoginForm } from './login-form'
 export const dynamic = 'force-dynamic'
 export const metadata: Metadata = { title: 'Sign in' }
 
-export default async function LoginPage({ searchParams }: { searchParams: Promise<{ denied?: string }> }) {
-  const { denied } = await searchParams
+export default async function LoginPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ denied?: string; invite?: string | string[] }>
+}) {
+  const { denied, invite: rawInvite } = await searchParams
   if (await getMember()) redirect('/edit')
+  const invite = typeof rawInvite === 'string' && isInviteTokenShape(rawInvite) ? rawInvite : null
 
-  // Signed in, but not on the invite list.
+  // Signed in, but this account has not joined with an invite link.
   const { data } = await getAuth().getSession()
   const notInvited = Boolean(data?.user)
 
@@ -27,8 +33,8 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
         {notInvited ? (
           <div className="mt-6 rounded-md border border-border-strong bg-surface p-4 text-sm">
             <p>
-              You&rsquo;re signed in as <strong>{data?.user.email}</strong>, but that email isn&rsquo;t on the
-              invite list.
+              You&rsquo;re signed in as <strong>{data?.user.email}</strong>, but this account hasn&rsquo;t joined
+              with an invite link. Sign out, then open your invite link again.
             </p>
             <form action={signOut} className="mt-4">
               <button className="text-accent underline-offset-4 hover:underline">Sign out</button>
@@ -37,7 +43,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
         ) : (
           <div className="mt-8">
             {denied && <p className="mb-4 text-sm text-ink-muted">Sign in to continue.</p>}
-            <LoginForm />
+            <LoginForm invite={invite} />
           </div>
         )}
       </div>

@@ -11,11 +11,28 @@ import { sql } from './db'
  * check done afterwards.
  */
 
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+
+/** Ids arrive from URLs and action arguments; anything else matches nothing. */
+export function isUuid(value: unknown): value is string {
+  return typeof value === 'string' && UUID.test(value)
+}
+
 export interface InviteRow {
   email: string
   is_admin: boolean
-  invited_at: string
-  accepted_at: string | null
+  invited_at: string | Date
+  accepted_at: string | Date | null
+  token_expires_at: string | Date | null
+  joined: boolean
+}
+
+/** What redeeming an invite link needs; the hash never leaves the server. */
+export interface PendingInvite {
+  email: string
+  token_hash: string | null
+  token_expires_at: string | Date | null
+  user_id: string | null
 }
 
 export interface ProfileRow {
@@ -39,22 +56,56 @@ export interface ProfileSummary {
 
 // ---------------------------------------------------------------- invites
 
-export async function getInvite(email: string): Promise<InviteRow | null> {
-  const rows = await sql`select * from invites where email = ${email}`
-  return (rows[0] as InviteRow | undefined) ?? null
+/**
+ * Membership for a signed-in account. Keyed on the account id bound when the
+ * invite link was redeemed, never on the email: the auth server does not
+ * verify emails, so an email match proves nothing.
+ */
+export async function getMembership(userId: string): Promise<{ is_admin: boolean } | null> {
+  if (!isUuid(userId)) return null
+  const rows = await sql`select is_admin from invites where user_id = ${userId}`
+  return (rows[0] as { is_admin: boolean } | undefined) ?? null
 }
 
-export async function markInviteAccepted(email: string) {
-  await sql`update invites set accepted_at = now() where email = ${email} and accepted_at is null`
+export async function getPendingInvite(email: string): Promise<PendingInvite | null> {
+  const rows = await sql`select email, token_hash, token_expires_at, user_id from invites where email = ${email}`
+  return (rows[0] as PendingInvite | undefined) ?? null
+}
+
+/** Binds an unredeemed invite to an account and burns its link. */
+export async function bindInvite(email: string, userId: string): Promise<boolean> {
+  const rows = await sql`update invites
+                            set user_id = ${userId}, accepted_at = now(), token_hash = null, token_expires_at = null
+                          where email = ${email} and user_id is null
+                          returning email`
+  return rows.length > 0
 }
 
 export async function listInvites(): Promise<InviteRow[]> {
-  return (await sql`select * from invites order by invited_at`) as InviteRow[]
+  return (await sql`select email, is_admin, invited_at, accepted_at, token_expires_at,
+                           (user_id is not null) as joined
+                      from invites order by invited_at`) as InviteRow[]
 }
 
-export async function addInvite(email: string, isAdmin: boolean) {
-  await sql`insert into invites (email, is_admin) values (${email}, ${isAdmin})
-            on conflict (email) do update set is_admin = excluded.is_admin`
+/**
+ * Adds an invite, or updates one. A fresh link replaces any earlier one,
+ * but only while the invite is unredeemed. Returns whether it is still
+ * waiting to be redeemed (so the caller knows whether to show the link).
+ */
+export async function upsertInvite(
+  email: string,
+  isAdmin: boolean,
+  tokenHash: string,
+  expiresAt: Date,
+): Promise<{ pending: boolean }> {
+  const rows = await sql`insert into invites (email, is_admin, token_hash, token_expires_at)
+                         values (${email}, ${isAdmin}, ${tokenHash}, ${expiresAt.toISOString()})
+                         on conflict (email) do update set
+                           is_admin = excluded.is_admin,
+                           token_hash = case when invites.user_id is null then excluded.token_hash end,
+                           token_expires_at = case when invites.user_id is null then excluded.token_expires_at end
+                         returning (user_id is null) as pending`
+  return { pending: Boolean((rows[0] as { pending: boolean } | undefined)?.pending) }
 }
 
 export async function removeInvite(email: string) {
@@ -92,11 +143,13 @@ export async function listProfiles(ownerId: string): Promise<ProfileSummary[]> {
 }
 
 export async function getProfile(id: string, ownerId: string): Promise<ProfileRow | null> {
+  if (!isUuid(id) || !isUuid(ownerId)) return null
   const rows = await sql`select * from profiles where id = ${id} and owner_id = ${ownerId}`
   return (rows[0] as ProfileRow | undefined) ?? null
 }
 
 export async function handleTaken(handle: string, exceptId?: string): Promise<boolean> {
+  if (exceptId !== undefined && !isUuid(exceptId)) return true
   const rows = exceptId
     ? await sql`select 1 from profiles where handle = ${handle} and id <> ${exceptId}`
     : await sql`select 1 from profiles where handle = ${handle}`
@@ -111,6 +164,7 @@ export async function createProfile(ownerId: string, handle: string, doc: CardDo
 }
 
 export async function saveDraft(id: string, ownerId: string, doc: CardDoc): Promise<boolean> {
+  if (!isUuid(id) || !isUuid(ownerId)) return false
   const rows = await sql`update profiles set draft = ${JSON.stringify(doc)}::jsonb, updated_at = now()
                          where id = ${id} and owner_id = ${ownerId} returning id`
   return rows.length > 0
@@ -118,24 +172,28 @@ export async function saveDraft(id: string, ownerId: string, doc: CardDoc): Prom
 
 /** Copies draft to published. Returns the handle, for revalidation. */
 export async function publishProfile(id: string, ownerId: string): Promise<string | null> {
+  if (!isUuid(id) || !isUuid(ownerId)) return null
   const rows = await sql`update profiles set published = draft, published_at = now(), updated_at = now()
                          where id = ${id} and owner_id = ${ownerId} returning handle`
   return (rows[0] as { handle: string } | undefined)?.handle ?? null
 }
 
 export async function unpublishProfile(id: string, ownerId: string): Promise<string | null> {
+  if (!isUuid(id) || !isUuid(ownerId)) return null
   const rows = await sql`update profiles set published = null, published_at = null, updated_at = now()
                          where id = ${id} and owner_id = ${ownerId} returning handle`
   return (rows[0] as { handle: string } | undefined)?.handle ?? null
 }
 
 export async function renameHandle(id: string, ownerId: string, handle: string): Promise<boolean> {
+  if (!isUuid(id) || !isUuid(ownerId)) return false
   const rows = await sql`update profiles set handle = ${handle}, updated_at = now()
                          where id = ${id} and owner_id = ${ownerId} returning id`
   return rows.length > 0
 }
 
 export async function deleteProfile(id: string, ownerId: string): Promise<string | null> {
+  if (!isUuid(id) || !isUuid(ownerId)) return null
   const rows = await sql`delete from profiles where id = ${id} and owner_id = ${ownerId} returning handle`
   return (rows[0] as { handle: string } | undefined)?.handle ?? null
 }
@@ -151,12 +209,14 @@ export async function getOwnerEmail(profileId: string): Promise<string | null> {
 
 /** The saved print design for one of the owner's cards, unvalidated. */
 export async function getDesign(profileId: string, ownerId: string): Promise<unknown | null> {
+  if (!isUuid(profileId) || !isUuid(ownerId)) return null
   const rows = await sql`select d.doc from card_designs d join profiles p on p.id = d.profile_id
                          where d.profile_id = ${profileId} and p.owner_id = ${ownerId}`
   return (rows[0] as { doc: unknown } | undefined)?.doc ?? null
 }
 
 export async function saveDesign(profileId: string, ownerId: string, doc: unknown): Promise<boolean> {
+  if (!isUuid(profileId) || !isUuid(ownerId)) return false
   const rows = await sql`insert into card_designs (profile_id, doc)
                          select p.id, ${JSON.stringify(doc)}::jsonb from profiles p
                          where p.id = ${profileId} and p.owner_id = ${ownerId}
@@ -192,6 +252,7 @@ export async function createTag(id: string, label: string, profileId: string | n
 }
 
 export async function assignTag(id: string, profileId: string | null) {
+  if (profileId !== null && !isUuid(profileId)) return
   await sql`update tags set profile_id = ${profileId} where id = ${id}`
 }
 
@@ -201,6 +262,7 @@ export async function deleteTag(id: string) {
 
 /** Tags pointing at one of the owner's cards. */
 export async function listCardTags(profileId: string, ownerId: string): Promise<TagRow[]> {
+  if (!isUuid(profileId) || !isUuid(ownerId)) return []
   return (await sql`select t.id, t.label, t.profile_id, p.handle, t.created_at
                     from tags t join profiles p on p.id = t.profile_id
                     where t.profile_id = ${profileId} and p.owner_id = ${ownerId}
@@ -216,6 +278,7 @@ export async function getTag(id: string): Promise<(TagRow & { owner_id: string |
 }
 
 export async function deleteCardTag(tagId: string, profileId: string, ownerId: string) {
+  if (!isUuid(profileId) || !isUuid(ownerId)) return
   await sql`delete from tags t using profiles p
             where t.id = ${tagId} and t.profile_id = ${profileId}
               and p.id = t.profile_id and p.owner_id = ${ownerId}`
@@ -228,6 +291,24 @@ export async function listAllProfiles(): Promise<{ id: string; handle: string; e
     handle: string
     email: string
   }[]
+}
+
+// --------------------------------------------------------- auth attempts
+
+export async function countAttempts(keyHash: string, windowMinutes: number): Promise<number> {
+  const rows = await sql`select count(*)::int as n from auth_attempts
+                         where key_hash = ${keyHash}
+                           and created_at > now() - make_interval(mins => ${Math.trunc(windowMinutes)})`
+  return (rows[0] as { n: number }).n
+}
+
+export async function recordAttempts(keyHashes: string[]) {
+  if (keyHashes.length === 0) return
+  await sql`insert into auth_attempts (key_hash) select unnest(${keyHashes}::text[])`
+}
+
+export async function pruneAttempts() {
+  await sql`delete from auth_attempts where created_at < now() - interval '1 day'`
 }
 
 // ------------------------------------------------------------------ leads
@@ -264,6 +345,7 @@ export async function recentLeadCounts(
 }
 
 export async function listLeads(profileId: string, ownerId: string): Promise<LeadRow[]> {
+  if (!isUuid(profileId) || !isUuid(ownerId)) return []
   return (await sql`select l.id, l.fields, l.consent_text, l.created_at
                     from leads l join profiles p on p.id = l.profile_id
                     where l.profile_id = ${profileId} and p.owner_id = ${ownerId}
@@ -271,6 +353,7 @@ export async function listLeads(profileId: string, ownerId: string): Promise<Lea
 }
 
 export async function deleteLead(leadId: string, ownerId: string) {
+  if (!isUuid(leadId) || !isUuid(ownerId)) return
   await sql`delete from leads l using profiles p
             where l.id = ${leadId} and p.id = l.profile_id and p.owner_id = ${ownerId}`
 }

@@ -2,11 +2,13 @@ import type { Metadata } from 'next'
 
 import { qrSvg } from '@/components/card/qr-svg'
 import { Chrome } from '@/components/chrome'
-import { listAllProfiles, listInvites, listTags } from '@/lib/data'
+import { formatSgTime } from '@/lib/card/csv'
+import { listAllProfiles, listInvites, listTags, type InviteRow } from '@/lib/data'
 import { siteUrl } from '@/lib/env'
 import { requireAdmin } from '@/lib/session'
 
-import { assignTagAction, createTagAction, deleteTagAction, inviteAction, uninviteAction } from './actions'
+import { assignTagAction, createTagAction, deleteTagAction, uninviteAction } from './actions'
+import { InviteForm } from './invite-form'
 
 export const dynamic = 'force-dynamic'
 export const metadata: Metadata = { title: 'Admin' }
@@ -31,23 +33,17 @@ export default async function AdminPage() {
         <section>
           <h2 className="text-lg font-semibold">Invites</h2>
           <p className="text-sm text-ink-muted">
-            Only these emails can create an account. Send the person the link{' '}
-            <span className="font-mono">{base.replace(/^https?:\/\//, '')}/login</span> yourself.
+            Inviting someone makes a one-time link that only works with their email. Send it to them yourself.
+            To replace a lost or expired link, invite the same email again.
           </p>
-          <form action={inviteAction} className="mt-4 flex flex-wrap items-center gap-2">
-            <input name="email" type="email" required placeholder="friend@example.com" className={`${input} w-72`} />
-            <label className="flex items-center gap-1.5 text-sm">
-              <input type="checkbox" name="admin" className="h-4 w-4" /> Admin
-            </label>
-            <button className="h-9 rounded-md bg-accent px-3 text-sm font-semibold text-accent-contrast">Invite</button>
-          </form>
+          <InviteForm />
           <ul className="mt-4 divide-y divide-border rounded-lg border border-border-strong bg-surface text-sm">
             {invites.map((i) => (
               <li key={i.email} className="flex items-center justify-between gap-3 px-4 py-2.5">
                 <span>
                   {i.email}
                   {i.is_admin && <span className="ml-2 text-xs text-accent">admin</span>}
-                  <span className="ml-2 text-xs text-ink-muted">{i.accepted_at ? 'joined' : 'not joined yet'}</span>
+                  <span className="ml-2 text-xs text-ink-muted">{inviteStatus(i)}</span>
                 </span>
                 {i.email.toLowerCase() !== member.email.toLowerCase() && (
                   <form action={uninviteAction.bind(null, i.email)}>
@@ -97,6 +93,14 @@ export default async function AdminPage() {
       </main>
     </Chrome>
   )
+}
+
+function inviteStatus(i: InviteRow): string {
+  if (i.joined) return 'joined'
+  if (!i.token_expires_at) return 'no link yet: invite again to make one'
+  return new Date(i.token_expires_at).getTime() > Date.now()
+    ? `link expires ${formatSgTime(i.token_expires_at)}`
+    : 'link expired: invite again'
 }
 
 function ProfileSelect({
