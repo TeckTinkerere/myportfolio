@@ -29,6 +29,7 @@ const csp = [
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  poweredByHeader: false,
   // Shared workspace packages ship TypeScript source, not build output.
   transpilePackages: ['@mohdaslam/ui'],
 
