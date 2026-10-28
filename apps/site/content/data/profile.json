@@ -20,18 +20,23 @@
     }
   ],
   "education": {
-    "qualification": "Diploma in Information Technology",
+    "qualification": "Diploma in Information Technology (Software and Applications)",
     "institution": "Singapore Polytechnic",
-    "timeframe": "2023 – present",
-    "start": "2023-04",
+    "timeframe": "2024 – present",
+    "start": "2024-04",
     "end": "",
     "coursework": [
-      "Object-oriented programming (Java)",
-      "Web development",
-      "Database systems (PostgreSQL, MySQL)",
-      "Secure coding practices",
-      "System analysis and design",
-      "Software testing and quality assurance"
+      "Fundamentals of Programming 1 and 2",
+      "Java Programming",
+      "J2EE Application Development",
+      "Front-End Web Development",
+      "Back-End Web Development",
+      "Database Systems",
+      "Secure Coding",
+      "Software Engineering Practice",
+      "Continuous Integration and Continuous Delivery",
+      "Design for User Interaction",
+      "Fundamentals of Computing"
     ]
   },
   "experience": [
@@ -421,5 +426,109 @@
       "text": "StartupLink and LocalLoco, both publicly deployed",
       "href": "#projects"
     }
-  ]
+  ],
+  "academics": {
+    "expectedGraduation": "April 2027",
+    "gpa": "3.55",
+    "gpaScale": "4.0",
+    "gpaAsOf": "after Year 2, March 2026",
+    "semesterGpas": [
+      {
+        "term": "Year 1, Sem 1",
+        "gpa": "3.09"
+      },
+      {
+        "term": "Year 1, Sem 2",
+        "gpa": "3.70"
+      },
+      {
+        "term": "Year 2, Sem 1",
+        "gpa": "3.98"
+      },
+      {
+        "term": "Year 2, Sem 2",
+        "gpa": "3.46"
+      }
+    ],
+    "directorsList": [],
+    "certificates": [
+      "Certificate in Entrepreneurship (three elective modules)"
+    ],
+    "notableModules": [
+      {
+        "name": "Database Systems",
+        "grade": "DIST",
+        "note": "LocalLoco’s location queries run in PostGIS rather than application code."
+      },
+      {
+        "name": "Continuous Integration and Continuous Delivery",
+        "grade": "A",
+        "note": "CI now gates every change to ROUTR and to this site."
+      },
+      {
+        "name": "Back-End Web Development",
+        "grade": "A",
+        "note": ""
+      },
+      {
+        "name": "Secure Coding",
+        "grade": "A",
+        "note": "StartupLink enforces access in database rules, not the interface."
+      },
+      {
+        "name": "Fundamentals of Programming 2",
+        "grade": "A",
+        "note": ""
+      },
+      {
+        "name": "Java Programming",
+        "grade": "A",
+        "note": ""
+      },
+      {
+        "name": "Front-End Web Development",
+        "grade": "A",
+        "note": ""
+      }
+    ],
+    "mathematics": [],
+    "plans": "",
+    "whyComputing": [
+      "The question I keep coming back to is not whether software can be built, but how anyone knows it works. At OCBC that meant giving automations shared logging and a health dashboard, so a failure shows up instead of quietly producing a wrong report.",
+      "The same question runs through my own projects. ROUTR is measured against a 153-prompt evaluation set with a published method. DoorLens ships with a limitations document because its dataset was too small to claim more. Nudgio is an alarm, so it has to fire on time even after the operating system kills the app.",
+      "A diploma taught me to build. I want a degree to learn the parts I keep reaching for and do not yet have: the theory behind reliable systems, the mathematics behind evaluating models, and the discipline of proving rather than testing."
+    ],
+    "thread": [
+      {
+        "title": "Observability at OCBC",
+        "body": "Shared logging and an automation-health dashboard that classifies every run as succeeded, failed or stalled.",
+        "href": "/resume#experience"
+      },
+      {
+        "title": "ROUTR: measured routing",
+        "body": "A 153-prompt evaluation set, CI validation, and a published method so the accuracy figure can be reproduced.",
+        "href": "/work/routr"
+      },
+      {
+        "title": "DoorLens: honest limits",
+        "body": "Frozen, hashed models and a written limitations document for a 110-cycle dataset with no test labels.",
+        "href": "/work/doorlens"
+      },
+      {
+        "title": "Nudgio: reliability by design",
+        "body": "One OS alarm registered at a time, 21 architecture decision records, and a spec with requirements traceability.",
+        "href": "/work/nudgio"
+      }
+    ],
+    "interests": [
+      {
+        "area": "Software engineering and reliability",
+        "why": "How to design, test and observe systems so that failures are found by the system, not its users."
+      },
+      {
+        "area": "Evaluating AI systems",
+        "why": "Building evaluation sets and methods that say honestly how well a model or agent performs, and where it does not."
+      }
+    ]
+  }
 }

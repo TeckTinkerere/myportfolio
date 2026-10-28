@@ -32,6 +32,7 @@ export async function GET() {
     '',
     '## Pages',
     ...primaryNav.map((item) => `- [${item.label}](${base}${item.href})`),
+    `- [Academics](${base}/academics): academic record and why computing`,
     '',
     '## Areas of work',
     ...capabilityRoutes.map(

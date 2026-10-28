@@ -49,6 +49,31 @@ export type SkillGroup = {
   exposure: string[]
 }
 
+export type Academics = {
+  /** Display label, e.g. "April 2027". Empty until confirmed. */
+  expectedGraduation: string
+  /** Cumulative GPA as printed on the transcript. Empty means unpublished. */
+  gpa: string
+  gpaScale: string
+  /** When the GPA was taken, e.g. "after Year 3 Semester 1". */
+  gpaAsOf: string
+  /** Oldest first, copied from the transcript. Shows the trend, not just the total. */
+  semesterGpas: { term: string; gpa: string }[]
+  /** Academic years, e.g. "AY2024/25". */
+  directorsList: string[]
+  /** Certificates awarded by the polytechnic alongside the diploma. */
+  certificates: string[]
+  notableModules: { name: string; grade: string; note: string }[]
+  mathematics: { name: string; grade: string }[]
+  /** What happens between the diploma and university, e.g. National Service. */
+  plans: string
+  /** Paragraphs. The admissions reader's answer to "why computing?" */
+  whyComputing: string[]
+  /** The pieces of work that show the same interest, each linking to its evidence. */
+  thread: { title: string; body: string; href: string }[]
+  interests: { area: string; why: string }[]
+}
+
 type ProfileFile = {
   headline: string
   summary: string
@@ -74,6 +99,7 @@ type ProfileFile = {
   capabilities: { group: string; items: string[] }[]
   resumePdf: { discriminant: boolean; value: { href: string; updated: string } | null }
   resumeLastUpdated: string
+  academics: Academics
 }
 
 const data = readJson('profile.json') as ProfileFile
@@ -111,6 +137,24 @@ export const resumePdf: { href: string; updated: string } | null =
   data.resumePdf.discriminant ? data.resumePdf.value : null
 
 export const resumeLastUpdated = data.resumeLastUpdated
+
+/**
+ * /academics: the record and the "why computing" argument, for university
+ * admissions readers. Results are never guessed — an empty field or an
+ * incomplete row simply does not render, so the page is honest while it is
+ * being filled in.
+ */
+export const academics: Academics = {
+  ...data.academics,
+  semesterGpas: data.academics.semesterGpas.filter((s) => s.term && s.gpa),
+  directorsList: data.academics.directorsList.filter(Boolean),
+  certificates: data.academics.certificates.filter(Boolean),
+  notableModules: data.academics.notableModules.filter((m) => m.name && m.grade),
+  mathematics: data.academics.mathematics.filter((m) => m.name && m.grade),
+  whyComputing: data.academics.whyComputing.filter(Boolean),
+  thread: data.academics.thread.filter((item) => item.title && item.href),
+  interests: data.academics.interests.filter((item) => item.area),
+}
 
 /** Résumé-only content. Engineering positioning, written for recruiters. */
 export const resumeHeadline = data.headline

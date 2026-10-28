@@ -1,4 +1,5 @@
 import { getPublicEvents, getPublicEvidence, getPublicProjects } from '@/lib/content/queries'
+import { academics } from '@/content/profile'
 import { capabilityRoutes, footerLinks, primaryNav } from '@/content/site-config'
 
 /**
@@ -15,6 +16,7 @@ const STATIC_ROUTES = new Set([
   '/events',
   '/community',
   '/about',
+  '/academics',
   '/contact',
   '/resume',
   '/privacy',
@@ -38,6 +40,18 @@ describe('internal links', () => {
   it('points every footer link at a real route', () => {
     for (const link of footerLinks) {
       expect(STATIC_ROUTES.has(link.href)).toBe(true)
+    }
+  })
+
+  /**
+   * The academics evidence cards are what an admissions reader clicks; a
+   * dead one, or one pointing at an unpublished case study, undoes the point.
+   */
+  it('points every academics evidence card at a published page', () => {
+    for (const item of academics.thread) {
+      if (/^https?:\/\//.test(item.href)) continue
+      const path = item.href.split('#')[0]
+      expect(STATIC_ROUTES.has(path) || projectRoutes.has(path)).toBe(true)
     }
   })
 

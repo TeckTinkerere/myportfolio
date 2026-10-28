@@ -134,6 +134,13 @@ export default function AboutPage() {
           <div>
             <SectionHeader eyebrow="Education" title="Studying" />
             <EducationCard />
+            <Link
+              href="/academics"
+              className="label-mono mt-4 inline-flex items-center gap-1.5 text-accent underline-offset-4 hover:underline"
+            >
+              Academic record and why computing
+              <ArrowUpRight aria-hidden className="size-3.5" />
+            </Link>
           </div>
           <div>
             <SectionHeader eyebrow="Also" title="Committees" />

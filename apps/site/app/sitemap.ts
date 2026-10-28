@@ -19,6 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/events', priority: 0.8 },
     { path: '/community', priority: 0.8 },
     { path: '/about', priority: 0.7 },
+    { path: '/academics', priority: 0.7 },
     { path: '/resume', priority: 0.6 },
     { path: '/contact', priority: 0.6 },
     { path: '/privacy', priority: 0.3 },

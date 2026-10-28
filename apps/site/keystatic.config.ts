@@ -341,6 +341,75 @@ export default config({
           false: fields.empty(),
         }),
         resumeLastUpdated: fields.text({ label: 'Résumé last updated (YYYY-MM)' }),
+        academics: fields.object(
+          {
+            expectedGraduation: fields.text({
+              label: 'Expected graduation',
+              description: 'Display label, e.g. April 2027. Empty hides it.',
+            }),
+            gpa: fields.text({
+              label: 'Cumulative GPA',
+              description: 'Exactly as on the transcript. Empty hides it.',
+            }),
+            gpaScale: fields.text({ label: 'GPA scale', defaultValue: '4.0' }),
+            gpaAsOf: fields.text({ label: 'GPA as of', description: 'e.g. after Year 3 Semester 1' }),
+            semesterGpas: fields.array(
+              fields.object({
+                term: fields.text({ label: 'Term', description: 'e.g. Year 1, Sem 1' }),
+                gpa: fields.text({ label: 'Semester GPA' }),
+              }),
+              {
+                label: 'Semester GPAs (oldest first)',
+                itemLabel: (p) => `${p.fields.term.value} — ${p.fields.gpa.value}`,
+              },
+            ),
+            directorsList: stringList("Director's List (academic year, e.g. AY2024/25)"),
+            certificates: stringList('Certificates awarded with the diploma'),
+            notableModules: fields.array(
+              fields.object({
+                name: fields.text({ label: 'Module' }),
+                grade: fields.text({ label: 'Grade' }),
+                note: fields.text({ label: 'What it taught or led to (optional)' }),
+              }),
+              {
+                label: 'Notable modules (rows without a grade are hidden)',
+                itemLabel: (p) => `${p.fields.name.value} — ${p.fields.grade.value}`,
+              },
+            ),
+            mathematics: fields.array(
+              fields.object({
+                name: fields.text({ label: 'Module' }),
+                grade: fields.text({ label: 'Grade' }),
+              }),
+              {
+                label: 'Mathematics modules (rows without a grade are hidden)',
+                itemLabel: (p) => `${p.fields.name.value} — ${p.fields.grade.value}`,
+              },
+            ),
+            plans: fields.text({
+              label: 'Plans after the diploma',
+              description: 'e.g. National Service, then university',
+              multiline: true,
+            }),
+            whyComputing: stringList('Why computing (one paragraph each)'),
+            thread: fields.array(
+              fields.object({
+                title: fields.text({ label: 'Title' }),
+                body: fields.text({ label: 'Body', multiline: true }),
+                href: fields.text({ label: 'Evidence link (/path or URL)' }),
+              }),
+              { label: 'The thread through my work', itemLabel: (p) => p.fields.title.value },
+            ),
+            interests: fields.array(
+              fields.object({
+                area: fields.text({ label: 'Area' }),
+                why: fields.text({ label: 'Why', multiline: true }),
+              }),
+              { label: 'What I want to study', itemLabel: (p) => p.fields.area.value },
+            ),
+          },
+          { label: 'Academics (/academics)' },
+        ),
       },
     }),
   },

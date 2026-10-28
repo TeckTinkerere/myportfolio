@@ -180,6 +180,12 @@ export default function ResumePage() {
           <div>
             <Heading id="education-heading" eyebrow="Education" title="Education" />
             <EducationCard />
+            <Link
+              href="/academics"
+              className="label-mono mt-4 inline-block text-accent underline-offset-4 hover:underline print:hidden"
+            >
+              Academic record and why computing →
+            </Link>
           </div>
           <div>
             <Heading id="awards-heading" eyebrow="Recognition" title="Competition placings" />

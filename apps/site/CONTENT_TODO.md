@@ -47,6 +47,28 @@ sentence of source material, so the rest is not written.
 
 ---
 
+### Academics (`/academics`, added 2026-10-28)
+
+Filled on 2026-10-28 from the SP transcript and SAS progress report:
+cumulative GPA 3.55 (after Year 2), semester GPAs, the seven strongest
+computing modules, the Certificate in Entrepreneurship, and expected
+graduation in April 2027. The start date was corrected from 2023 to April
+2024, the first semester on the transcript.
+
+Mathematics (MS0105, C+) is deliberately **not** shown. "Selected modules"
+is a selection, and the full transcript goes to universities anyway.
+
+Still open (Keystatic → Profile & résumé → Academics):
+
+- `[VERIFY]` Director's List years, if any. None appear on the transcript
+  text supplied.
+- `[VERIFY]` Year 3 internship grade, once released. Then update the
+  cumulative GPA and `gpaAsOf`.
+- `[VERIFY]` Plans line, e.g. "National Service from 2027, then university"
+- `[VERIFY]` **Rewrite the three "why computing" paragraphs in your own
+  words.** They were drafted from the published evidence and need your own
+  voice before an admissions reader sees them.
+
 ## Non-blocking
 
 ### Events

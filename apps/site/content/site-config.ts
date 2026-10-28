@@ -121,6 +121,7 @@ export const capabilityRoutes = [
 export const footerLinks = [
   { href: '/work', label: 'Work' },
   { href: '/about', label: 'About' },
+  { href: '/academics', label: 'Academics' },
   { href: '/resume', label: 'Résumé' },
   { href: '/privacy', label: 'Privacy' },
 ] as const
