@@ -1,4 +1,4 @@
-import { ArrowUpRight, Layers, Puzzle, Workflow } from 'lucide-react'
+import { Activity, ArrowUpRight, Gauge, Presentation } from 'lucide-react'
 import { CodeIllustration, MicIllustration } from '@mohdaslam/ui/illustrations'
 import type { Metadata } from 'next'
 import Image from 'next/image'
@@ -22,13 +22,13 @@ import type { PortfolioImage } from '@/lib/content/schema'
 
 export const metadata: Metadata = {
   title: 'About',
-  description: `${siteConfig.name} is a Singapore-based technology builder working across software, automation, web products, community initiatives and technology events.`,
+  description: `${siteConfig.name} is a software engineering student in Singapore building automation, developer tooling and full-stack products, with an automation and observability internship at OCBC.`,
   alternates: { canonical: '/about' },
 }
 
 /** One glyph per bio point, in the order profile.ts lists them. */
-const BIO_ICONS = [Layers, Puzzle, Workflow] as const
-const BIO_TITLES = ['One skill, many rooms', 'Starts as a vague problem', 'Decisions and follow-through']
+const BIO_ICONS = [Activity, Gauge, Presentation] as const
+const BIO_TITLES = ['Reliability first', 'Measured, not claimed', 'Explaining it to a room']
 
 export default function AboutPage() {
   const recognition = getRecognition()
@@ -50,7 +50,7 @@ export default function AboutPage() {
       <Section aria-label="In short" className="pb-0">
         <ul className="grid gap-4 md:grid-cols-3">
           {bioPoints.map((point, index) => {
-            const Icon = BIO_ICONS[index] ?? Layers
+            const Icon = BIO_ICONS[index] ?? Activity
             return (
               <li key={point} className="panel rounded-sm p-5">
                 <span className="flex size-11 items-center justify-center rounded-sm border border-accent/40 bg-accent/10 text-accent">
@@ -69,7 +69,7 @@ export default function AboutPage() {
         and each a door into the part of the site that proves it.
       */}
       <Section aria-label="Two sides of the work" className="pb-0">
-        <SectionHeader eyebrow="Two sides" title="I build things, and I run rooms" />
+        <SectionHeader eyebrow="Two sides" title="I build systems, and I teach in rooms full of builders" />
         <div className="grid gap-4 md:grid-cols-2">
           <SideCard
             href="/work"
@@ -83,10 +83,10 @@ export default function AboutPage() {
           <SideCard
             href="/events"
             art={<MicIllustration />}
-            eyebrow="Operator & host"
+            eyebrow="Teaching & events"
             count={events.length}
             unit={`events · ${hosted} hosted`}
-            body="Hackathons, workshops and meetups — hosting, teaching and keeping the day running."
+            body="AI build workshops and hackathons — teaching, helping people debug, and hosting the room."
             linkLabel="See the events"
           />
         </div>
@@ -274,7 +274,7 @@ function Hero() {
                 />
               </div>
               <figcaption className="label-mono absolute -bottom-3 left-3 whitespace-nowrap rounded-sm bg-accent px-2 py-1 text-accent-contrast">
-                ● On the mic
+                ● At a workshop
               </figcaption>
             </figure>
           </div>

@@ -1,3 +1,4 @@
+import { ArrowUpRight } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -12,12 +13,13 @@ import { PersonSchema } from '@/components/seo/person-schema'
 import { GridBackdrop, Panel } from '@/components/system/panel'
 import { SystemField } from '@/components/three/system-field'
 import { SystemFieldStatic } from '@/components/three/system-field-static'
-import { principles } from '@/content/profile'
+import { experience, principles } from '@/content/profile'
 import { placements } from '@/content/recognition'
 import { capabilityRoutes, siteConfig } from '@/content/site-config'
 import { getFeaturedEvent, getFeaturedProjects, getPublicProjects } from '@/lib/content/queries'
 import { buildSystemField } from '@/lib/content/system-field'
 import { STATUS_LABELS } from '@/lib/content/public-view'
+import { cn } from '@/lib/utils'
 
 export default function HomePage() {
   // Three projects plus the strongest event record, so the four featured
@@ -31,9 +33,10 @@ export default function HomePage() {
     <>
       <PersonSchema />
       <Hero field={field} />
-      <Capabilities />
+      <Experience />
       <SelectedWork projects={featured} event={featuredEvent} />
       <Recognition />
+      <Capabilities />
       <WorkingStyle />
       <FinalCta />
     </>
@@ -57,7 +60,7 @@ function Hero({ field }: { field: ReturnType<typeof buildSystemField> }) {
         <div className="grid items-center gap-12 lg:grid-cols-[1.15fr_1fr] lg:gap-8">
           <div className="hero-seq">
             <p className="label-mono text-accent">
-              Singapore · Technology · Products · Events
+              Singapore · Automation · Developer tooling · Full-stack
             </p>
 
             <h1 className="mt-6 font-display text-display font-semibold text-ink">
@@ -69,19 +72,28 @@ function Hero({ field }: { field: ReturnType<typeof buildSystemField> }) {
             </p>
 
             <div className="mt-9 flex flex-wrap gap-3">
-              <CtaLink href="/work">Explore selected work</CtaLink>
+              <CtaLink href="/work">See selected work</CtaLink>
               <CtaLink href="/contact" variant="secondary">
-                Discuss an opportunity
+                Get in touch
               </CtaLink>
             </div>
 
             {/* Single source: content/site-config.ts. Never restated. */}
-            <div className="mt-10 max-w-xl border-l-2 border-accent/50 pl-4">
-              <p className="label-mono text-accent">Status</p>
-              <p className="mt-1.5 text-sm leading-relaxed text-ink-muted">
-                {siteConfig.status}
-              </p>
-            </div>
+            <dl className="mt-10 grid max-w-xl gap-4 border-l-2 border-accent/50 pl-4">
+              <div>
+                <dt className="label-mono text-accent">Now</dt>
+                <dd className="mt-1.5 text-sm leading-relaxed text-ink-muted">
+                  {siteConfig.status}
+                </dd>
+              </div>
+              <div>
+                <dt className="label-mono text-accent">Happy to talk with</dt>
+                <dd className="mt-1.5 text-sm leading-relaxed text-ink-muted">
+                  {siteConfig.openTo}
+                </dd>
+              </div>
+            </dl>
+            <ContactLinks className="mt-5 pl-4" />
           </div>
 
           {/*
@@ -89,7 +101,9 @@ function Hero({ field }: { field: ReturnType<typeof buildSystemField> }) {
             by discipline and coloured by its real status — so it cannot drift
             from the truth, and it updates itself when the content does.
           */}
-          <div className="relative order-first lg:order-none">
+          {/* Text first on phones too: someone who just met me should see who I am
+              before the visual. */}
+          <div className="relative">
             <div className="relative mx-auto aspect-square w-full max-w-[26rem]">
               <SystemFieldStatic data={field} />
               <SystemField data={field} />
@@ -97,11 +111,13 @@ function Hero({ field }: { field: ReturnType<typeof buildSystemField> }) {
 
             <Panel
               designation="Published work"
-              meta={`${projects.length} items`}
+              meta={`${projects.length - (counts.archived ?? 0)} active`}
               className="mx-auto mt-4 max-w-[26rem]"
             >
               <dl className="grid grid-cols-2 gap-x-4 gap-y-2 p-4 sm:grid-cols-3">
+                {/* Archived work stays on /work but is left out of the headline readout. */}
                 {Object.entries(counts)
+                  .filter(([status]) => status !== 'archived')
                   .sort((a, b) => b[1] - a[1])
                   .map(([status, count]) => (
                     <div key={status} className="flex items-baseline gap-2">
@@ -117,6 +133,34 @@ function Hero({ field }: { field: ReturnType<typeof buildSystemField> }) {
         </div>
       </Section>
     </div>
+  )
+}
+
+/** The direct routes, for someone who just met me and wants to connect. */
+function ContactLinks({ className }: { className?: string }) {
+  const links = [
+    { label: 'LinkedIn', href: siteConfig.contact.linkedin },
+    { label: 'GitHub', href: siteConfig.contact.github },
+    { label: 'Email', href: `mailto:${siteConfig.contact.email}` },
+  ]
+
+  return (
+    <ul className={cn('flex flex-wrap gap-x-5 gap-y-2', className)}>
+      {links.map((link) => (
+        <li key={link.label}>
+          <a
+            href={link.href}
+            {...(link.href.startsWith('http')
+              ? { target: '_blank', rel: 'noopener noreferrer' }
+              : {})}
+            className="label-mono inline-flex items-center gap-1 text-ink underline-offset-4 hover:text-accent hover:underline"
+          >
+            {link.label}
+            <ArrowUpRight aria-hidden className="size-3.5" />
+          </a>
+        </li>
+      ))}
+    </ul>
   )
 }
 
@@ -174,8 +218,8 @@ function SelectedWork({
     <Section aria-labelledby="work-heading">
       <SectionHeader
         eyebrow="Selected work"
-        title="Things I built, ran, or helped happen"
-        description="A product, a platform, a community initiative, and facilitation."
+        title="Built, measured, and put in front of people"
+        description="Developer tooling, two full-stack products, and the largest room I have hosted."
         action={
           <Link
             href="/work"
@@ -197,6 +241,40 @@ function SelectedWork({
           </Reveal>
         ) : null}
       </div>
+    </Section>
+  )
+}
+
+/** Current role first: the strongest single piece of evidence on the site. */
+function Experience() {
+  const current = experience[0]
+  if (!current) return null
+
+  return (
+    <Section aria-labelledby="experience-heading" className="pt-0">
+      <Panel designation="Current role" meta={current.timeframe}>
+        <div className="p-6">
+          <h2 id="experience-heading" className="font-display text-2xl font-semibold text-ink">
+            {current.role}
+            <span className="text-ink-muted"> · {current.organisation}</span>
+          </h2>
+          <p className="prose-measure mt-3 leading-relaxed text-ink-muted">{current.summary}</p>
+          {current.highlights.length > 0 ? (
+            <ul className="mt-5 grid gap-3 text-sm leading-relaxed text-ink sm:grid-cols-3">
+              {current.highlights.slice(0, 3).map((item) => (
+                <li key={item} className="border-l-2 border-accent/50 pl-3">
+                  {item}
+                </li>
+              ))}
+            </ul>
+          ) : null}
+          <div className="mt-6">
+            <CtaLink href="/resume" variant="secondary">
+              Full experience
+            </CtaLink>
+          </div>
+        </div>
+      </Panel>
     </Section>
   )
 }
@@ -286,12 +364,12 @@ function FinalCta() {
               id="cta-heading"
               className="max-w-2xl font-display text-headline font-semibold text-ink"
             >
-              Got a problem, product, or event worth moving forward?
+              Working on tooling, automation or AI systems? I would like to hear about it.
             </h2>
             <div className="mt-8 flex flex-wrap gap-3">
-              <CtaLink href="/contact">Discuss an opportunity</CtaLink>
-              <CtaLink href="/about" variant="secondary">
-                About me
+              <CtaLink href="/contact">Get in touch</CtaLink>
+              <CtaLink href={siteConfig.contact.linkedin} variant="secondary">
+                Connect on LinkedIn
               </CtaLink>
             </div>
           </div>

@@ -11,7 +11,7 @@ export const ENQUIRY_TYPES = {
   website: 'Website or product project',
   event: 'Event hosting or facilitation',
   community: 'Community partnership',
-  other: 'Other',
+  other: 'Saying hello, or something else',
 } as const
 
 export type EnquiryType = keyof typeof ENQUIRY_TYPES

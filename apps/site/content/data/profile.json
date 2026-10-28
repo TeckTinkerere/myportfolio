@@ -1,9 +1,9 @@
 {
-  "bioOpener": "I take unclear problems, give them a structure, and get them in front of people.",
+  "bioOpener": "I build automation and developer tools, and I care most about whether they actually keep working.",
   "bioPoints": [
-    "Software, automation, web products, community initiatives, technology events — one skill, different rooms.",
-    "Most of it starts as a badly described problem: a shop nobody can find, students and founders who never meet, a community with no process.",
-    "Most useful where a project needs both the technical decisions and the follow-through."
+    "At OCBC I move fragile automations onto Playwright and give them shared logging and a health dashboard, so failures surface instead of hiding.",
+    "ROUTR ships with a 153-prompt eval set; DoorLens ships with a written limitations document. Where I cannot measure something, I say so.",
+    "I teach and facilitate at AI build workshops and hackathons. Explaining a system to a room is how I check that I understand it."
   ],
   "principles": [
     {

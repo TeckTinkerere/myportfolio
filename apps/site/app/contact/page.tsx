@@ -1,4 +1,4 @@
-import { Mail } from 'lucide-react'
+import { ArrowUpRight, Mail } from 'lucide-react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 
@@ -9,7 +9,7 @@ import { ENQUIRY_TYPES, type EnquiryType } from '@/lib/validation/contact'
 
 export const metadata: Metadata = {
   title: 'Contact',
-  description: `Get in touch with ${siteConfig.name} about technical work, a website or product, an event, or a community partnership.`,
+  description: `Get in touch with ${siteConfig.name} about developer tooling, automation, a product, an event, or just to connect.`,
   alternates: { canonical: '/contact' },
 }
 
@@ -40,16 +40,26 @@ export default async function ContactPage({
 
         <aside className="flex flex-col gap-6 lg:pt-20">
           <div className="rounded-sm border border-border bg-surface p-6">
-            <h2 className="text-sm font-semibold text-ink">Prefer email?</h2>
+            <h2 className="text-sm font-semibold text-ink">Prefer email or LinkedIn?</h2>
             <p className="mt-2 text-sm leading-relaxed text-ink-muted">
-              The form is a convenience, not a requirement.
+              The form is a convenience, not a requirement. If we just met, LinkedIn is the
+              quickest way to stay in touch.
             </p>
             <a
               href={`mailto:${siteConfig.contact.email}`}
-              className="mt-4 inline-flex items-center gap-2 text-sm text-accent underline-offset-4 hover:underline"
+              className="mt-4 flex items-center gap-2 text-sm text-accent underline-offset-4 hover:underline"
             >
               <Mail aria-hidden className="size-4" />
               {siteConfig.contact.email}
+            </a>
+            <a
+              href={siteConfig.contact.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 flex items-center gap-2 text-sm text-accent underline-offset-4 hover:underline"
+            >
+              <ArrowUpRight aria-hidden className="size-4" />
+              Connect on LinkedIn
             </a>
           </div>
 

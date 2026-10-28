@@ -43,12 +43,12 @@ const recognitionList: RecognitionInput[] = [
   },
   {
     slug: 'ai-for-good-youth-student-facilitator',
-    title: 'AI for Good (Youth) — Student Facilitator',
+    title: 'AI for Good (Youth) — Leadership & Facilitation Award',
     issuer: 'AI Singapore',
     date: '2025-04-15',
     placement: '3rd place',
     summary:
-      'Recognised for leadership and facilitation on AI-driven social impact projects.',
+      'Placed 3rd among student facilitators for leadership and facilitation, guiding youth teams through AI social-impact projects.',
     image: {
       src: '/images/certificates/AITrainer.png',
       alt: 'AI for Good (Youth) Student Facilitator certificate issued by AI Singapore',

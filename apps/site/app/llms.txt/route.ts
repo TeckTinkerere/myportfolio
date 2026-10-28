@@ -25,6 +25,7 @@ export async function GET() {
     `- Role: ${siteConfig.descriptor}`,
     `- Education: ${education.qualification}, ${education.institution} (${education.timeframe})`,
     `- Status: ${siteConfig.status}`,
+    `- Open to: ${siteConfig.openTo}`,
     `- Contact: ${siteConfig.contact.email}`,
     `- GitHub: ${siteConfig.contact.github}`,
     `- LinkedIn: ${siteConfig.contact.linkedin}`,

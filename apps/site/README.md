@@ -1,6 +1,6 @@
 # mohdaslam.dev
 
-Personal site for Mohamed Aslam — technology builder and community operator,
+Personal site for Mohamed Aslam — software engineering student,
 Singapore.
 
 Built as a proof-of-work platform rather than a decorative portfolio: one

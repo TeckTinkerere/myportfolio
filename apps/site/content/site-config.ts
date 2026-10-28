@@ -14,19 +14,27 @@ export const siteConfig = {
   legalName: 'Mohamed Aslam Abdul Gafoor',
   monogram: 'MA',
 
-  descriptor: 'Technology Builder & Community Operator',
-  headline: 'I build useful systems and bring people together.',
+  /**
+   * One identity across the site, matching the résumé headline. Events and
+   * community work are still published, but as evidence of communication,
+   * not as a second job title.
+   */
+  descriptor: 'Software Engineering Student',
+  headline: 'I build software that keeps working, and shows you when it doesn’t.',
   positioning:
-    'I’m Mohamed Aslam, a Singapore-based technology builder working across software, automation, web products, community initiatives, and technology events.',
+    'I’m Mohamed Aslam, an IT student at Singapore Polytechnic, interning at OCBC on automation reliability and observability. I also build developer tooling and full-stack products, and teach at AI build workshops.',
   valueProposition:
-    'My work sits at the intersection of technology, execution, and communication. I enjoy taking unclear problems, structuring them, and turning them into something people can actually use, operate, or participate in.',
+    'Most of my work comes back to one question: does this system actually work, and how would anyone know? Logging, evaluation sets and written limitations are how I answer it.',
 
   /**
-   * Availability line. Rendered in one place on the homepage and nowhere
-   * else — edit here, not in a component.
+   * What I am doing now and who I would like to hear from. Rendered in one
+   * place on the homepage and nowhere else — edit here, not in a component.
+   * Keep it dated in spirit: it is the line most likely to go stale.
    */
   status:
-    'Currently studying Information Technology at Singapore Polytechnic. Open to selected website or product projects and weekend event-hosting opportunities.',
+    'Automation & tooling intern at OCBC while finishing my Diploma in IT at Singapore Polytechnic.',
+  openTo:
+    'People working on developer tooling, automation or AI systems, and anyone heading into computing at university.',
 
   location: 'Singapore',
   locale: 'en-SG',
