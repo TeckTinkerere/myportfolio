@@ -7,6 +7,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import { Illustration } from '@/components/art'
+import { RunDial } from '@/components/run-dial'
+import { Tilt } from '@mohdaslam/ui/tilt'
 import { approach, formats, hostedRooms } from '@/content/hosting'
 import { bookingHref, emceeConfig } from '@/content/site-config'
 import { getPublicRunSheets } from '@/lib/queries'
@@ -93,7 +95,10 @@ function Hero({ largest, roomCount }: { largest?: string; roomCount: number }) {
             </dl>
           </div>
 
-          <div className="relative mx-auto w-full max-w-md">
+          {/* The photo is a plane in space: it leans toward the pointer, and
+              the tag floats in front of it, so the two shift against each
+              other. Mouse only; a still photograph everywhere else. */}
+          <Tilt className="relative mx-auto w-full max-w-md" innerClassName="relative" max={6}>
             <div className="panel relative aspect-[4/5] overflow-hidden rounded-sm">
               <Image
                 src="/images/on-stage.jpg"
@@ -104,10 +109,13 @@ function Hero({ largest, roomCount }: { largest?: string; roomCount: number }) {
                 className="object-cover object-top"
               />
             </div>
-            <p className="label-mono absolute -bottom-3 left-4 rounded-sm bg-accent px-2.5 py-1.5 text-accent-contrast">
+            <p
+              className="label-mono absolute -bottom-3 left-4 rounded-sm bg-accent px-2.5 py-1.5 text-accent-contrast shadow-lg"
+              style={{ transform: 'translateZ(48px)' }}
+            >
               ● On mic
             </p>
-          </div>
+          </Tilt>
         </div>
       </Section>
     </div>
@@ -200,10 +208,8 @@ function RunSheets() {
             <li key={sheet.slug}>
               <article className="panel group relative grid h-full overflow-hidden rounded-sm transition-colors hover:border-border-strong sm:grid-cols-[1fr_1.1fr]">
                 <div className="flex items-center justify-center border-b border-border bg-surface-raised p-6 sm:border-b-0 sm:border-r">
-                  <Illustration
-                    art="runsheet"
-                    className="max-w-[14rem] transition-transform duration-500 group-hover:scale-[1.04]"
-                  />
+                  {/* The sheet's own running order, as a dial. */}
+                  <RunDial order={order} className="w-full max-w-[13rem]" />
                 </div>
                 <div className="flex flex-col p-5">
                   <span className="label-mono text-accent">

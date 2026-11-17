@@ -14,6 +14,8 @@ export const systemFieldConfig: {
   nodeSizeFeatured: number
   rotationsPerMinute: number
   pointerTilt: number
+  hitRadiusPx: number
+  hoverScale: number
   linkAtSharedLenses: number
   linkOpacity: number
   dustCount: number
@@ -23,6 +25,7 @@ export const systemFieldConfig: {
   statusColors: Record<import('@/lib/content/schema').ProjectStatus, string>
   dustColor: string
   linkColor: string
+  dimColor: string
 } = {
   /** Radius of the sphere the project nodes are distributed over. */
   radius: 3.1,
@@ -36,6 +39,15 @@ export const systemFieldConfig: {
 
   /** How far the field tilts toward the pointer, in radians. 0 disables it. */
   pointerTilt: 0.12,
+
+  /**
+   * How close the pointer must be to a node, in CSS pixels, to select it.
+   * Generous on purpose: the nodes are only a few pixels wide.
+   */
+  hitRadiusPx: 28,
+
+  /** How much the selected node grows. */
+  hoverScale: 1.7,
 
   /** Draw a line between two projects that share this many lenses or more. */
   linkAtSharedLenses: 2,
@@ -67,6 +79,9 @@ export const systemFieldConfig: {
 
   dustColor: '#2b3f52',
   linkColor: '#f4b942',
+
+  /** What nodes fade toward when another status is being highlighted. */
+  dimColor: '#12161b',
 }
 
 export type SystemFieldConfig = typeof systemFieldConfig

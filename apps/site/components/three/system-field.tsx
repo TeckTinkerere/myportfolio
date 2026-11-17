@@ -1,8 +1,9 @@
 'use client'
 
 import dynamic from 'next/dynamic'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
+import type { ProjectStatus } from '@/lib/content/schema'
 import type { SystemFieldData } from '@/lib/content/system-field'
 
 /**
@@ -32,9 +33,21 @@ function supportsWebGL(): boolean {
   }
 }
 
-export function SystemField({ data }: { data: SystemFieldData }) {
+export function SystemField({
+  data,
+  highlight = null,
+  onLive,
+}: {
+  data: SystemFieldData
+  /** Status to emphasise; every other node is dimmed. */
+  highlight?: ProjectStatus | null
+  /** Called once the scene has drawn, so the SVG beneath can be hidden. */
+  onLive?: () => void
+}) {
   const [ready, setReady] = useState(false)
   const [animate, setAnimate] = useState(true)
+  const [inView, setInView] = useState(true)
+  const container = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (!supportsWebGL()) return
@@ -57,11 +70,29 @@ export function SystemField({ data }: { data: SystemFieldData }) {
     return () => query.removeEventListener('change', sync)
   }, [])
 
+  // Scrolled past the hero: stop drawing frames nobody can see.
+  useEffect(() => {
+    const node = container.current
+    if (!ready || !node) return
+    const observer = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting))
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [ready])
+
   if (!ready) return null
 
   return (
-    <div className="absolute inset-0 animate-rise-in [animation-duration:700ms]">
-      <SystemFieldCanvas data={data} animate={animate} />
+    <div
+      ref={container}
+      className="absolute inset-0 animate-rise-in [animation-duration:700ms]"
+    >
+      <SystemFieldCanvas
+        data={data}
+        animate={animate}
+        active={inView}
+        highlight={highlight}
+        onLive={onLive}
+      />
     </div>
   )
 }

@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation'
 
 import { Section } from '@/components/layout/section'
 import { CaseSpine } from '@/components/system/diagram'
+import { CaseLead } from '@/components/projects/case-lead'
 import { ProjectCard } from '@/components/projects/project-card'
 import { StatusBadge } from '@/components/projects/status-badge'
 import { ProjectShare } from '@/components/share/project-share'
@@ -111,18 +112,7 @@ export default async function CaseStudyPage({
           </p>
         ) : null}
 
-        {project.coverImage ? (
-          <div className="relative mt-10 aspect-[16/9] overflow-hidden rounded-sm border border-border bg-surface-raised">
-            <Image
-              src={project.coverImage.src}
-              alt={project.coverImage.alt}
-              fill
-              priority
-              sizes="(max-width: 1280px) 100vw, 1280px"
-              className="object-cover"
-            />
-          </div>
-        ) : null}
+        <CaseLead project={project} evidence={evidence} />
       </Section>
 
       {/* PRD s11.2 — the facts, before the narrative. */}
@@ -173,6 +163,36 @@ export default async function CaseStudyPage({
           ]}
         />
       </Section>
+
+      {project.gallery && project.gallery.length > 0 ? (
+        <Section aria-labelledby="gallery-heading" className="pt-0">
+          <h2 id="gallery-heading" className="label-mono text-ink-muted">
+            In pictures
+          </h2>
+          <ul className="mt-4 grid gap-4 sm:grid-cols-2">
+            {project.gallery.map((image) => (
+              <li key={image.src}>
+                <figure className="panel overflow-hidden rounded-sm">
+                  <div className="relative aspect-[16/10] bg-surface-raised">
+                    <Image
+                      src={image.src}
+                      alt={image.alt}
+                      fill
+                      sizes="(max-width: 640px) 100vw, 640px"
+                      className="object-cover object-top"
+                    />
+                  </div>
+                  {image.caption ? (
+                    <figcaption className="border-t border-border px-4 py-3 text-sm text-ink-muted">
+                      {image.caption}
+                    </figcaption>
+                  ) : null}
+                </figure>
+              </li>
+            ))}
+          </ul>
+        </Section>
+      ) : null}
 
       {metrics.length > 0 ? (
         <Section aria-labelledby="metrics-heading" className="pt-0">

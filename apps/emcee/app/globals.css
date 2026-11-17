@@ -4,3 +4,20 @@
   package's "exports" map; the same note applies in apps/site.
 */
 @import '../../../packages/ui/src/styles.css';
+
+/*
+  The run-sheet dial's hand: one slow sweep, so the dial reads as a clock
+  rather than a chart. Held still for anyone who has asked for less motion.
+*/
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes dial-sweep {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .dial-hand-sweep {
+    transform-origin: 50% 50%;
+    animation: dial-sweep 48s linear infinite;
+  }
+}

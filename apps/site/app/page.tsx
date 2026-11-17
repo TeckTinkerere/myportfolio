@@ -11,7 +11,7 @@ import { PrincipleIcon } from '@/components/profile/profile-blocks'
 import { ProjectCard } from '@/components/projects/project-card'
 import { PersonSchema } from '@/components/seo/person-schema'
 import { GridBackdrop, Panel } from '@/components/system/panel'
-import { SystemField } from '@/components/three/system-field'
+import { SystemFieldStage } from '@/components/three/system-field-stage'
 import { SystemFieldStatic } from '@/components/three/system-field-static'
 import { experience, principles } from '@/content/profile'
 import { placements } from '@/content/recognition'
@@ -19,6 +19,7 @@ import { capabilityRoutes, siteConfig } from '@/content/site-config'
 import { getFeaturedEvent, getFeaturedProjects, getPublicProjects } from '@/lib/content/queries'
 import { buildSystemField } from '@/lib/content/system-field'
 import { STATUS_LABELS } from '@/lib/content/public-view'
+import type { ProjectStatus } from '@/lib/content/schema'
 import { cn } from '@/lib/utils'
 
 export default function HomePage() {
@@ -103,33 +104,21 @@ function Hero({ field }: { field: ReturnType<typeof buildSystemField> }) {
           */}
           {/* Text first on phones too: someone who just met me should see who I am
               before the visual. */}
-          <div className="relative">
-            <div className="relative mx-auto aspect-square w-full max-w-[26rem]">
-              <SystemFieldStatic data={field} />
-              <SystemField data={field} />
-            </div>
-
-            <Panel
-              designation="Published work"
-              meta={`${projects.length - (counts.archived ?? 0)} active`}
-              className="mx-auto mt-4 max-w-[26rem]"
-            >
-              <dl className="grid grid-cols-2 gap-x-4 gap-y-2 p-4 sm:grid-cols-3">
-                {/* Archived work stays on /work but is left out of the headline readout. */}
-                {Object.entries(counts)
-                  .filter(([status]) => status !== 'archived')
-                  .sort((a, b) => b[1] - a[1])
-                  .map(([status, count]) => (
-                    <div key={status} className="flex items-baseline gap-2">
-                      <dt className="label-mono truncate text-ink-muted">
-                        {STATUS_LABELS[status as keyof typeof STATUS_LABELS]}
-                      </dt>
-                      <dd className="label-mono tnum ml-auto text-ink">{count}</dd>
-                    </div>
-                  ))}
-              </dl>
-            </Panel>
-          </div>
+          {/* Archived work stays on /work but is left out of the headline readout. */}
+          <SystemFieldStage
+            data={field}
+            activeCount={projects.length - (counts.archived ?? 0)}
+            rows={Object.entries(counts)
+              .filter(([status]) => status !== 'archived')
+              .sort((a, b) => b[1] - a[1])
+              .map(([status, count]) => ({
+                status: status as ProjectStatus,
+                label: STATUS_LABELS[status as ProjectStatus],
+                count,
+              }))}
+          >
+            <SystemFieldStatic data={field} />
+          </SystemFieldStage>
         </div>
       </Section>
     </div>

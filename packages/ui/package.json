@@ -10,6 +10,7 @@
     "./illustrations": "./src/illustrations.tsx",
     "./theme-provider": "./src/theme-provider.tsx",
     "./theme-toggle": "./src/theme-toggle.tsx",
+    "./tilt": "./src/tilt.tsx",
     "./styles.css": "./src/styles.css",
     "./tailwind-preset": "./src/tailwind-preset.ts"
   },
